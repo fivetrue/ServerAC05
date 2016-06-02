@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app>
+
+	<servlet>
+		<servlet-name>naverCafeSignup</servlet-name>
+		<jsp-file>/naver/CafeSignup.jsp</jsp-file>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>naverCallback</servlet-name>
+		<jsp-file>/naver/ServiceCallback.jsp</jsp-file>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>naverCafeSignup</servlet-name>
+		<url-pattern>/api/naver/cafesignup</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>naverCallback</servlet-name>
+		<url-pattern>/api/naver/callback</url-pattern>
+	</servlet-mapping>
+	
+	
+	<!-- 설정 -->
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.css</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.js</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.gif</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.jpg</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.png</url-pattern>
+    </servlet-mapping>
+
+</web-app>  
