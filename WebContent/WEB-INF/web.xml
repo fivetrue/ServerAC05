@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app>
 
+	<!-- App Config  -->
+	<servlet>
+		<servlet-name>appConfig</servlet-name>
+		<jsp-file>/config/GetAppConfig.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>appConfig</servlet-name>
+		<url-pattern>/api/config/appconfig</url-pattern>
+	</servlet-mapping>
+	
+	<!-- Naver  -->
 	<servlet>
 		<servlet-name>naverCafeSignup</servlet-name>
 		<jsp-file>/naver/CafeSignup.jsp</jsp-file>

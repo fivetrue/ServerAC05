@@ -22,7 +22,7 @@ import com.fivetrue.gimpo.ac05.NaverConstants;
 
 import javafx.util.Pair;
 
-public class NaverAPIManager extends BaseApiHandler{
+public class NaverAPIManager extends ProjectCheckApiHandler{
 	
 	private static final String TAG = "NaverAPIManager";
 
@@ -32,34 +32,6 @@ public class NaverAPIManager extends BaseApiHandler{
 		checkRequestValidation();
 	}
 	
-	@Override
-	protected boolean checkRequestValidation() {
-		// TODO Auto-generated method stub
-		String appId = getRequest().getHeader(Constants.KEY_APP_ID);
-		String appKey = getRequest().getHeader(Constants.KEY_APP_KEY);
-		Date date = new Date(System.currentTimeMillis());
-		String log = getSimpleDataFormat().format(date) + " / RemoteAddr : (" + getRequest().getRemoteAddr()  + ") / "
-				+"Headers : (" + "ContentType : " + getRequest().getContentType() + ", "
-				+ Constants.KEY_APP_ID + " : " + appId + ", "
-				+ Constants.KEY_APP_KEY + " : " + appKey + ") / ";
-		log += "Path : (" + getRequest().getServletPath() + ") / "; 		
-		log += "Class : (" + getClass().getName() + ") / "; 		
-		log += "Parameters : (";
-		for(String key : getRequest().getParameterMap().keySet()){
-			log += key + " : " + getRequest().getParameter(key) + ", ";
-		}
-		getContext().log(log);
-//		System.out.println(log );
-//		boolean b = appId != null && appId.equals(Constants.APP_ID) && appKey != null && appKey.equals(Constants.APP_KEY);
-//		if(!b){
-//			Result result = new Result();
-//			result.setErrorCode(Result.ERROR_CODE_REQUEST_ERROR);
-//			result.setMessage("Invalid header values");
-//			result.makeResponseTime();
-//			writeContent(new Gson().toJson(result));
-//		}
-		return true;
-	}
 	
 	public void requestSignup() throws IOException{
 		String cafeId = getRequest().getParameter("cafeId");
