@@ -12,7 +12,7 @@ public class NaverConstants {
 	public static final class Login{
 		public static final String LOGIN_AUTH_API = "https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=" + CLIENT_ID + "&redirect_uri=%s&state=%s";
 //		https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=jyvqXeaVOVmV&redirect_uri=http%3A%2F%2Fservice.redirect.url%2Fredirect&state=hLiDdL2uhPtsftcU
-		public static final String REDIRECT_CALLBACK_URL = "";
+		public static final String REDIRECT_CALLBACK_URL = "http://52.76.24.8:8080/gimpoac05/api/naver/callback";
 		
 	}
 	

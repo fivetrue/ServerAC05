@@ -32,17 +32,17 @@ public class NaverAPIManager extends ProjectCheckApiHandler{
 	public NaverAPIManager(ServletContext context, HttpServletRequest request, HttpServletResponse response) {
 		super(context, request, response);
 		// TODO Auto-generated constructor stub
-		checkRequestValidation();
+//		checkRequestValidation();
 	}
 	
 	
 	public void requestLogin(){
 //		https://nid.naver.com/oauth2.0/authorize?client_id={클라이언트 아이디}&response_type=code&redirect_uri={개발자 센터에 등록한 콜백 URL(URL 인코딩)}&state={상태 토큰}
-		String redirectUrl = getParameter("redirect");
 		String token = UUID.randomUUID().toString().trim();
 		getContext().setAttribute("state", token);
-		String api = String.format(NaverConstants.Login.LOGIN_AUTH_API, redirectUrl, UUID.randomUUID());
+		String api = String.format(NaverConstants.Login.LOGIN_AUTH_API, NaverConstants.Login.REDIRECT_CALLBACK_URL, UUID.randomUUID());
 		try {
+			getContext().log("redirect : " + api);
 			getResponse().sendRedirect(api);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
