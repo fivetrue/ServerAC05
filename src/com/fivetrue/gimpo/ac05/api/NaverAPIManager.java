@@ -41,23 +41,30 @@ public class NaverAPIManager extends ProjectCheckApiHandler{
 	
 	public void requestLogin(){
 //		https://nid.naver.com/oauth2.0/authorize?client_id={클라이언트 아이디}&response_type=code&redirect_uri={개발자 센터에 등록한 콜백 URL(URL 인코딩)}&state={상태 토큰}
-		String token = UUID.randomUUID().toString().trim();
-		getContext().setAttribute("state", token);
-		String redirectUrl = NaverConstants.Login.REDIRECT_CALLBACK_URL;
-		try {
-			redirectUrl = URLEncoder.encode(NaverConstants.Login.REDIRECT_CALLBACK_URL, "UTF-8");
-		} catch (UnsupportedEncodingException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+		String state = getParameter("state");
+		if(state != null){
+			String redirectUrl = NaverConstants.Login.REDIRECT_CALLBACK_URL;
+			try {
+				redirectUrl = URLEncoder.encode(NaverConstants.Login.REDIRECT_CALLBACK_URL, "UTF-8");
+			} catch (UnsupportedEncodingException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			String api = String.format(NaverConstants.Login.LOGIN_AUTH_API, redirectUrl, state);
+			try {
+				getResponse().sendRedirect(api);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else{
+			Result result = new Result();
+			result.setErrorCode(Result.ERROR_CODE_REQUEST_ERROR);
+			result.setMessage("parameter state is null");
+			result.makeResponseTime();
+			writeObject(result);
 		}
-		String api = String.format(NaverConstants.Login.LOGIN_AUTH_API, redirectUrl, UUID.randomUUID());
-		try {
-			getContext().log("redirect : " + api);
-			getResponse().sendRedirect(api);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 //		String response = requestApi(api, "GET", null, null);
 	}
 	
@@ -78,14 +85,13 @@ public class NaverAPIManager extends ProjectCheckApiHandler{
 				e.printStackTrace();
 			}
 		}
-		String stateToken = (String) getContext().getAttribute("state");
-		getContext().log("check callback Property stateToken : " + stateToken);
 		getContext().log("check callback Parameter : " + loginResult.toString());
 		Result result = new Result();
-		if(loginResult.getState() != null && stateToken != null && loginResult.getState().equals(stateToken)){
-			getContext().setAttribute("state", null);
+		if(loginResult.getState() != null && loginResult.getCode() != null){
+			result.setErrorCode(Result.ERROR_CODE_OK);
 		}else{
-			loginResult.setError_description(loginResult.getError_description() + " / State token mismatch");
+			result.setErrorCode(Result.ERROR_CODE_REQUEST_ERROR);
+			loginResult.setError_description(loginResult.getError_description() + " / state, code value is invalide");
 		}
 		result.setResult(loginResult);
 		result.makeResponseTime();
