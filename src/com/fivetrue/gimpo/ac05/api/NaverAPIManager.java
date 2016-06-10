@@ -6,9 +6,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.Date;
 import java.util.UUID;
 
@@ -21,6 +23,7 @@ import com.fivetrue.api.BaseApiHandler;
 import com.fivetrue.api.Result;
 import com.fivetrue.gimpo.ac05.Constants;
 import com.fivetrue.gimpo.ac05.NaverConstants;
+import com.fivetrue.gimpo.ac05.vo.NaverLoginResult;
 import com.fivetrue.gimpo.ac05.vo.UserInfo;
 
 import javafx.util.Pair;
@@ -40,7 +43,14 @@ public class NaverAPIManager extends ProjectCheckApiHandler{
 //		https://nid.naver.com/oauth2.0/authorize?client_id={클라이언트 아이디}&response_type=code&redirect_uri={개발자 센터에 등록한 콜백 URL(URL 인코딩)}&state={상태 토큰}
 		String token = UUID.randomUUID().toString().trim();
 		getContext().setAttribute("state", token);
-		String api = String.format(NaverConstants.Login.LOGIN_AUTH_API, NaverConstants.Login.REDIRECT_CALLBACK_URL, UUID.randomUUID());
+		String redirectUrl = NaverConstants.Login.REDIRECT_CALLBACK_URL;
+		try {
+			redirectUrl = URLEncoder.encode(NaverConstants.Login.REDIRECT_CALLBACK_URL, "UTF-8");
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		String api = String.format(NaverConstants.Login.LOGIN_AUTH_API, redirectUrl, UUID.randomUUID());
 		try {
 			getContext().log("redirect : " + api);
 			getResponse().sendRedirect(api);
@@ -49,6 +59,35 @@ public class NaverAPIManager extends ProjectCheckApiHandler{
 			e.printStackTrace();
 		}
 //		String response = requestApi(api, "GET", null, null);
+	}
+	
+	public void receiveServiceCallback(){
+		
+		NaverLoginResult loginResult = new NaverLoginResult();
+		Field[] fields = loginResult.getClass().getDeclaredFields();
+		for(Field f : fields){
+			String value = getParameter(f.getName());
+			try {
+				f.set(loginResult, value);
+			} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		String stateToken = (String) getContext().getAttribute("state");
+		Result result = new Result();
+		if(loginResult.getState() != null && stateToken != null && loginResult.getState().equals(stateToken)){
+			getContext().log("Login success : " + loginResult.toString());
+			getContext().setAttribute("state", null);
+		}else{
+			loginResult.setError_description(loginResult.getError_description() + " / State token mismatch");
+		}
+		result.setResult(loginResult);
+		result.makeResponseTime();
+		writeObject(result);
 	}
 	
 	public void requestSignup() throws IOException{
@@ -91,10 +130,6 @@ public class NaverAPIManager extends ProjectCheckApiHandler{
 //			
 //			
 //		}
-		
-	}
-	
-	public void receiveServiceCallback(){
 		
 	}
 	
