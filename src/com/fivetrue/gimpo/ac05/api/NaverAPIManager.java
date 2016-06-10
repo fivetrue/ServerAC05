@@ -78,9 +78,10 @@ public class NaverAPIManager extends ProjectCheckApiHandler{
 			}
 		}
 		String stateToken = (String) getContext().getAttribute("state");
+		getContext().log("check callback Property stateToken : " + stateToken);
+		getContext().log("check callback Parameter : " + loginResult.toString());
 		Result result = new Result();
 		if(loginResult.getState() != null && stateToken != null && loginResult.getState().equals(stateToken)){
-			getContext().log("Login success : " + loginResult.toString());
 			getContext().setAttribute("state", null);
 		}else{
 			loginResult.setError_description(loginResult.getError_description() + " / State token mismatch");
