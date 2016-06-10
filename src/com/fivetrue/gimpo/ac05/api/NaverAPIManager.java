@@ -66,6 +66,7 @@ public class NaverAPIManager extends ProjectCheckApiHandler{
 		NaverLoginResult loginResult = new NaverLoginResult();
 		Field[] fields = loginResult.getClass().getDeclaredFields();
 		for(Field f : fields){
+			f.setAccessible(true);
 			String value = getParameter(f.getName());
 			try {
 				f.set(loginResult, value);
