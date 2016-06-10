@@ -11,7 +11,23 @@
 		<url-pattern>/api/config/appconfig</url-pattern>
 	</servlet-mapping>
 	
+	<!-- User  -->
+	<servlet>
+		<servlet-name>registerUser</servlet-name>
+		<jsp-file>/user/RegisterUser.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>registerUser</servlet-name>
+		<url-pattern>/api/user/register</url-pattern>
+	</servlet-mapping>	
+	
 	<!-- Naver  -->
+	
+	<servlet>
+		<servlet-name>naverLogin</servlet-name>
+		<jsp-file>/naver/NaverLogin.jsp</jsp-file>
+	</servlet>
+	
 	<servlet>
 		<servlet-name>naverCafeSignup</servlet-name>
 		<jsp-file>/naver/CafeSignup.jsp</jsp-file>
@@ -21,6 +37,11 @@
 		<servlet-name>naverCallback</servlet-name>
 		<jsp-file>/naver/ServiceCallback.jsp</jsp-file>
 	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>naverLogin</servlet-name>
+		<url-pattern>/api/naver/login</url-pattern>
+	</servlet-mapping>
 	
 	<servlet-mapping>
 		<servlet-name>naverCafeSignup</servlet-name>

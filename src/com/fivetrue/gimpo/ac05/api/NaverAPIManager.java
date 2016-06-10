@@ -6,9 +6,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.lang.reflect.Field;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Date;
+import java.util.UUID;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.ServletContext;
@@ -19,6 +21,7 @@ import com.fivetrue.api.BaseApiHandler;
 import com.fivetrue.api.Result;
 import com.fivetrue.gimpo.ac05.Constants;
 import com.fivetrue.gimpo.ac05.NaverConstants;
+import com.fivetrue.gimpo.ac05.vo.UserInfo;
 
 import javafx.util.Pair;
 
@@ -33,33 +36,61 @@ public class NaverAPIManager extends ProjectCheckApiHandler{
 	}
 	
 	
-	public void requestSignup() throws IOException{
-		String cafeId = getRequest().getParameter("cafeId");
-		String userNickname = getRequest().getParameter("userNickname");
-			
-		if(cafeId != null && userNickname != null){
-			String respose = requestApi(NaverConstants.Cafe.SIGNUP_CAFE_API, "POST", 
-//					new Pair<String, String>("clubid", cafeId), 
-					new Pair<String, String>("nickname", userNickname));
-			
-			writeContent(respose);
-		}else{
-			writeContent("INVALID_PARAMETER");
+	public void requestLogin(){
+//		https://nid.naver.com/oauth2.0/authorize?client_id={클라이언트 아이디}&response_type=code&redirect_uri={개발자 센터에 등록한 콜백 URL(URL 인코딩)}&state={상태 토큰}
+		String redirectUrl = getParameter("redirect");
+		String token = UUID.randomUUID().toString().trim();
+		getContext().setAttribute("state", token);
+		String api = String.format(NaverConstants.Login.LOGIN_AUTH_API, redirectUrl, UUID.randomUUID());
+		try {
+			getResponse().sendRedirect(api);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+//		String response = requestApi(api, "GET", null, null);
+	}
+	
+	public void requestSignup() throws IOException{
+		
+		UserInfo user = new UserInfo();
+		Field[] fields = user.getClass().getDeclaredFields();
+		
+		for(Field f : fields){
+			f.setAccessible(true);
+			String value = getRequest().getParameter(f.getName());
+			try {
+				f.set(user, value);
+			} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		String token = getParameter("token");
+
+		String respose = requestApi(NaverConstants.Cafe.SIGNUP_CAFE_API, "POST", 
+				token,
+				new Pair<String, String>("clubid", NaverConstants.Cafe.CAFE_ID), 
+				new Pair<String, String>("nickname", user.getNickname()));
+
+		writeContent(respose);
 	}
 	
 	public void requestLoginAuth(){
 //		https://nid.naver.com/oauth2.0/authorize?client_id={클라이언트 아이디}&response_type=code&redirect_uri={개발자 센터에 등록한 콜백 URL(URL 인코딩)}&state={상태 토큰}
-		String state = getRequest().getParameter("state");
-		if(state != null){
-			String response = requestApi(NaverConstants.Login.LOGIN_AUTH_API, "POST", 
-					new Pair<String, String>("client_id", NaverConstants.CLIENT_ID),
-					new Pair<String, String>("response_type", "code"),
-					new Pair<String, String>("redirect_uri", NaverConstants.Login.REDIRECT_CALLBACK_URL),
-					new Pair<String, String>("stat", state));
-			
-			
-		}
+//		String state = getRequest().getParameter("state");
+//		if(state != null){
+//			String response = requestApi(NaverConstants.Login.LOGIN_AUTH_API, "POST", 
+//					new Pair<String, String>("client_id", NaverConstants.CLIENT_ID),
+//					new Pair<String, String>("response_type", "code"),
+//					new Pair<String, String>("redirect_uri", NaverConstants.Login.REDIRECT_CALLBACK_URL),
+//					new Pair<String, String>("stat", state));
+//			
+//			
+//		}
 		
 	}
 	
@@ -67,7 +98,7 @@ public class NaverAPIManager extends ProjectCheckApiHandler{
 		
 	}
 	
-	private String requestApi(String api, String method, Pair<String, String>...parameters){
+	private String requestApi(String api, String method, String token, Pair<String, String>...parameters){
 		String response = "";
 		try {
 			boolean hasoutbody = method.equalsIgnoreCase("POST");
@@ -76,6 +107,9 @@ public class NaverAPIManager extends ProjectCheckApiHandler{
             conn.setRequestMethod(method);
             conn.addRequestProperty(NaverConstants.HEADER_KEY_X_NAVER_CLIENT_ID, NaverConstants.CLIENT_ID);
             conn.addRequestProperty(NaverConstants.HEADER_KEY_X_NAVER_CLIENT_SECRET, NaverConstants.CLIENT_SECRET);
+            if(token != null){
+            	conn.addRequestProperty(NaverConstants.HEADER_KEY_AUTHORIZATION, "Bearer " + token);
+            }
 
             conn.setUseCaches(false);
             conn.setDoInput(true);
@@ -108,7 +142,7 @@ public class NaverAPIManager extends ProjectCheckApiHandler{
 		getContext().log(TAG + " : requestAPi ("
 				+ "api = " + api + " / "
 				+ "method = " + method + " / "
-				+ "parameter = " + parameters.toString() + " / "
+				+ "parameter = " + parameters != null ? parameters.toString() : "" + " / "
 				+ "response = " + response + " / "
 				+ ")" );
 		

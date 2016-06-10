@@ -1,5 +1,7 @@
 package com.fivetrue.gimpo.ac05.vo;
 
+import java.util.ArrayList;
+
 public class AppConfig {
 	
 	public String appId = null;
@@ -11,5 +13,10 @@ public class AppConfig {
 	
 	public String naverClientId = null;
 	public String naverClientSecret = null;
+	
+	public String clubId = null;
+	public String clubUrl = null;
+	
+	public ArrayList<String> districtList = null;
     
 }

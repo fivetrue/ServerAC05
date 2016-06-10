@@ -1,6 +1,8 @@
 package com.fivetrue.gimpo.ac05.api;
 
 
+import java.util.ArrayList;
+
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,8 +34,17 @@ public class ConfigApiHandler extends ProjectCheckApiHandler{
 			config.senderId = Constants.GCM.GCM_SENDER_ID;
 			config.naverClientId = NaverConstants.CLIENT_ID;
 			config.naverClientSecret = NaverConstants.CLIENT_SECRET;
+			config.clubId = NaverConstants.Cafe.CAFE_ID;
+			config.clubUrl = NaverConstants.Cafe.CAFE_URL;
+			
+			ArrayList<String> districtList = new ArrayList<>();
+			for(int i = 0 ; i < 15 ; i ++){
+				districtList.add("50" + (i + 1));
+			}
 			result.setResult(config);
 			writeObject(result);
 		}
 	}
+	
+	
 }
