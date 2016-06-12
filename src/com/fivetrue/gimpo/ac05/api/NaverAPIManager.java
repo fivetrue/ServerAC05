@@ -64,11 +64,9 @@ public class NaverAPIManager extends ProjectCheckApiHandler{
 			result.makeResponseTime();
 			writeObject(result);
 		}
-		
-//		String response = requestApi(api, "GET", null, null);
 	}
 	
-	public void receiveServiceCallback(){
+	public Result receiveServiceCallback(){
 		
 		NaverLoginResult loginResult = new NaverLoginResult();
 		Field[] fields = loginResult.getClass().getDeclaredFields();
@@ -95,7 +93,8 @@ public class NaverAPIManager extends ProjectCheckApiHandler{
 		}
 		result.setResult(loginResult);
 		result.makeResponseTime();
-		writeObject(result);
+//		writeObject(result);
+		return result;
 	}
 	
 	public void requestSignup() throws IOException{

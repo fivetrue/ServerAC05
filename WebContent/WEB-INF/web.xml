@@ -50,7 +50,7 @@
 	
 	<servlet-mapping>
 		<servlet-name>naverCallback</servlet-name>
-		<url-pattern>/api/naver/callback</url-pattern>
+		<url-pattern>/naver/callback</url-pattern>
 	</servlet-mapping>
 	
 	
