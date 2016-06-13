@@ -11,19 +11,15 @@ import java.lang.reflect.Field;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.Date;
-import java.util.UUID;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.fivetrue.api.BaseApiHandler;
 import com.fivetrue.api.Result;
-import com.fivetrue.gimpo.ac05.Constants;
 import com.fivetrue.gimpo.ac05.NaverConstants;
-import com.fivetrue.gimpo.ac05.vo.NaverLoginResult;
+import com.fivetrue.gimpo.ac05.vo.AuthLoginResult;
 import com.fivetrue.gimpo.ac05.vo.UserInfo;
 
 import javafx.util.Pair;
@@ -66,9 +62,9 @@ public class NaverAPIManager extends ProjectCheckApiHandler{
 		}
 	}
 	
-	public Result receiveServiceCallback(){
+	public AuthLoginResult receiveServiceCallback(){
 		
-		NaverLoginResult loginResult = new NaverLoginResult();
+		AuthLoginResult loginResult = new AuthLoginResult();
 		Field[] fields = loginResult.getClass().getDeclaredFields();
 		for(Field f : fields){
 			f.setAccessible(true);
@@ -84,17 +80,7 @@ public class NaverAPIManager extends ProjectCheckApiHandler{
 			}
 		}
 		getContext().log("check callback Parameter : " + loginResult.toString());
-		Result result = new Result();
-		if(loginResult.getState() != null && loginResult.getCode() != null){
-			result.setErrorCode(Result.ERROR_CODE_OK);
-		}else{
-			result.setErrorCode(Result.ERROR_CODE_REQUEST_ERROR);
-			loginResult.setError_description(loginResult.getError_description() + " / state, code value is invalide");
-		}
-		result.setResult(loginResult);
-		result.makeResponseTime();
-//		writeObject(result);
-		return result;
+		return loginResult;
 	}
 	
 	public void requestSignup() throws IOException{

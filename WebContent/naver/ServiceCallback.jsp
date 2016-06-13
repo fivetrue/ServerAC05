@@ -1,3 +1,4 @@
+<%@page import="com.fivetrue.gimpo.ac05.vo.AuthLoginResult"%>
 <%@page import="com.google.gson.Gson"%>
 <%@page import="com.fivetrue.api.Result"%>
 <%@page import="com.fivetrue.gimpo.ac05.api.NaverAPIManager"%>
@@ -6,7 +7,7 @@
 	
 	<%
 		NaverAPIManager manager = new NaverAPIManager(getServletContext(), request, response);
-		Result result = manager.receiveServiceCallback();
+		AuthLoginResult result = manager.receiveServiceCallback();
 		String resultJson = new Gson().toJson(result);
 	%>
 	

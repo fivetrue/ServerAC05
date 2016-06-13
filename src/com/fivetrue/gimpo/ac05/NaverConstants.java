@@ -16,6 +16,10 @@ public class NaverConstants {
 		
 	}
 	
+	public static final class User{
+		public static final String INFO_API = "https://openapi.naver.com/v1/nid/me";
+	}
+	
 	
 	public static final class Cafe{
 		

@@ -1,6 +1,6 @@
 package com.fivetrue.gimpo.ac05.vo;
 
-public class NaverLoginResult {
+public class AuthLoginResult {
 	private String code = null;
 	private String state = null;
 	private String error = null;
