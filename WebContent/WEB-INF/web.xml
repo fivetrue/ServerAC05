@@ -38,6 +38,11 @@
 		<jsp-file>/naver/ServiceCallback.jsp</jsp-file>
 	</servlet>
 	
+	<servlet>
+		<servlet-name>requestToken</servlet-name>
+		<jsp-file>/naver/RequestToken.jsp</jsp-file>
+	</servlet>
+	
 	<servlet-mapping>
 		<servlet-name>naverLogin</servlet-name>
 		<url-pattern>/api/naver/login</url-pattern>
@@ -51,6 +56,11 @@
 	<servlet-mapping>
 		<servlet-name>naverCallback</servlet-name>
 		<url-pattern>/naver/callback</url-pattern>
+
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>requestToken</servlet-name>
+		<url-pattern>api/token</url-pattern>
 	</servlet-mapping>
 	
 	

@@ -11,6 +11,7 @@ import java.lang.reflect.Field;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.ServletContext;
@@ -109,6 +110,21 @@ public class NaverAPIManager extends ProjectCheckApiHandler{
 				new Pair<String, String>("nickname", user.getNickname()));
 
 		writeContent(respose);
+	}
+	
+	public void requestToken(){
+		checkRequestValidation();
+		Result result = new Result();
+		ArrayList<Pair<String, String>> parameters = new ArrayList<>();
+		for(String key : getRequest().getParameterMap().keySet()){
+			parameters.add(new Pair<String, String>(key, getRequest().getParameter(key)));
+		}
+		String response = requestApi(NaverConstants.Login.AUTH_TOKEN_API, "POST", null, (Pair<String, String>[]) parameters.toArray());
+		
+		result.setErrorCode(Result.ERROR_CODE_OK);
+		result.setResult(response);
+		result.makeResponseTime();
+		writeObject(result);
 	}
 	
 	public void requestLoginAuth(){
