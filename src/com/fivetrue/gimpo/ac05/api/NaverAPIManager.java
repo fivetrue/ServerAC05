@@ -104,7 +104,7 @@ public class NaverAPIManager extends ProjectCheckApiHandler{
 		}
 		String token = getParameter("token");
 
-		String respose = requestApi(NaverConstants.Cafe.SIGNUP_CAFE_API, "POST", 
+		String respose = requestApi(String.format(NaverConstants.Cafe.SIGNUP_CAFE_API, NaverConstants.Cafe.CAFE_ID), "POST", 
 				token,
 				new Pair<String, String>("clubid", NaverConstants.Cafe.CAFE_ID), 
 				new Pair<String, String>("nickname", user.getNickname()));

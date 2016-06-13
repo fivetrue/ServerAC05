@@ -31,7 +31,8 @@ public class NaverConstants {
 		public static final String CAFE_URL = "http://cafe.naver.com/gimpoac05";
 		public static final String TERM_AND_CONDITION_URL = "http://cafe.naver.com/common/cafein_service.htm";
 		
-		public static final String SIGNUP_CAFE_API = "https://openapi.naver.com/cafe/cafeApply.json";
+//		public static final String SIGNUP_CAFE_API = "https://openapi.naver.com/cafe/cafeApply.json";
+		public static final String SIGNUP_CAFE_API = "https://openapi.naver.com/v1/cafe/%s/members";
 		public static final String POST_ACTICLE_CAFE_API = "https://openapi.naver.com/cafe/articlePost.json";
 	}
 }
