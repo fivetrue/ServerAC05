@@ -36,6 +36,7 @@ public class ConfigApiHandler extends ProjectCheckApiHandler{
 			config.naverClientSecret = NaverConstants.CLIENT_SECRET;
 			config.clubId = NaverConstants.Cafe.CAFE_ID;
 			config.clubUrl = NaverConstants.Cafe.CAFE_URL;
+			config.myInfoUrl = NaverConstants.User.MY_INFO_URL;
 			
 			ArrayList<String> districtList = new ArrayList<>();
 			for(int i = 0 ; i < 15 ; i ++){

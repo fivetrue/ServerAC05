@@ -20,6 +20,7 @@ public class NaverConstants {
 	
 	public static final class User{
 		public static final String INFO_API = "https://openapi.naver.com/v1/nid/me";
+		public static final String MY_INFO_URL = "https://nid.naver.com/user2/help/myInfo.nhn?menu=home";
 	}
 	
 	

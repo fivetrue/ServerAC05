@@ -17,6 +17,9 @@ public class AppConfig {
 	public String clubId = null;
 	public String clubUrl = null;
 	
+	public String myInfoUrl = null;
+	
+	
 	public ArrayList<String> districtList = null;
     
 }
