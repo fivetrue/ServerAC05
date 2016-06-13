@@ -115,11 +115,12 @@ public class NaverAPIManager extends ProjectCheckApiHandler{
 	public void requestToken(){
 		checkRequestValidation();
 		Result result = new Result();
-		ArrayList<Pair<String, String>> parameters = new ArrayList<>();
+		Pair<String, String>[] pairs = new Pair[getRequest().getParameterMap().size()];
+		int count = 0 ;
 		for(String key : getRequest().getParameterMap().keySet()){
-			parameters.add(new Pair<String, String>(key, getRequest().getParameter(key)));
+			pairs[count ++] = new Pair<String, String>(key, getRequest().getParameter(key));
 		}
-		String response = requestApi(NaverConstants.Login.AUTH_TOKEN_API, "POST", null, (Pair<String, String>[]) parameters.toArray());
+		String response = requestApi(NaverConstants.Login.AUTH_TOKEN_API, "POST", null, pairs);
 		
 		result.setErrorCode(Result.ERROR_CODE_OK);
 		result.setResult(response);
