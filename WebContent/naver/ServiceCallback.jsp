@@ -29,8 +29,7 @@
 	}
 	
 </script>
-<title>Callback page</title>
 </head>
 <body>
-
+	<h2>로그인 완료</h2>
 </body>

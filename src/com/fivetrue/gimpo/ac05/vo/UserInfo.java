@@ -21,7 +21,7 @@ public class UserInfo extends DatabaseObject {
 	    private String device = null;
 	    
 	    private String apartDong = null;
-
+	    
 	    public String getEmail() {
 	        return email;
 	    }
