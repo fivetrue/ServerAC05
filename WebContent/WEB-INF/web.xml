@@ -60,7 +60,7 @@
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>requestToken</servlet-name>
-		<url-pattern>api/token</url-pattern>
+		<url-pattern>/api/token</url-pattern>
 	</servlet-mapping>
 	
 	
