@@ -107,7 +107,7 @@ public class DataGetterApiHandler extends ProjectCheckApiHandler{
 	private ArrayList<PageData> getTownNews(){
 		String api = GIMPO_LOCAL_NOTICE_HOST + GIMPO_LOCAL_NOTICE_BOARD;
 		Pair<String, String>[] header = new Pair[1];
-//		header[0] = new Pair<String, String>("Content-Type", "text/html; charset=UTF-8");
+		header[0] = new Pair<String, String>("Content-Type", "text/html; charset=UTF-8");
 		String response = requestApi(api, "GET", true, header, null);
 
 		String[] splits = response.split("<a href=");
@@ -134,8 +134,7 @@ public class DataGetterApiHandler extends ProjectCheckApiHandler{
 				int endSubTokenIndex = subChild.indexOf(endToken) + endToken.length();
 				String htmlContent = subChild.substring(0, endSubTokenIndex);
 
-//				htmlContent = "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">" + htmlContent.trim();
-				htmlContent = htmlContent.trim();
+				htmlContent = "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">" + htmlContent.trim();
 				page.setPageContent(htmlContent);
 				page.setPageType(PageType.Town.name());
 				pages.add(page);
