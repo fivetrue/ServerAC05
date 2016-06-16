@@ -85,23 +85,25 @@ public class DataGetterApiHandler extends ProjectCheckApiHandler{
 
 
 	public void gettingDatas(){
-		Result result = new Result();
-		ArrayList<PageData> pages = new ArrayList<>();
-		pages.addAll(getTownNews());
-		pages.addAll(getJournalFeed());
-		pages.addAll(getNewsFeed());
-		
-		PageDataDBManager.getInstance().drop();
-		PageDataDBManager.getInstance().create();
-		if(pages != null && pages.size() > 0){
-			for(PageData page : pages){
-				PageDataDBManager.getInstance().insertObject(page);
+		if(checkRequestValidation()){
+			Result result = new Result();
+			ArrayList<PageData> pages = new ArrayList<>();
+			pages.addAll(getTownNews());
+			pages.addAll(getJournalFeed());
+			pages.addAll(getNewsFeed());
+			
+			PageDataDBManager.getInstance().drop();
+			PageDataDBManager.getInstance().create();
+			if(pages != null && pages.size() > 0){
+				for(PageData page : pages){
+					PageDataDBManager.getInstance().insertObject(page);
+				}
 			}
+			result.setErrorCode(Result.ERROR_CODE_OK);
+			result.setResult(pages.size());
+			result.makeResponseTime();
+			writeObject(result);
 		}
-		result.setErrorCode(Result.ERROR_CODE_OK);
-		result.setResult(pages.size());
-		result.makeResponseTime();
-		writeObject(result);
 	}
 	
 	private ArrayList<PageData> getTownNews(){
