@@ -64,6 +64,27 @@
 	</servlet-mapping>
 	
 	
+	<!-- News feeds -->
+	<servlet>
+		<servlet-name>gettingData</servlet-name>
+		<jsp-file>/info/GettingData.jsp</jsp-file>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>gettingData</servlet-name>
+		<url-pattern>/api/data/getting</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>pageData</servlet-name>
+		<jsp-file>/info/PageData.jsp</jsp-file>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>pageData</servlet-name>
+		<url-pattern>/api/data/page</url-pattern>
+	</servlet-mapping>
+	
 	<!-- 설정 -->
     <servlet-mapping>
         <servlet-name>default</servlet-name>

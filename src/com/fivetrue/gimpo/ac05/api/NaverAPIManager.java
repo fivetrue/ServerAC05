@@ -1,19 +1,10 @@
 package com.fivetrue.gimpo.ac05.api;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.net.URLEncoder;
-import java.util.ArrayList;
 
-import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -27,8 +18,6 @@ import javafx.util.Pair;
 
 public class NaverAPIManager extends ProjectCheckApiHandler{
 	
-	private static final String TAG = "NaverAPIManager";
-
 	public NaverAPIManager(ServletContext context, HttpServletRequest request, HttpServletResponse response) {
 		super(context, request, response);
 		// TODO Auto-generated constructor stub
@@ -104,12 +93,12 @@ public class NaverAPIManager extends ProjectCheckApiHandler{
 		}
 		String token = getParameter("token");
 
-		String respose = requestApi(String.format(NaverConstants.Cafe.SIGNUP_CAFE_API, NaverConstants.Cafe.CAFE_ID), "POST", 
-				token,
-				new Pair<String, String>("clubid", NaverConstants.Cafe.CAFE_ID), 
-				new Pair<String, String>("nickname", user.getNickname()));
-
-		writeContent(respose);
+//		String respose = requestApi(String.format(NaverConstants.Cafe.SIGNUP_CAFE_API, NaverConstants.Cafe.CAFE_ID), "POST", 
+//				token,
+//				new Pair<String, String>("clubid", NaverConstants.Cafe.CAFE_ID), 
+//				new Pair<String, String>("nickname", user.getNickname()));
+//
+//		writeContent(respose);
 	}
 	
 	public void requestToken(){
@@ -120,7 +109,7 @@ public class NaverAPIManager extends ProjectCheckApiHandler{
 		for(String key : getRequest().getParameterMap().keySet()){
 			pairs[count ++] = new Pair<String, String>(key, getRequest().getParameter(key));
 		}
-		String response = requestApi(NaverConstants.Login.AUTH_TOKEN_API, "POST", null, pairs);
+		String response = requestApi(NaverConstants.Login.AUTH_TOKEN_API, "POST", false, null, pairs);
 		
 		result.setErrorCode(Result.ERROR_CODE_OK);
 		result.setResult(response);
@@ -140,68 +129,6 @@ public class NaverAPIManager extends ProjectCheckApiHandler{
 //			
 //			
 //		}
-		
-	}
-	
-	private String requestApi(String api, String method, String token, Pair<String, String>...parameters){
-		String response = "";
-		try {
-			boolean hasoutbody = method.equalsIgnoreCase("POST");
-            final URL url = new URL(api);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod(method);
-            conn.addRequestProperty(NaverConstants.HEADER_KEY_X_NAVER_CLIENT_ID, NaverConstants.CLIENT_ID);
-            conn.addRequestProperty(NaverConstants.HEADER_KEY_X_NAVER_CLIENT_SECRET, NaverConstants.CLIENT_SECRET);
-            if(token != null){
-            	conn.addRequestProperty(NaverConstants.HEADER_KEY_AUTHORIZATION, "Bearer " + token);
-            }
-
-            conn.setUseCaches(false);
-            conn.setDoInput(true);
-            conn.setDoOutput(hasoutbody);
-            conn.connect();
-            
-            OutputStream os = conn.getOutputStream();
-            BufferedWriter writer = new BufferedWriter(
-                    new OutputStreamWriter(os, "UTF-8"));
-            writer.write(getPostDataString(parameters));
-
-            writer.flush();
-            writer.close();
-            os.close();
-            int responseCode=conn.getResponseCode();
-
-            if (responseCode == HttpsURLConnection.HTTP_OK) {
-                String line;
-                BufferedReader br=new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                while ((line=br.readLine()) != null) {
-                    response+=line;
-                }
-            }
-            else {
-                response="";
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-		getContext().log(TAG + " : requestAPi ("
-				+ "api = " + api + " / "
-				+ "method = " + method + " / "
-				+ "parameter = " + parameters != null ? parameters.toString() : "" + " / "
-				+ "response = " + response + " / "
-				+ ")" );
-		
-		return response;
-	}
-	
-	private String getPostDataString(Pair<String, String>[] pairs){
-		String data = "";
-		if(pairs != null && pairs.length > 0){
-			for(Pair<String, String> p : pairs){
-				data += p.getKey() + "=" + p.getValue() + "&"; 
-			}
-		}
-		return data;
 		
 	}
 
