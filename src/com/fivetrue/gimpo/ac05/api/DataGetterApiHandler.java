@@ -89,8 +89,8 @@ public class DataGetterApiHandler extends ProjectCheckApiHandler{
 			Result result = new Result();
 			ArrayList<PageData> pages = new ArrayList<>();
 			pages.addAll(getTownNews());
-			pages.addAll(getJournalFeed());
-			pages.addAll(getNewsFeed());
+			pages.addAll(getRssFeed("http://www.gimpojn.com/rss/clickTop.xml", PageType.Journal));
+			pages.addAll(getRssFeed("http://www.igimpo.com/rss/clickTop.xml", PageType.News));
 			
 			PageDataDBManager.getInstance().drop();
 			PageDataDBManager.getInstance().create();
@@ -129,21 +129,59 @@ public class DataGetterApiHandler extends ProjectCheckApiHandler{
 
 
 				String subResponse = requestApi(url, "GET", true, header, null);
-				String startToken = "<td colspan=\"4\" class=\"bbs_con\">";
-				String endToken = "</td>";
-				int startSubTokenIndex = subResponse.indexOf(startToken) + startToken.length();
+				String authorStartToken = "<th scope=\"row\">작성자</th>";
+				String authorSecondToken = "<td>";
+				String authorEndToken = "</td>";
+				
+				subResponse = subResponse.substring(subResponse.indexOf(authorStartToken) + authorStartToken.length());
+				subResponse = subResponse.substring(subResponse.indexOf(authorSecondToken) + authorSecondToken.length());
+				
+				String author = subResponse.substring(0, subResponse.indexOf(authorEndToken));
+				
+				String dateStartToken = "<td>";
+				String dateEndToken = "</td>";
+				
+				subResponse = subResponse.substring(subResponse.indexOf(dateStartToken) + dateStartToken.length());
+				
+				String date = subResponse.substring(0, subResponse.indexOf(dateEndToken));
+				
+				String contentStartToken = "<td colspan=\"4\" class=\"bbs_con\">";
+				String contentEndToken = "</td>";
+				int startSubTokenIndex = subResponse.indexOf(contentStartToken) + contentStartToken.length();
 				String subChild = subResponse.substring(startSubTokenIndex);
-				int endSubTokenIndex = subChild.indexOf(endToken) + endToken.length();
+				int endSubTokenIndex = subChild.indexOf(contentEndToken) + contentEndToken.length();
 				String htmlContent = subChild.substring(0, endSubTokenIndex);
 
 				htmlContent = "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">" + htmlContent.trim();
 				page.setPageContent(htmlContent);
 				page.setPageType(PageType.Town.name());
+				page.setPageAuthor(author);
+				page.setPageDate(date);
 				pages.add(page);
 			}
 		}
 		return pages;
 		
+	}
+	
+	
+	private ArrayList<PageData> getRssFeed(String url, PageType type){
+		ArrayList<PageData> pages = new ArrayList<>();
+		if(url != null){
+			RSSFeedParser parser = new RSSFeedParser(url);
+		    Feed feed = parser.readFeed();
+		    for (FeedMessage message : feed.getMessages()) {
+		    	PageData data = new PageData();
+		    	data.setPageTitle(message.getTitle());
+		    	data.setPageContent(message.getDescription());
+		    	data.setPageAuthor(message.getAuthor());
+		    	data.setPageUrl(message.getLink());
+		    	data.setPageType(type.name());
+		    	data.setPageDate(message.getPubDate());
+		    	pages.add(data);
+		    }
+		}
+		return pages;
 	}
 	
 	private ArrayList<PageData>  getJournalFeed(){
@@ -159,6 +197,7 @@ public class DataGetterApiHandler extends ProjectCheckApiHandler{
 	    	data.setPageAuthor(message.getAuthor());
 	    	data.setPageUrl(message.getLink());
 	    	data.setPageType(PageType.Journal.name());
+	    	data.setPageDate(message.getPubDate());
 	    	pages.add(data);
 	    }
 		return pages;

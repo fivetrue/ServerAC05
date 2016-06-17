@@ -24,6 +24,9 @@ public class PageData extends DatabaseObject{
 	@StringLength(24)
 	private String pageType = "None";
 	
+	@StringLength(48)
+	private String pageDate = null;
+	
 	public String getPageTitle() {
 		return new String(Base64.getDecoder().decode(pageTitle.getBytes()));
 	}
@@ -61,10 +64,18 @@ public class PageData extends DatabaseObject{
 	public PageType getType(){
 		return PageType.valueOf(pageType);
 	}
+	
+	public String getPageDate() {
+		return pageDate;
+	}
+	public void setPageDate(String pageDate) {
+		this.pageDate = pageDate;
+	}
+	
 	@Override
 	public String toString() {
 		return "PageData [pageTitle=" + pageTitle + ", pageUrl=" + pageUrl + ", pageContent=" + pageContent
-				+ ", pageAuthor=" + pageAuthor + ", pageType=" + pageType + "]";
+				+ ", pageAuthor=" + pageAuthor + ", pageType=" + pageType + ", pageDate=" + pageDate + "]";
 	}
 	
 }
