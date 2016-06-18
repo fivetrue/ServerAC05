@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.fivetrue.api.Result;
 import com.fivetrue.db.DBMessage;
 import com.fivetrue.gimpo.ac05.manager.UserDBManager;
+import com.fivetrue.gimpo.ac05.vo.NotificationData;
+import com.fivetrue.gimpo.ac05.vo.PushMessage;
 import com.fivetrue.gimpo.ac05.vo.UserInfo;
 
 
@@ -58,6 +60,14 @@ public class UserApiHandler extends ProjectCheckApiHandler{
 			DBMessage msg = null;
 			if(UserDBManager.getInstance().isExistUser(user)){
 				msg = UserDBManager.getInstance().updateObject(user);
+//				PushMessage message = new PushMessage();
+//				message.getRegistration_ids().add(user.getGcmId());
+//				NotificationData data = new NotificationData();
+//				data.id = 12;
+//				data.title = "알림";
+//				data.message = "유저 정보 갱신 성공";
+//				message.setData(data);
+//				PushNotificationApiHandler.sendNotification(message);
 			}else{
 				msg = UserDBManager.getInstance().insertObject(user);
 				if(msg != null && msg.getMessage() != null){

@@ -110,7 +110,7 @@ public class DataGetterApiHandler extends ProjectCheckApiHandler{
 		String api = GIMPO_LOCAL_NOTICE_HOST + GIMPO_LOCAL_NOTICE_BOARD;
 		Pair<String, String>[] header = new Pair[1];
 		header[0] = new Pair<String, String>("Content-Type", "text/html; charset=UTF-8");
-		String response = requestApi(api, "GET", true, header, null);
+		String response = requestApi(api, "GET", true, header, "");
 
 		String[] splits = response.split("<a href=");
 		ArrayList<PageData> pages = new ArrayList<>();
@@ -128,7 +128,7 @@ public class DataGetterApiHandler extends ProjectCheckApiHandler{
 				page.setPageTitle(title);
 
 
-				String subResponse = requestApi(url, "GET", true, header, null);
+				String subResponse = requestApi(url, "GET", true, header, "");
 				String authorStartToken = "<th scope=\"row\">작성자</th>";
 				String authorSecondToken = "<td>";
 				String authorEndToken = "</td>";

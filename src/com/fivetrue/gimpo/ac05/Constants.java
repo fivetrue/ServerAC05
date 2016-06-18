@@ -20,6 +20,7 @@ public class Constants {
 	public static final String DEFAULT_USER_IMAGE_THUNBNAIL = "http://52.76.24.8:8080/dogdic/resource/images/default_user.png";
 	
 	public static class GCM{
+		public static String GCM_SEND_SERVER_URL = "https://gcm-http.googleapis.com/gcm/send";
 		public static String GCM_KEY = "AIzaSyAWEH17enSgJXZzLztFi2eCIJoF5X8KtPM";
 		public static String GCM_SENDER_ID = "78268034449";
 	}
