@@ -60,9 +60,15 @@ public class DataGetterApiHandler extends ProjectCheckApiHandler{
 //			entries.add(makePageDataEntry("최근 우리동네 소식", town, "#FFecedf5", "#FF3887fa", "#FFecedf5", "#66ecedf5"));
 //			entries.add(makePageDataEntry("최근 김포 저널", journal, "#FFecedf5", "#FFFFA900", "#FFecedf5", "#66FFA900" ));
 //			entries.add(makePageDataEntry("최근 김포 뉴스", news, "#FFecedf5", "#FFD48C00", "#FFecedf5", "#66D48C00" ));
-			entries.add(makePageDataEntry("최근 우리동네 소식", town, "#FFFFFFFF", "#FF3887fa", "#FFFFFFFF", "#FF3887fa"));
-			entries.add(makePageDataEntry("최근 김포 저널", journal, "#FFFFFFFF", "#FF87b4f6", "#FFFFFFFF", "#FF87b4f6" ));
-			entries.add(makePageDataEntry("최근 김포 뉴스", news, "#FFFFFFFF", "#FFD48C00", "#FFFFFFFF", "#FFD48C00" ));
+			entries.add(makePageDataEntry("최근 우리동네 소식", town, "#FFFFFFFF", "#FF3887fa"
+					, "#FFFFFFFF", "#FF3887fa"
+					, "김포 구래동 최근 소식 정보입니다. 해당 정보는 하루에 한번 업데이트 됩니다."));
+			entries.add(makePageDataEntry("최근 김포 저널", journal, "#FFFFFFFF", "#FF87b4f6"
+					, "#FFFFFFFF", "#FF87b4f6"
+					, "김포 저널에 올라오는 정보입니다. 3시간 마다 업데이트 됩니다."));
+			entries.add(makePageDataEntry("최근 김포 뉴스", news, "#FFFFFFFF", "#FFD48C00"
+					, "#FFFFFFFF", "#FFD48C00"
+					, "김포 뉴스에 올라오는 뉴스입니다. 1시간 마다 업데이트 됩니다."));
 			result.setErrorCode(Result.ERROR_CODE_OK);
 			result.makeResponseTime();
 			result.setResult(entries);
@@ -71,7 +77,7 @@ public class DataGetterApiHandler extends ProjectCheckApiHandler{
 	}
 	
 	private PageDataEntry makePageDataEntry(String title, ArrayList<PageData> data, String titleColor, String titlebgColor
-			, String contentColor, String contentBgColor){
+			, String contentColor, String contentBgColor, String contentDescription){
 		PageDataEntry entry = new PageDataEntry();
 		entry.setDataTitle(title);
 		entry.setPages(data);
@@ -80,6 +86,7 @@ public class DataGetterApiHandler extends ProjectCheckApiHandler{
 		entry.setTitleBgColor(titlebgColor);
 		entry.setContentColor(contentColor);
 		entry.setContentBgColor(contentBgColor);
+		entry.setContentDescription(contentDescription);
 		return entry;
 	}
 

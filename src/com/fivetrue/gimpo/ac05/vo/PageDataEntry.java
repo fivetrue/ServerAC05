@@ -12,6 +12,8 @@ public class PageDataEntry {
 	private String contentColor = null;
 	private String contentBgColor = null;
 	
+	private String contentDescription = null;
+	
 	private ArrayList<PageData> pages = new ArrayList<>();
 	public String getDataTitle() {
 		return dataTitle;
@@ -54,6 +56,13 @@ public class PageDataEntry {
 		return pages;
 	}
 	
+	public String getContentDescription() {
+		return contentDescription;
+	}
+	
+	public void setContentDescription(String contentDescription) {
+		this.contentDescription = contentDescription;
+	}
 	public void setPages(ArrayList<PageData> pages) {
 		this.pages = pages;
 	}
@@ -61,7 +70,6 @@ public class PageDataEntry {
 	public String toString() {
 		return "PageDataEntry [dataTitle=" + dataTitle + ", count=" + count + ", titleColor=" + titleColor
 				+ ", titleBgColor=" + titleBgColor + ", contentColor=" + contentColor + ", contentBgColor="
-				+ contentBgColor + ", pages=" + pages + "]";
+				+ contentBgColor + ", contentDescription=" + contentDescription + ", pages=" + pages + "]";
 	}
-
 }
