@@ -43,5 +43,10 @@ public class PageDataDBManager extends DatabaseManagerImpl<PageData>{
 		
 	}
 	
+	public ArrayList<PageData> getPageDataWithWhere(String where){
+		return getSelectQueryData(null , where);
+		
+	}
+	
 
 }

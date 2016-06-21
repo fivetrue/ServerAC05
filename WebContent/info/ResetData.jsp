@@ -3,5 +3,5 @@
     pageEncoding="UTF-8"%>
 <%
 	DataGetterApiHandler handler = new DataGetterApiHandler(getServletContext(), request, response);
-	handler.getPageDatas();
+	handler.resetData();
 %>

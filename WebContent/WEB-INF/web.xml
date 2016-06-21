@@ -66,23 +66,23 @@
 	
 	<!-- News feeds -->
 	<servlet>
-		<servlet-name>gettingData</servlet-name>
-		<jsp-file>/info/GettingData.jsp</jsp-file>
+		<servlet-name>resetData</servlet-name>
+		<jsp-file>/info/ResetData.jsp</jsp-file>
 	</servlet>
 	
 	<servlet-mapping>
-		<servlet-name>gettingData</servlet-name>
-		<url-pattern>/api/data/getting</url-pattern>
+		<servlet-name>resetData</servlet-name>
+		<url-pattern>/api/data/reset</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>
-		<servlet-name>pageData</servlet-name>
-		<jsp-file>/info/PageData.jsp</jsp-file>
+		<servlet-name>mainData</servlet-name>
+		<jsp-file>/info/MainData.jsp</jsp-file>
 	</servlet>
 	
 	<servlet-mapping>
-		<servlet-name>pageData</servlet-name>
-		<url-pattern>/api/data/page</url-pattern>
+		<servlet-name>mainData</servlet-name>
+		<url-pattern>/api/data/main</url-pattern>
 	</servlet-mapping>
 	
 	<!-- 설정 -->

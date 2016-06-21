@@ -9,15 +9,17 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.fivetrue.api.Result;
 import com.fivetrue.gimpo.ac05.manager.PageDataDBManager;
+import com.fivetrue.gimpo.ac05.manager.TownDataDBManager;
+import com.fivetrue.gimpo.ac05.vo.MainDataEntry;
 import com.fivetrue.gimpo.ac05.vo.PageData;
 import com.fivetrue.gimpo.ac05.vo.PageData.PageType;
-import com.fivetrue.gimpo.ac05.vo.PageDataEntry;
+import com.fivetrue.gimpo.ac05.vo.TownData;
+import com.fivetrue.gimpo.ac05.vo.TownDataEntry;
 import com.fivetrue.rss.Feed;
 import com.fivetrue.rss.FeedMessage;
 import com.fivetrue.rss.RSSFeedParser;
 
 import javafx.util.Pair;
-
 
 public class DataGetterApiHandler extends ProjectCheckApiHandler{
 
@@ -33,94 +35,101 @@ public class DataGetterApiHandler extends ProjectCheckApiHandler{
 		// TODO Auto-generated constructor stub
 	}
 	
-	public void getPageDatas(){
+	public void getTownData(){
+		
+	}
+	
+	public void getMainData(){
 		if(checkRequestValidation()){
 			String type = getParameter("type");
 			Result result = new Result();
-			ArrayList<PageData> datas = PageDataDBManager.getInstance().getPageData(type);
 			
-			ArrayList<PageData> town = new ArrayList<>();
-			ArrayList<PageData> journal = new ArrayList<>();
-			ArrayList<PageData> news = new ArrayList<>();
-			for(PageData page : datas){
-				switch(page.getType()){
-				case Town:
-					town.add(page);
-					break;
-				case Journal:
-					journal.add(page);
-					break;
-				case News:
-					news.add(page);
-					break;
-				}
+			MainDataEntry entry = new MainDataEntry();
+			ArrayList<TownData> town = TownDataDBManager.getInstance().getSelectQueryData(null, null);
+			if(town == null || town.size() <= 0){
+				resetTownData();
 			}
+			town = TownDataDBManager.getInstance().getSelectQueryData(null, null);
+			TownDataEntry townEntry= new TownDataEntry();
+			townEntry.setTitle("최근 우리동네 소식");
+			townEntry.setCount(town.size());
+			townEntry.setDescription("김포 구래동 최근 소식 정보입니다. 해당 정보는 하루에 한번 업데이트 됩니다.");
+			townEntry.setList(town);
+			townEntry.setTitleColor("#FFFFFFFF");
+			townEntry.setTitleBgColor("#FF3887fa");
+			townEntry.setContentColor("#FFFFFFFF");
+			townEntry.setContentBgColor("#FF3887fa");
+			entry.setTown(townEntry);
+			ArrayList<PageData> pageData = getPageDatas(type);
+			if(pageData == null || pageData.size() <= 0){
+				resetPageData();
+			}
+			pageData = getPageDatas(type);
+			entry.setPages(pageData);
 			
-			ArrayList<PageDataEntry> entries = new ArrayList<>();
-//			entries.add(makePageDataEntry("최근 우리동네 소식", town, "#FFecedf5", "#FF3887fa", "#FFecedf5", "#66ecedf5"));
-//			entries.add(makePageDataEntry("최근 김포 저널", journal, "#FFecedf5", "#FFFFA900", "#FFecedf5", "#66FFA900" ));
-//			entries.add(makePageDataEntry("최근 김포 뉴스", news, "#FFecedf5", "#FFD48C00", "#FFecedf5", "#66D48C00" ));
-			entries.add(makePageDataEntry("최근 우리동네 소식", town, "#FFFFFFFF", "#FF3887fa"
-					, "#FFFFFFFF", "#FF3887fa"
-					, "김포 구래동 최근 소식 정보입니다. 해당 정보는 하루에 한번 업데이트 됩니다."));
-			entries.add(makePageDataEntry("최근 김포 저널", journal, "#FFFFFFFF", "#FF87b4f6"
-					, "#FFFFFFFF", "#FF87b4f6"
-					, "김포 저널에 올라오는 정보입니다. 3시간 마다 업데이트 됩니다."));
-			entries.add(makePageDataEntry("최근 김포 뉴스", news, "#FFFFFFFF", "#FFD48C00"
-					, "#FFFFFFFF", "#FFD48C00"
-					, "김포 뉴스에 올라오는 뉴스입니다. 1시간 마다 업데이트 됩니다."));
 			result.setErrorCode(Result.ERROR_CODE_OK);
+			result.setResult(entry);
 			result.makeResponseTime();
-			result.setResult(entries);
 			writeObject(result);
 		}
 	}
 	
-	private PageDataEntry makePageDataEntry(String title, ArrayList<PageData> data, String titleColor, String titlebgColor
-			, String contentColor, String contentBgColor, String contentDescription){
-		PageDataEntry entry = new PageDataEntry();
-		entry.setDataTitle(title);
-		entry.setPages(data);
-		entry.setCount(data.size());
-		entry.setTitleColor(titleColor);
-		entry.setTitleBgColor(titlebgColor);
-		entry.setContentColor(contentColor);
-		entry.setContentBgColor(contentBgColor);
-		entry.setContentDescription(contentDescription);
-		return entry;
+	private ArrayList<PageData> getPageDatas(String type){
+		ArrayList<PageData> datas = PageDataDBManager.getInstance().getPageData(type);
+		return datas;
 	}
-
-
-	public void gettingDatas(){
+	
+	public void resetData(){
 		if(checkRequestValidation()){
 			Result result = new Result();
-			ArrayList<PageData> pages = new ArrayList<>();
-			pages.addAll(getTownNews());
-			pages.addAll(getRssFeed("http://www.gimpojn.com/rss/clickTop.xml", PageType.Journal));
-			pages.addAll(getRssFeed("http://www.igimpo.com/rss/clickTop.xml", PageType.News));
-			
-			PageDataDBManager.getInstance().drop();
-			PageDataDBManager.getInstance().create();
-			if(pages != null && pages.size() > 0){
-				for(PageData page : pages){
-					PageDataDBManager.getInstance().insertObject(page);
-				}
-			}
-			result.setErrorCode(Result.ERROR_CODE_OK);
-			result.setResult(pages.size());
+			int count = resetPageData();
+			count += resetTownData();
 			result.makeResponseTime();
-			writeObject(result);
+			result.setErrorCode(Result.ERROR_CODE_OK);
+			result.setResult(count);
+			writeObject(count);
 		}
 	}
+
+	private int resetPageData(){
+		ArrayList<PageData> pages = new ArrayList<>();
+		pages.add(new PageData("최근 김포 저널", "http://www.gimpojn.com/rss/clickTop.xml"
+				,"#FFecedf5", "#FFFFA900", "#FFecedf5", "#FFFFA900"
+				, "김포 저널에 업로드되는 정보입니다. 3시간 마다 업데이트 됩니다.", PageType.Journal.name()));
+		pages.add(new PageData("최근 김포 뉴스", "http://www.igimpo.com/rss/clickTop.xml"
+				,"#FFecedf5", "#FFFFA900", "#FFecedf5", "#FFFFA900"
+				, "김포 뉴스에 업로드되는 정보입니다. 1시간 마다 업데이트 됩니다.", PageType.News.name()));
+
+		PageDataDBManager.getInstance().drop();
+		PageDataDBManager.getInstance().create();
+		if(pages != null && pages.size() > 0){
+			for(PageData page : pages){
+				PageDataDBManager.getInstance().insertObject(page);
+			}
+		}
+		return pages.size();
+	}
 	
-	private ArrayList<PageData> getTownNews(){
+	private int resetTownData(){
+		ArrayList<TownData> datas = getTownNews();
+		TownDataDBManager.getInstance().drop();
+		TownDataDBManager.getInstance().create();
+		if(datas != null){
+			for(TownData page : datas){
+				TownDataDBManager.getInstance().insertObject(page);
+			}
+		}
+		return datas.size();
+	}
+	
+	private ArrayList<TownData> getTownNews(){
 		String api = GIMPO_LOCAL_NOTICE_HOST + GIMPO_LOCAL_NOTICE_BOARD;
 		Pair<String, String>[] header = new Pair[1];
 		header[0] = new Pair<String, String>("Content-Type", "text/html; charset=UTF-8");
 		String response = requestApi(api, "GET", true, header, "");
 
 		String[] splits = response.split("<a href=");
-		ArrayList<PageData> pages = new ArrayList<>();
+		ArrayList<TownData> pages = new ArrayList<>();
 		for(String data : splits){
 			if(data.contains("view.do")){
 				data = data.replaceAll("\"", "");
@@ -129,10 +138,10 @@ public class DataGetterApiHandler extends ProjectCheckApiHandler{
 				String url = data.substring(0, startTokenIndex);
 				String title = data.substring(startTokenIndex + 1, endTokenIndex);
 				url = GIMPO_LOCAL_NOTICE_HOST + url;
-				PageData page = new PageData();
+				TownData page = new TownData();
 
-				page.setPageUrl(url);
-				page.setPageTitle(title);
+				page.setUrl(url);
+				page.setTitle(title);
 
 
 				String subResponse = requestApi(url, "GET", true, header, "");
@@ -160,10 +169,9 @@ public class DataGetterApiHandler extends ProjectCheckApiHandler{
 				String htmlContent = subChild.substring(0, endSubTokenIndex);
 
 				htmlContent = "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">" + htmlContent.trim();
-				page.setPageContent(htmlContent);
-				page.setPageType(PageType.Town.name());
-				page.setPageAuthor(author);
-				page.setPageDate(date);
+				page.setContent(htmlContent);
+				page.setAuthor(author);
+				page.setDate(date);
 				pages.add(page);
 			}
 		}
@@ -172,61 +180,59 @@ public class DataGetterApiHandler extends ProjectCheckApiHandler{
 	}
 	
 	
-	private ArrayList<PageData> getRssFeed(String url, PageType type){
-		ArrayList<PageData> pages = new ArrayList<>();
-		if(url != null){
-			RSSFeedParser parser = new RSSFeedParser(url);
-		    Feed feed = parser.readFeed();
-		    for (FeedMessage message : feed.getMessages()) {
-		    	PageData data = new PageData();
-		    	data.setPageTitle(message.getTitle());
-		    	data.setPageContent(message.getDescription());
-		    	data.setPageAuthor(message.getAuthor());
-		    	data.setPageUrl(message.getLink());
-		    	data.setPageType(type.name());
-		    	data.setPageDate(message.getPubDate());
-		    	pages.add(data);
-		    }
-		}
-		return pages;
-	}
+//	private ArrayList<PageData> getRssFeed(String url, PageType type){
+//		ArrayList<PageData> pages = new ArrayList<>();
+//		if(url != null){
+//			RSSFeedParser parser = new RSSFeedParser(url);
+//		    Feed feed = parser.readFeed();
+//		    for (FeedMessage message : feed.getMessages()) {
+//		    	PageData data = new PageData();
+//		    	data.setPageTitle(message.getTitle());
+//		    	data.setPageUrl(message.getLink());
+//		    	data.setPageType(type.name());
+//		    	data.setPageDate(message.getPubDate());
+//		    	pages.add(data);
+//		    }
+//		}
+//		return pages;
+//	}
 	
-	private ArrayList<PageData>  getJournalFeed(){
-		String apiFeed = "http://www.gimpojn.com/rss/clickTop.xml";
-		
-		ArrayList<PageData> pages = new ArrayList<>();
-		RSSFeedParser parser = new RSSFeedParser(apiFeed);
-	    Feed feed = parser.readFeed();
-	    for (FeedMessage message : feed.getMessages()) {
-	    	PageData data = new PageData();
-	    	data.setPageTitle(message.getTitle());
-	    	data.setPageContent(message.getDescription());
-	    	data.setPageAuthor(message.getAuthor());
-	    	data.setPageUrl(message.getLink());
-	    	data.setPageType(PageType.Journal.name());
-	    	data.setPageDate(message.getPubDate());
-	    	pages.add(data);
-	    }
-		return pages;
-		
-	}
-	
-	private ArrayList<PageData>  getNewsFeed(){
-		String apiFeed = "http://www.igimpo.com/rss/clickTop.xml";
-		
-		ArrayList<PageData> pages = new ArrayList<>();
-		RSSFeedParser parser = new RSSFeedParser(apiFeed);
-	    Feed feed = parser.readFeed();
-	    for (FeedMessage message : feed.getMessages()) {
-	    	PageData data = new PageData();
-	    	data.setPageTitle(message.getTitle());
-	    	data.setPageContent(message.getDescription());
-	    	data.setPageAuthor(message.getAuthor());
-	    	data.setPageUrl(message.getLink());
-	    	data.setPageType(PageType.News.name());
-	    	pages.add(data);
-	    }
-		return pages;
-		
-	}
+//	private ArrayList<PageData>  getJournalFeed(){
+//		String apiFeed = "http://www.gimpojn.com/rss/clickTop.xml";
+//		
+//		ArrayList<PageData> pages = new ArrayList<>();
+//		RSSFeedParser parser = new RSSFeedParser(apiFeed);
+//	    Feed feed = parser.readFeed();
+//	    for (FeedMessage message : feed.getMessages()) {
+//	    	PageData data = new PageData();
+//	    	data.setPageTitle(message.getTitle());
+//	    	data.setPageContent(message.getDescription());
+//	    	data.setPageAuthor(message.getAuthor());
+//	    	data.setPageUrl(message.getLink());
+//	    	data.setPageType(PageType.Journal.name());
+//	    	data.setPageDate(message.getPubDate());
+//	    	pages.add(data);
+//	    }
+//		return pages;
+//		
+//	}
+//	
+//	private ArrayList<PageData>  getNewsFeed(){
+//		String apiFeed = "http://www.igimpo.com/rss/clickTop.xml";
+//		
+//		ArrayList<PageData> pages = new ArrayList<>();
+//		RSSFeedParser parser = new RSSFeedParser(apiFeed);
+//	    Feed feed = parser.readFeed();
+//	    for (FeedMessage message : feed.getMessages()) {
+//	    	PageData data = new PageData();
+//	    	data.setPageTitle(message.getTitle());
+//	    	data.setPageContent(message.getDescription());
+//	    	data.setPageAuthor(message.getAuthor());
+//	    	data.setPageUrl(message.getLink());
+//	    	data.setPageType(PageType.News.name());
+//	    	pages.add(data);
+//	    }
+//		return pages;
+//		
+//	}
 }
