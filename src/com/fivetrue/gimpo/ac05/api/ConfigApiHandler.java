@@ -40,8 +40,10 @@ public class ConfigApiHandler extends ProjectCheckApiHandler{
 			
 			ArrayList<String> districtList = new ArrayList<>();
 			for(int i = 0 ; i < 15 ; i ++){
-				districtList.add("50" + (i + 1));
+				int value = i + 1;
+				districtList.add("5" + (value < 10 ? "0"+value : value));
 			}
+			config.districtList = districtList;
 			result.setResult(config);
 			writeObject(result);
 		}

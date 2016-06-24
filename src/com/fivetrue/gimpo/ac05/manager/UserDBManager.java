@@ -36,14 +36,16 @@ public class UserDBManager extends DatabaseManagerImpl<UserInfo>{
 		return mTempUserInfo;
 	}
 	
-	public boolean isExistUser(UserInfo user){
-		boolean b = false;
+	public UserInfo isExistUser(UserInfo user){
+		UserInfo u = null;
 		if(user != null && user.getEmail() != null){
 			mTempUserInfo = user;
 			ArrayList<UserInfo> datas = getSelectQueryData(null, "email='" + user.getEmail() +"'");
-			b = datas != null && datas.size() > 0;
+			if(datas != null && datas.size() > 0){
+				u = datas.get(0);
+			}
 		}
-		return b;
+		return u;
 	}
 	
 

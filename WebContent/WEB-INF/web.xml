@@ -85,6 +85,60 @@
 		<url-pattern>/api/data/main</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>notiDadta</servlet-name>
+		<jsp-file>/info/NoticeData.jsp</jsp-file>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>notiDadta</servlet-name>
+		<url-pattern>/api/data/noti</url-pattern>
+	</servlet-mapping>
+	
+	<!-- Admin -->
+	<servlet>
+		<servlet-name>adminLogin</servlet-name>
+		<jsp-file>/admin/AdminLogin.jsp</jsp-file>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>adminLogin</servlet-name>
+		<url-pattern>/admin/login</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>adminPush</servlet-name>
+		<jsp-file>/admin/AdminPush.jsp</jsp-file>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>adminPush</servlet-name>
+		<url-pattern>/admin/push</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>adminError</servlet-name>
+		<jsp-file>/admin/AdminError.jsp</jsp-file>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>adminError</servlet-name>
+		<url-pattern>/admin/error</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>sendPush</servlet-name>
+		<jsp-file>/push/SendPush.jsp</jsp-file>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>sendPush</servlet-name>
+		<url-pattern>/push/send</url-pattern>
+	</servlet-mapping>
+	
+	
 	<!-- 설정 -->
     <servlet-mapping>
         <servlet-name>default</servlet-name>

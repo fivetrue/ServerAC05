@@ -10,9 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.fivetrue.api.Result;
 import com.fivetrue.db.DBMessage;
 import com.fivetrue.gimpo.ac05.manager.UserDBManager;
-import com.fivetrue.gimpo.ac05.vo.NotificationData;
-import com.fivetrue.gimpo.ac05.vo.PushMessage;
 import com.fivetrue.gimpo.ac05.vo.UserInfo;
+import com.fivetrue.utils.TextUtils;
 
 
 public class UserApiHandler extends ProjectCheckApiHandler{
@@ -58,21 +57,15 @@ public class UserApiHandler extends ProjectCheckApiHandler{
 			
 			Result result = new Result();  
 			DBMessage msg = null;
-			if(UserDBManager.getInstance().isExistUser(user)){
-				msg = UserDBManager.getInstance().updateObject(user);
-//				PushMessage message = new PushMessage();
-//				message.getRegistration_ids().add(user.getGcmId());
-//				NotificationData data = new NotificationData();
-//				data.id = 12;
-//				data.title = "알림";
-//				data.message = "유저 정보 갱신 성공";
-//				message.setData(data);
-//				PushNotificationApiHandler.sendNotification(message);
-			}else{
-				msg = UserDBManager.getInstance().insertObject(user);
-				if(msg != null && msg.getMessage() != null){
-					UserDBManager.getInstance().create();
+			UserInfo existUser = UserDBManager.getInstance().isExistUser(user);
+			if(existUser != null){
+				if(TextUtils.isEmpty(user.getApartDong())){
+					user.setApartDong(existUser.getApartDong());
 				}
+				msg = UserDBManager.getInstance().updateObject(user);
+			}else{
+				UserDBManager.getInstance().create();
+				msg = UserDBManager.getInstance().insertObject(user);
 			}
 			
 			if(msg.getRow() > 0){

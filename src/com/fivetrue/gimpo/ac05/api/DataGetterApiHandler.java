@@ -8,9 +8,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.fivetrue.api.Result;
+import com.fivetrue.gimpo.ac05.manager.NotificationDataDBManager;
 import com.fivetrue.gimpo.ac05.manager.PageDataDBManager;
 import com.fivetrue.gimpo.ac05.manager.TownDataDBManager;
 import com.fivetrue.gimpo.ac05.vo.MainDataEntry;
+import com.fivetrue.gimpo.ac05.vo.NotificationData;
 import com.fivetrue.gimpo.ac05.vo.PageData;
 import com.fivetrue.gimpo.ac05.vo.PageData.PageType;
 import com.fivetrue.gimpo.ac05.vo.TownData;
@@ -39,12 +41,42 @@ public class DataGetterApiHandler extends ProjectCheckApiHandler{
 		
 	}
 	
+	public void getNoticeData(){
+		if(checkRequestValidation()){
+			Result result = new Result();
+			String query = NotificationDataDBManager.getInstance().getSelectQuery(null, null) + " ORDER BY createTime DESC LIMIT 10";
+			ArrayList<NotificationData> notidata = NotificationDataDBManager.getInstance().rawQuery(query);
+			result.setResult(notidata);
+			result.setErrorCode(Result.ERROR_CODE_OK);
+			result.makeResponseTime();
+			writeObject(result);
+		}
+	}
+	
 	public void getMainData(){
 		if(checkRequestValidation()){
 			String type = getParameter("type");
 			Result result = new Result();
 			
 			MainDataEntry entry = new MainDataEntry();
+			/**
+			 * 공지사항 
+			 */
+			String[] selection = {
+					"title",
+					"message",
+					"uri",
+					"imageUrl",
+					"createTime",
+					"authorNickname",
+					"authorEmail",
+			};
+			String query = NotificationDataDBManager.getInstance().getSelectQuery(selection, "type=1") + " ORDER BY createTime DESC LIMIT 10";
+			ArrayList<NotificationData> notidata = NotificationDataDBManager.getInstance().rawQuery(query);
+			entry.setNotices(notidata);
+			/**
+			 * 마을 데이터 
+			 */
 			ArrayList<TownData> town = TownDataDBManager.getInstance().getSelectQueryData(null, null);
 			if(town == null || town.size() <= 0){
 				resetTownData();
@@ -60,6 +92,10 @@ public class DataGetterApiHandler extends ProjectCheckApiHandler{
 			townEntry.setContentColor("#FFFFFFFF");
 			townEntry.setContentBgColor("#FF3887fa");
 			entry.setTown(townEntry);
+			
+			/**
+			 * 저널 및 뉴스 데이터 
+			 */
 			ArrayList<PageData> pageData = getPageDatas(type);
 			if(pageData == null || pageData.size() <= 0){
 				resetPageData();
@@ -94,10 +130,12 @@ public class DataGetterApiHandler extends ProjectCheckApiHandler{
 	private int resetPageData(){
 		ArrayList<PageData> pages = new ArrayList<>();
 		pages.add(new PageData("최근 김포 저널", "http://www.gimpojn.com/rss/clickTop.xml"
-				,"#FFecedf5", "#FFFFA900", "#FFecedf5", "#FFFFA900"
+//				,"#FFecedf5", "#FF87b4f6", "#FFecedf5", "#FF87b4f6"
+				,"#FFFFFFFF", "#FF87b4f6", "#FFFFFFFF", "#FF87b4f6"
 				, "김포 저널에 업로드되는 정보입니다. 3시간 마다 업데이트 됩니다.", PageType.Journal.name()));
 		pages.add(new PageData("최근 김포 뉴스", "http://www.igimpo.com/rss/clickTop.xml"
-				,"#FFecedf5", "#FFFFA900", "#FFecedf5", "#FFFFA900"
+//				,"#FFecedf5", "#FFFFA900", "#FFecedf5", "#FFFFA900"
+				,"#FFFFFFFF", "#FF3887fa", "#FFFFFFFF", "#FF3887fa"
 				, "김포 뉴스에 업로드되는 정보입니다. 1시간 마다 업데이트 됩니다.", PageType.News.name()));
 
 		PageDataDBManager.getInstance().drop();

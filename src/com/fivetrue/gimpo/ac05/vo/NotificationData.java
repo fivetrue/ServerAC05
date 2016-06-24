@@ -1,11 +1,101 @@
 package com.fivetrue.gimpo.ac05.vo;
 
-public class NotificationData {
-	 public int id = -1;
-	    public String title = null;
-	    public String message = null;
-	    public String targetClass = null;
-	    public String uri = null;
-	    public String imageUrl = null;
-	    public boolean hasLarge = false;
+import com.fivetrue.db.DatabaseObject;
+import com.fivetrue.db.annotation.DisplayName;
+import com.fivetrue.db.annotation.PrimaryKey;
+
+public class NotificationData extends DatabaseObject{
+	
+	@PrimaryKey
+	private String multicast_id = null;
+	
+	@DisplayName("PushID")
+	private int id = -1;
+	
+	@DisplayName("제목")
+	private String title = null;
+	@DisplayName("내용")
+	private String message = null;
+	@DisplayName("URL정보")
+	private String uri = null;
+	@DisplayName("이미지URL")
+	private String imageUrl = null;
+	
+	private long createTime = 0;
+	
+	private String authorNickname = null;
+	private String authorEmail = null;
+
+	@DisplayName("공지사항")
+	private int type = 0;
+	
+	public String getMulticast_id() {
+		return multicast_id;
+	}
+	public void setMulticast_id(String multicast_id) {
+		this.multicast_id = multicast_id;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public String getMessage() {
+		return message;
+	}
+	public void setMessage(String message) {
+		this.message = message;
+	}
+	public String getUri() {
+		return uri;
+	}
+	public void setUri(String uri) {
+		this.uri = uri;
+	}
+	public String getImageUrl() {
+		return imageUrl;
+	}
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+	
+	public long getCreateTime() {
+		return createTime;
+	}
+	public void setCreateTime(long createTime) {
+		this.createTime = createTime;
+	}
+	
+	public String getAuthorNickname() {
+		return authorNickname;
+	}
+	public void setAuthorNickname(String authorName) {
+		this.authorNickname = authorName;
+	}
+	public String getAuthorEmail() {
+		return authorEmail;
+	}
+	public void setAuthorEmail(String authorEmail) {
+		this.authorEmail = authorEmail;
+	}
+	
+	public int getType() {
+		return type;
+	}
+	public void setType(int type) {
+		this.type = type;
+	}
+	@Override
+	public String toString() {
+		return "NotificationData [multicast_id=" + multicast_id + ", id=" + id + ", title=" + title + ", message="
+				+ message + ", uri=" + uri + ", imageUrl=" + imageUrl + ", createTime=" + createTime
+				+ ", authorNickname=" + authorNickname + ", authorEmail=" + authorEmail + ", type=" + type + "]";
+	}
 }

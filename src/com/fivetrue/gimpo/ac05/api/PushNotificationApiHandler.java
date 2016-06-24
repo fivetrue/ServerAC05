@@ -1,11 +1,14 @@
 package com.fivetrue.gimpo.ac05.api;
 
+import java.lang.reflect.Field;
+
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.fivetrue.api.Result;
 import com.fivetrue.gimpo.ac05.Constants;
+import com.fivetrue.gimpo.ac05.vo.NotificationData;
 import com.fivetrue.gimpo.ac05.vo.PushMessage;
 import com.google.gson.Gson;
 
@@ -27,6 +30,36 @@ public class PushNotificationApiHandler extends ProjectCheckApiHandler{
 		writeObject(result);
 	}
 	
+	public NotificationData getNotificationDataFromParameter(){
+		NotificationData data = new NotificationData();
+		Field[] fields = data.getClass().getDeclaredFields();
+		for(Field f : fields){
+			f.setAccessible(true);
+			String typeName = f.getType().toString();
+			String value = getParameter(f.getName());
+			if(value != null){
+				try {
+					Object obj = null;
+					if(typeName.contains("Integer") || typeName.contains("int")){
+						try{
+							obj = Integer.parseInt(value);
+						}catch(NumberFormatException e){
+							e.printStackTrace();
+							obj = 1;
+						}
+					}else{
+						obj = value;
+					}
+					f.set(data, obj);
+				} catch (IllegalArgumentException | IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		return data;
+	}
+	
 
 	public static String sendNotification(PushMessage message){
 		Pair<String,String>[] headers = new Pair[2]; 
@@ -39,4 +72,5 @@ public class PushNotificationApiHandler extends ProjectCheckApiHandler{
 		System.out.println("response = " + response);
 		return response;
 	}
+	
 }

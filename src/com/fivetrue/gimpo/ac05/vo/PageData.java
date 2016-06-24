@@ -10,6 +10,7 @@ public class PageData extends DatabaseObject{
 	
 	public static enum PageType{
 		None,
+		Notice,
 		Town,
 		Journal,
 		News,
