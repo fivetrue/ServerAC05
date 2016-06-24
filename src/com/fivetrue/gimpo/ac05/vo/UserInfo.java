@@ -2,22 +2,33 @@ package com.fivetrue.gimpo.ac05.vo;
 
 import com.fivetrue.db.DatabaseObject;
 import com.fivetrue.db.annotation.PrimaryKey;
+import com.fivetrue.db.annotation.StringLength;
 
 public class UserInfo extends DatabaseObject {
 	
 		@PrimaryKey
+		@StringLength(128)
 	    private String email = null;
 		
+		@StringLength(64)
 		private String nickname = null;
+		@StringLength(128)
 	    private String encId = null;
+		@StringLength(128)
 	    private String profileImage = null;
+		@StringLength(32)
 	    private String age = null;
+		@StringLength(4)
 	    private String gender = null;
+		@StringLength(24)
 	    private String id = null;
+		@StringLength(64)
 	    private String name = null;
+		@StringLength(16)
 	    private String birthday = null;
 
 	    private String gcmId = null;
+	    @StringLength(32)
 	    private String device = null;
 	    
 	    private String apartDong = null;
