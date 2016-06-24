@@ -3,27 +3,35 @@ package com.fivetrue.gimpo.ac05.vo;
 import com.fivetrue.db.DatabaseObject;
 import com.fivetrue.db.annotation.DisplayName;
 import com.fivetrue.db.annotation.PrimaryKey;
+import com.fivetrue.db.annotation.StringLength;
 
 public class NotificationData extends DatabaseObject{
 	
 	@PrimaryKey
+	@StringLength(64)
 	private String multicast_id = null;
 	
 	@DisplayName("PushID")
 	private int id = -1;
 	
 	@DisplayName("제목")
+	@StringLength(128)
 	private String title = null;
 	@DisplayName("내용")
+	@StringLength(256)
 	private String message = null;
 	@DisplayName("URL정보")
+	@StringLength(128)
 	private String uri = null;
 	@DisplayName("이미지URL")
+	@StringLength(128)
 	private String imageUrl = null;
 	
 	private long createTime = 0;
 	
+	@StringLength(64)
 	private String authorNickname = null;
+	@StringLength(64)
 	private String authorEmail = null;
 
 	@DisplayName("공지사항")

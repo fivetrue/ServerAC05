@@ -10,12 +10,15 @@ import com.fivetrue.db.annotation.StringLength;
 public class GCMResult extends DatabaseObject{
 
 	@PrimaryKey
+	@StringLength(32)
 	private String multicast_id = null;
 	private int success = 0;
 	private int failure = 0;
+	
+	@StringLength(32)
 	private String canonical_ids = null;
 	
-	@StringLength(512 * 2)
+	@StringLength(512)
 	private String result = null;
 	
 	@MemberVariable
