@@ -23,7 +23,7 @@
 	
 	<!-- Naver  -->
 	
-	<servlet>
+	<servlet>s
 		<servlet-name>naverLogin</servlet-name>
 		<jsp-file>/naver/NaverLogin.jsp</jsp-file>
 	</servlet>
@@ -118,6 +118,16 @@
 	</servlet-mapping>
 	
 	<servlet>
+		<servlet-name>adminPushDetail</servlet-name>
+		<jsp-file>/admin/AdminPushDetail.jsp</jsp-file>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>adminPushDetail</servlet-name>
+		<url-pattern>/admin/push/detail</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
 		<servlet-name>adminError</servlet-name>
 		<jsp-file>/admin/AdminError.jsp</jsp-file>
 	</servlet>
@@ -136,6 +146,16 @@
 	<servlet-mapping>
 		<servlet-name>sendPush</servlet-name>
 		<url-pattern>/push/send</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>checkPush</servlet-name>
+		<jsp-file>/push/CheckPush.jsp</jsp-file>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>checkPush</servlet-name>
+		<url-pattern>/push/check</url-pattern>
 	</servlet-mapping>
 	
 	

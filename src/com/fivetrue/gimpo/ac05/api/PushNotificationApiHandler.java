@@ -1,5 +1,6 @@
 package com.fivetrue.gimpo.ac05.api;
 
+import java.io.IOException;
 import java.lang.reflect.Field;
 
 import javax.servlet.ServletContext;
@@ -8,8 +9,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.fivetrue.api.Result;
 import com.fivetrue.gimpo.ac05.Constants;
+import com.fivetrue.gimpo.ac05.manager.NotificationDataCheckUserDBManager;
 import com.fivetrue.gimpo.ac05.vo.NotificationData;
+import com.fivetrue.gimpo.ac05.vo.NotificationDataCheckUser;
 import com.fivetrue.gimpo.ac05.vo.PushMessage;
+import com.fivetrue.utils.TextUtils;
 import com.google.gson.Gson;
 
 import javafx.util.Pair;
@@ -58,6 +62,34 @@ public class PushNotificationApiHandler extends ProjectCheckApiHandler{
 			}
 		}
 		return data;
+	}
+	
+	public void checkPush(){
+		String redirect = getParameter("redirect");
+		String id = getParameter("id");
+		String email = getParameter("email");
+		
+		if(!TextUtils.isEmpty(id) && !TextUtils.isEmpty(email)){
+			NotificationDataCheckUserDBManager.getInstance().create();
+			int count = NotificationDataCheckUserDBManager.getInstance().getCountData("notiMulticastId='" + id + "' AND userEmail='"+ email + "'");
+			
+			if(count == 0){
+				NotificationDataCheckUser data = new NotificationDataCheckUser();
+				data.setNotiMulticastId(id);
+				data.setUserEmail(email);
+				NotificationDataCheckUserDBManager.getInstance().insertObject(data);
+			}
+		}
+		
+		
+		
+		try {
+			getResponse().sendRedirect(redirect);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	
 
