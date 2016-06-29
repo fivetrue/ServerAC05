@@ -43,8 +43,19 @@ public class DataGetterApiHandler extends ProjectCheckApiHandler{
 	
 	public void getNoticeData(){
 		if(checkRequestValidation()){
+			String param = getParameter("type");
+			String where = null;
+			int type = -1;
+			if(param != null){
+			 try{
+				 type = Integer.parseInt(param.trim());
+				 where = "type=" + type;
+			 }catch(Exception e){
+				 e.printStackTrace();
+			 }
+			}
 			Result result = new Result();
-			String query = NotificationDataDBManager.getInstance().getSelectQuery(null, null) + " ORDER BY createTime DESC LIMIT 10";
+			String query = NotificationDataDBManager.getInstance().getSelectQuery(null, where) + " ORDER BY createTime DESC";
 			ArrayList<NotificationData> notidata = NotificationDataDBManager.getInstance().rawQuery(query);
 			result.setResult(notidata);
 			result.setErrorCode(Result.ERROR_CODE_OK);
