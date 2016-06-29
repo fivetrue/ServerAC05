@@ -14,10 +14,11 @@
 <%
 	PushNotificationApiHandler manager = new PushNotificationApiHandler(getServletContext(), request, response);
 	NotificationData data = manager.getNotificationDataFromParameter();
+	String test = request.getParameter("test");
+	boolean isTest = (test != null && test.equalsIgnoreCase("on")) ? true : false;
 	UserInfo adminUser = (UserInfo) session.getAttribute("admin");
 	
-	if(data == null || TextUtils.isEmpty(data.getMessage())
-			|| TextUtils.isEmpty(data.getTitle()) || adminUser == null){
+	if(data == null || TextUtils.isEmpty(data.getMessage()) || adminUser == null){
 		
 		//Error
 		%>
@@ -30,38 +31,81 @@
 	}else{
 		PushMessage push = new PushMessage();
 		push.setData(data);
-		ArrayList<UserInfo> users =  UserDBManager.getInstance().getSelectQueryData(null, null);
 		String result = "";
-		if(users != null && users.size() > 0){
-			for(UserInfo user : users){
-				result += "Receiver = " + user.getEmail() + "<br>";
-				push.getRegistration_ids().add(user.getGcmId());
+		if(!isTest){
+			ArrayList<UserInfo> users =  UserDBManager.getInstance().getSelectQueryData(null, null);
+			if(users != null && users.size() > 0){
+				for(UserInfo user : users){
+					result += "Receiver = " + user.getEmail() + "<br>";
+					push.getRegistration_ids().add(user.getGcmId());
+				}
+				result += "Receiver count = " + users.size() + "<br>"; 
+				String pushResult = PushNotificationApiHandler.sendNotification(push);
+				GCMResult gcmResult = new Gson().fromJson(pushResult, GCMResult.class);
+				
+				data.setMulticast_id(gcmResult.getMulticast_id());
+				data.setCreateTime(System.currentTimeMillis());
+				data.setAuthorEmail(adminUser.getEmail());
+				data.setAuthorNickname(adminUser.getNickname());
+				
+				NotificationDataDBManager.getInstance().create();
+				NotificationDataDBManager.getInstance().insertObject(data);
+				
+				GcmResultDBManager.getInstance().create();
+				GcmResultDBManager.getInstance().insertObject(gcmResult);
+				%>
+				<script type="text/javascript">
+					alert(<%out.print("\"" + result + pushResult.replace("\"", "") + "\"");%>);
+					history.back();
+					location.reload(true);
+				</script>
+				<%
+			}else{
+				//Error
+				%>
+				<script type="text/javascript">
+				alert("수신 받을 유저가 없습니다. ");
+				history.back();
+				</script>
+				<%
+				
 			}
-			result += "Receiver count = " + users.size() + "<br>"; 
-			String pushResult = PushNotificationApiHandler.sendNotification(push);
-			GCMResult gcmResult = new Gson().fromJson(pushResult, GCMResult.class);
-			
-			data.setMulticast_id(gcmResult.getMulticast_id());
-			data.setCreateTime(System.currentTimeMillis());
-			data.setAuthorEmail(adminUser.getEmail());
-			data.setAuthorNickname(adminUser.getNickname());
-			
-			NotificationDataDBManager.getInstance().create();
-			NotificationDataDBManager.getInstance().insertObject(data);
-			
-			GcmResultDBManager.getInstance().create();
-			GcmResultDBManager.getInstance().insertObject(gcmResult);
-			
-			out.println(result + pushResult);
 		}else{
-			//Error
-			%>
-			<script type="text/javascript">
-			alert("수신 받을 유저가 없습니다. ");
-			history.back();
-			</script>
-			<%
 			
+			result += "Test Push notification ";
+			ArrayList<UserInfo> users =  UserDBManager.getInstance()
+					.getSelectQueryData(null, "email='" + adminUser.getEmail() + "'");
+			if(users != null && users.size() > 0){
+				for(UserInfo user : users){
+					result += "Receiver = " + user.getEmail() + "<br>";
+					push.getRegistration_ids().add(user.getGcmId());
+				}
+				result += "Receiver count = " + users.size() + "<br>"; 
+				String pushResult = PushNotificationApiHandler.sendNotification(push);
+				GCMResult gcmResult = new Gson().fromJson(pushResult, GCMResult.class);
+				
+				data.setMulticast_id(gcmResult.getMulticast_id());
+				data.setCreateTime(System.currentTimeMillis());
+				data.setAuthorEmail(adminUser.getEmail());
+				data.setAuthorNickname(adminUser.getNickname());
+				%>
+				<script type="text/javascript">
+					
+					alert(<%out.print("\"" + result + pushResult.replace("\"", "") + "\"");%>);
+					history.back();
+					location.reload(true);
+				</script>
+				<%
+			}else{
+				//Error
+				%>
+				<script type="text/javascript">
+				alert("수신 받을 유저가 없습니다. ");
+				history.back();
+				</script>
+				<%
+				
+			}
 		}
 	}
 

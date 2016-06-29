@@ -39,7 +39,7 @@
 				<input type="text" name="id" />
 			</div>
 			<div class="row">
-				<p>
+				<br><p>
 					<input type="submit" value="로그인">
 				</p>
 		</form>

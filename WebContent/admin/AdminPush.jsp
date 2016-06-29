@@ -9,6 +9,19 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <%@include file="AdminHeader.jsp"%>
+<script type="text/javascript">
+	function onClickSend(){
+		var b = confirm("전송하겠습니까 ?");
+		if(b == true){
+			onReload();
+		}
+		return b;
+	}
+	
+	function onReload(){
+		location.reload(true);	
+	}
+</script>
 <body>
 
 	<%
@@ -43,7 +56,9 @@
 				}
 				}
 			%>
-			<input type="submit" value="보내기">
+			테스트 전송<br>
+			<input type="checkbox" name="test"><br><br>
+			<input type="submit" value="보내기" onclick="">
 		</form>
 	</div>
 

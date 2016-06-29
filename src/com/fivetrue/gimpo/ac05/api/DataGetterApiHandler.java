@@ -62,16 +62,7 @@ public class DataGetterApiHandler extends ProjectCheckApiHandler{
 			/**
 			 * 공지사항 
 			 */
-			String[] selection = {
-					"title",
-					"message",
-					"uri",
-					"imageUrl",
-					"createTime",
-					"authorNickname",
-					"authorEmail",
-			};
-			String query = NotificationDataDBManager.getInstance().getSelectQuery(selection, "type=1") + " ORDER BY createTime DESC LIMIT 10";
+			String query = NotificationDataDBManager.getInstance().getSelectQuery(null, "type=1") + " ORDER BY createTime DESC LIMIT 10";
 			ArrayList<NotificationData> notidata = NotificationDataDBManager.getInstance().rawQuery(query);
 			entry.setNotices(notidata);
 			/**

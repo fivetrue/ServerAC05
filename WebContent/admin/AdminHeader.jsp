@@ -42,17 +42,17 @@
 			if(admin != null){
 				session.setAttribute("admin", adminUser);
 			}else{
-				response.sendRedirect("./error");
+				response.sendRedirect("./login");
 			}
 		}else{
-			response.sendRedirect("./error");	
+			response.sendRedirect("./login");	
 		}
 	}else{
 		UserInfo admin = (UserInfo) session.getAttribute("admin");
 		if(admin != null){
 			
 		}else{
-			response.sendRedirect("./error");
+			response.sendRedirect("./login");
 		}
 	}
 %>
