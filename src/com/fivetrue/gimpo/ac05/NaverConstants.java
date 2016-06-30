@@ -20,14 +20,17 @@ public class NaverConstants {
 	
 	public static final class User{
 		public static final String INFO_API = "https://openapi.naver.com/v1/nid/me";
+		public static final String MY_INFO_URL = "https://nid.naver.com/user2/help/myInfo.nhn?menu=home";
 	}
 	
 	
 	public static final class Cafe{
 		
+//		config.clubId = "27521358"; // 병점 카페.
+//		config.clubId = "28622122"; // 테스트 카페.
 		public static final String CAFE_ID = "28051000";
-		public static final String CAFE_USER_INFO_URL = "http://cafe.naver.com/CafeMemberInfo.nhn?clubid=" + CAFE_ID + "&memberid=";
 		public static final String CAFE_URL = "http://cafe.naver.com/gimpoac05";
+		public static final String CAFE_USER_INFO_URL = "http://cafe.naver.com/CafeMemberInfo.nhn?clubid=" + CAFE_ID + "&memberid=";
 		public static final String TERM_AND_CONDITION_URL = "http://cafe.naver.com/common/cafein_service.htm";
 		
 //		public static final String SIGNUP_CAFE_API = "https://openapi.naver.com/cafe/cafeApply.json";

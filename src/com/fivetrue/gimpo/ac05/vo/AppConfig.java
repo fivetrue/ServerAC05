@@ -16,6 +16,7 @@ public class AppConfig {
 	
 	public String clubId = null;
 	public String clubUrl = null;
+	public String clubMyInfo = null;
 	
 	public String myInfoUrl = null;
 	
