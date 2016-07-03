@@ -45,6 +45,20 @@ public class ConfigApiHandler extends ProjectCheckApiHandler{
 				districtList.add("5" + (value < 10 ? "0"+value : value));
 			}
 			config.districtList = districtList;
+			
+			ArrayList<String> infomationUrlList = new ArrayList<>();
+			infomationUrlList.add("/image/main_visual.jpg");
+			infomationUrlList.add("/image/img_type1.jpg");
+			infomationUrlList.add("/image/img_type2.jpg");
+			infomationUrlList.add("/image/img_type3.jpg");
+			infomationUrlList.add("/image/img_type4.jpg");
+			infomationUrlList.add("/image/img_interior1.jpg");
+			infomationUrlList.add("/image/img_interior2.jpg");
+			infomationUrlList.add("/image/img_interior3.jpg");
+			infomationUrlList.add("/image/img_interior4.jpg");
+			infomationUrlList.add("/image/img_meterial.jpg");
+			
+			config.infomationImageUrlList = infomationUrlList;
 			result.setResult(config);
 			writeObject(result);
 		}
