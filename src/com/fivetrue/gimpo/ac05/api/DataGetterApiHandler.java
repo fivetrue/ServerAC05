@@ -25,8 +25,10 @@ import javafx.util.Pair;
 
 public class DataGetterApiHandler extends ProjectCheckApiHandler{
 
-	private static final String GIMPO_LOCAL_NOTICE_HOST = "http://gr.gimpo.go.kr/gurae/bbs/CM5311/";
-	private static final String GIMPO_LOCAL_NOTICE_BOARD = "list.do?menu_cd=102406&pageIndex=1";
+//	private static final String GIMPO_LOCAL_NOTICE_HOST = "http://gr.gimpo.go.kr/gurae/bbs/CM5311/";
+	private static final String GIMPO_LOCAL_NOTICE_HOST = "http://gr.gimpo.go.kr/gurae/bbs/NTCE212/";
+	private static final String GIMPO_LOCAL_NOTICE_BOARD = "list.do?menu_cd=102404&pageIndex=1";
+//	http://gr.gimpo.go.kr/gurae/bbs/NTCE212/list.do?menu_cd=102404
 	//	private static final String GIMPO_LOCAL_NOTICE_BOARD = "list.do?menu_cd=102406&pageIndex=1";
 
 
@@ -185,8 +187,8 @@ public class DataGetterApiHandler extends ProjectCheckApiHandler{
 
 
 				String subResponse = requestApi(url, "GET", true, header, "");
-				String authorStartToken = "<th scope=\"row\">작성자</th>";
-				String authorSecondToken = "<td>";
+				String authorStartToken = "<th scope=\"row\">담당부서</th>";
+				String authorSecondToken = "<td colspan=\"3\">";
 				String authorEndToken = "</td>";
 				
 				subResponse = subResponse.substring(subResponse.indexOf(authorStartToken) + authorStartToken.length());
@@ -194,22 +196,23 @@ public class DataGetterApiHandler extends ProjectCheckApiHandler{
 				
 				String author = subResponse.substring(0, subResponse.indexOf(authorEndToken));
 				
-				String dateStartToken = "<td>";
+				String dateStartToken = "<th scope=\"row\">작성일</th>";
+				String dateSecondToken = "<td >";
 				String dateEndToken = "</td>";
 				
 				subResponse = subResponse.substring(subResponse.indexOf(dateStartToken) + dateStartToken.length());
+				subResponse = subResponse.substring(subResponse.indexOf(dateSecondToken) + dateSecondToken.length());
 				
-				String date = subResponse.substring(0, subResponse.indexOf(dateEndToken));
+				String date = subResponse.substring(0, subResponse.indexOf(dateEndToken)).trim();
 				
 				String contentStartToken = "<td colspan=\"4\" class=\"bbs_con\">";
 				String contentEndToken = "</td>";
 				int startSubTokenIndex = subResponse.indexOf(contentStartToken) + contentStartToken.length();
 				String subChild = subResponse.substring(startSubTokenIndex);
-				int endSubTokenIndex = subChild.indexOf(contentEndToken) + contentEndToken.length();
+				int endSubTokenIndex = subChild.indexOf(contentEndToken);
 				String htmlContent = subChild.substring(0, endSubTokenIndex);
 
-				htmlContent = "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">" + htmlContent.trim();
-				page.setContent(htmlContent);
+				page.setContent(htmlContent.trim());
 				page.setAuthor(author);
 				page.setDate(date);
 				pages.add(page);
