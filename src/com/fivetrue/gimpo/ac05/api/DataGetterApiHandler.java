@@ -81,11 +81,12 @@ public class DataGetterApiHandler extends ProjectCheckApiHandler{
 			/**
 			 * 마을 데이터 
 			 */
-			ArrayList<TownData> town = TownDataDBManager.getInstance().getSelectQueryData(null, null);
+			query = TownDataDBManager.getInstance().getSelectQuery(null, null) + " ORDER BY date DESC";
+			ArrayList<TownData> town = TownDataDBManager.getInstance().rawQuery(query);
 			if(town == null || town.size() <= 0){
 				resetTownData();
 			}
-			town = TownDataDBManager.getInstance().getSelectQueryData(null, null);
+			town = TownDataDBManager.getInstance().rawQuery(query);
 			TownDataEntry townEntry= new TownDataEntry();
 			townEntry.setTitle("최근 우리동네 소식");
 			townEntry.setCount(town.size());
