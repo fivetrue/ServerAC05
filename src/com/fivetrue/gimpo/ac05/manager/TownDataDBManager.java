@@ -56,5 +56,17 @@ public class TownDataDBManager extends DatabaseManagerImpl<TownData>{
 		}
 		return data;
 	}
+	
+	
+	@Override
+	public ArrayList<TownData> rawQuery(String query) {
+		// TODO Auto-generated method stub
+		ArrayList<TownData> data = super.rawQuery(query);
+		for(TownData t : data){
+			t.setContent(new String(Base64.getDecoder().decode(t.getContent())));
+			t.setTitle(new String(Base64.getDecoder().decode(t.getTitle())));
+		}
+		return data;
+	}
 
 }
