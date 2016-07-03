@@ -56,7 +56,7 @@ public class ConfigApiHandler extends ProjectCheckApiHandler{
 			infomationUrlList.add("/image/img_interior2.jpg");
 			infomationUrlList.add("/image/img_interior3.jpg");
 			infomationUrlList.add("/image/img_interior4.jpg");
-			infomationUrlList.add("/image/img_meterial.jpg");
+			infomationUrlList.add("/image/img_material.jpg");
 			
 			config.infomationImageUrlList = infomationUrlList;
 			result.setResult(config);
