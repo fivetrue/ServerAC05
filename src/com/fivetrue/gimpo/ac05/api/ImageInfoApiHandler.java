@@ -33,8 +33,9 @@ public class ImageInfoApiHandler extends ProjectCheckApiHandler{
 			if(type != null){
 				where = "imageType='"+ type + "'";
 			}
-			ImageInfoDBManager.getInstance().create();
-			ArrayList<ImageInfo> imageInfos = ImageInfoDBManager.getInstance().getSelectQueryData(null, where);
+			String query = ImageInfoDBManager.getInstance().getSelectQuery(null, where);
+			query += " ORDER BY imageType ASC index ASC ";
+			ArrayList<ImageInfo> imageInfos = ImageInfoDBManager.getInstance().rawQuery(query);
 			result.makeResponseTime();
 			result.setErrorCode(Result.ERROR_CODE_OK);
 			result.setResult(imageInfos);
