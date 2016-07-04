@@ -70,9 +70,7 @@ public class PushNotificationApiHandler extends ProjectCheckApiHandler{
 		String email = getParameter("email");
 		
 		if(!TextUtils.isEmpty(id) && !TextUtils.isEmpty(email)){
-			NotificationDataCheckUserDBManager.getInstance().create();
 			int count = NotificationDataCheckUserDBManager.getInstance().getCountData("notiMulticastId='" + id + "' AND userEmail='"+ email + "'");
-			
 			if(count == 0){
 				NotificationDataCheckUser data = new NotificationDataCheckUser();
 				data.setNotiMulticastId(id);

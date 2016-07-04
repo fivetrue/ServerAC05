@@ -8,6 +8,14 @@ public class ImageInfo extends DatabaseObject{
 	private String imageName = null;
 	private String description = null;
 	private String imageType = null;
+	private int index = 0;
+	
+	public ImageInfo(String url, String name, String desc, String type){
+		this.imageUrl = url;
+		this.imageName = name;
+		this.description = desc;
+		this.imageType = type;
+	}
 	
 	public String getImageUrl() {
 		return imageUrl;
@@ -34,9 +42,18 @@ public class ImageInfo extends DatabaseObject{
 	public void setImageType(String imageType) {
 		this.imageType = imageType;
 	}
+	
+	public int getIndex() {
+		return index;
+	}
+
+	public void setIndex(int index) {
+		this.index = index;
+	}
+
 	@Override
 	public String toString() {
 		return "ImageInfo [imageUrl=" + imageUrl + ", imageName=" + imageName + ", description=" + description
-				+ ", imageType=" + imageType + "]";
+				+ ", imageType=" + imageType + ", index=" + index + "]";
 	}
 }

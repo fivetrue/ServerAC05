@@ -48,10 +48,10 @@
 				data.setAuthorEmail(adminUser.getEmail());
 				data.setAuthorNickname(adminUser.getNickname());
 				
-				NotificationDataDBManager.getInstance().create();
+				/* NotificationDataDBManager.getInstance().create(); */
 				NotificationDataDBManager.getInstance().insertObject(data);
 				
-				GcmResultDBManager.getInstance().create();
+				/* GcmResultDBManager.getInstance().create(); */
 				GcmResultDBManager.getInstance().insertObject(gcmResult);
 				%>
 				<script type="text/javascript">

@@ -2,11 +2,15 @@ package com.fivetrue.gimpo.ac05.api;
 
 
 
+import java.util.ArrayList;
+
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.fivetrue.api.Result;
+import com.fivetrue.gimpo.ac05.manager.ImageInfoDBManager;
+import com.fivetrue.gimpo.ac05.vo.ImageInfo;
 
 
 public class ImageInfoApiHandler extends ProjectCheckApiHandler{
@@ -22,8 +26,19 @@ public class ImageInfoApiHandler extends ProjectCheckApiHandler{
 	
 	public void getImageInfo(){
 		if(checkRequestValidation()){
+			String type = getParameter("type");
+			String where = null;
+			Result result = new Result();
 			
-			
+			if(type != null){
+				where = "imageType='"+ type + "'";
+			}
+			ImageInfoDBManager.getInstance().create();
+			ArrayList<ImageInfo> imageInfos = ImageInfoDBManager.getInstance().getSelectQueryData(null, where);
+			result.makeResponseTime();
+			result.setErrorCode(Result.ERROR_CODE_OK);
+			result.setResult(imageInfos);
+			writeObject(result);
 		}
 	}
 }

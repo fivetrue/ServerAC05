@@ -64,7 +64,7 @@ public class UserApiHandler extends ProjectCheckApiHandler{
 				}
 				msg = UserDBManager.getInstance().updateObject(user);
 			}else{
-				UserDBManager.getInstance().create();
+//				UserDBManager.getInstance().create();
 				msg = UserDBManager.getInstance().insertObject(user);
 			}
 			

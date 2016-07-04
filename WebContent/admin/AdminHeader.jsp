@@ -37,7 +37,7 @@
 		ArrayList<UserInfo> admins = UserDBManager.getInstance().getSelectQueryData(null, "userinfo.email='"+ email +"' AND userinfo.id='" +id + "'");
 		if(admins != null && admins.size() > 0){
 			UserInfo adminUser = admins.get(0);
-			AdminUserDBManager.getInstance().create();
+			/* AdminUserDBManager.getInstance().create(); */
 			Admin admin = AdminUserDBManager.getInstance().getAdmin(adminUser.getEmail());
 			if(admin != null){
 				session.setAttribute("admin", adminUser);

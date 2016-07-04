@@ -95,6 +95,16 @@
 		<url-pattern>/api/data/noti</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>imageData</servlet-name>
+		<jsp-file>/info/ImageInfo.jsp</jsp-file>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>imageData</servlet-name>
+		<url-pattern>/api/data/image</url-pattern>
+	</servlet-mapping>
+	
 	<!-- Admin -->
 	<servlet>
 		<servlet-name>adminLogin</servlet-name>

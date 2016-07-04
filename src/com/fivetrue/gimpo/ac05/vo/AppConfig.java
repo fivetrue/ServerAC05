@@ -22,7 +22,4 @@ public class AppConfig {
 	
 	
 	public ArrayList<String> districtList = null;
-	
-	public ArrayList<String> infomationImageUrlList = null;
-    
 }
