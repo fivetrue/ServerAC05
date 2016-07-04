@@ -10,6 +10,10 @@ public class ImageInfo extends DatabaseObject{
 	private String imageType = null;
 	private int index = 0;
 	
+	public ImageInfo(){
+		
+	}
+	
 	public ImageInfo(String url, String name, String desc, String type){
 		this.imageUrl = url;
 		this.imageName = name;
