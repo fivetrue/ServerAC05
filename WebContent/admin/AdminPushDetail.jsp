@@ -124,5 +124,6 @@
 			}
 		}
 	%>
+	<%@include file="AdminFooter.jsp"%></body>
 </body>
 </html>

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.fivetrue.api.Result;
+import com.fivetrue.db.DBMessage;
 import com.fivetrue.gimpo.ac05.Constants;
 import com.fivetrue.gimpo.ac05.manager.NotificationDataCheckUserDBManager;
 import com.fivetrue.gimpo.ac05.manager.NotificationDataDBManager;
@@ -103,8 +104,9 @@ public class PushNotificationApiHandler extends ProjectCheckApiHandler{
 			if(count > 0){
 				ArrayList<NotificationData> data = NotificationDataDBManager.getInstance().getSelectQueryData(null, "multicast_id='" + id + "'");
 				if(data != null && data.size() > 0){
-					NotificationDataDBManager.getInstance().removeObject(data.get(0));
+					DBMessage msg = NotificationDataDBManager.getInstance().removeObject(data.get(0));
 					result.setErrorCode(Result.ERROR_CODE_OK);
+					result.setResult(msg);
 				}else{
 					result.setErrorCode(Result.ERROR_CODE_REQUEST_ERROR);
 					result.setMessage("존재하지 않는 id 입니다.");

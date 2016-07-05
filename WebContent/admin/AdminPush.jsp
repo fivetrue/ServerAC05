@@ -108,7 +108,5 @@
 		</table>
 
 	</div>
-
-
-</body>
+<%@include file="AdminFooter.jsp"%></body>
 </html>

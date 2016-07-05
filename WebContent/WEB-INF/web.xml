@@ -116,37 +116,6 @@
 		<url-pattern>/admin/login</url-pattern>
 	</servlet-mapping>
 	
-	
-	<servlet>
-		<servlet-name>adminPush</servlet-name>
-		<jsp-file>/admin/AdminPush.jsp</jsp-file>
-	</servlet>
-	
-	<servlet-mapping>
-		<servlet-name>adminPush</servlet-name>
-		<url-pattern>/admin/push</url-pattern>
-	</servlet-mapping>
-	
-	<servlet>
-		<servlet-name>adminPushDetail</servlet-name>
-		<jsp-file>/admin/AdminPushDetail.jsp</jsp-file>
-	</servlet>
-	
-	<servlet-mapping>
-		<servlet-name>adminPushDetail</servlet-name>
-		<url-pattern>/admin/push/detail</url-pattern>
-	</servlet-mapping>
-	
-	<servlet>
-		<servlet-name>adminImageInfo</servlet-name>
-		<jsp-file>/admin/AdminImageInfo.jsp</jsp-file>
-	</servlet>
-	
-	<servlet-mapping>
-		<servlet-name>adminImageInfo</servlet-name>
-		<url-pattern>/admin/info/image</url-pattern>
-	</servlet-mapping>
-	
 	<servlet>
 		<servlet-name>adminError</servlet-name>
 		<jsp-file>/admin/AdminError.jsp</jsp-file>
@@ -188,6 +157,76 @@
 		<url-pattern>/push/delete</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>adminPush</servlet-name>
+		<jsp-file>/admin/AdminPush.jsp</jsp-file>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>adminPush</servlet-name>
+		<url-pattern>/admin/push</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>adminPushDetail</servlet-name>
+		<jsp-file>/admin/AdminPushDetail.jsp</jsp-file>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>adminPushDetail</servlet-name>
+		<url-pattern>/admin/push/detail</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>adminImageInfo</servlet-name>
+		<jsp-file>/admin/AdminImageInfo.jsp</jsp-file>
+	</servlet>
+	
+	<!-- Image Info -->
+	<servlet-mapping>
+		<servlet-name>adminImageInfo</servlet-name>
+		<url-pattern>/admin/info/image</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>adminImageInfoDetail</servlet-name>
+		<jsp-file>/admin/AdminImageInfoDetail.jsp</jsp-file>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>adminImageInfoDetail</servlet-name>
+		<url-pattern>/admin/info/image/detail</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>adminImageInfoUpdate</servlet-name>
+		<jsp-file>/imageinfo/UpdateImageInfo.jsp</jsp-file>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>adminImageInfoUpdate</servlet-name>
+		<url-pattern>/admin/info/image/update</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>adminImageInfoDelete</servlet-name>
+		<jsp-file>/imageinfo/DeleteImageInfo.jsp</jsp-file>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>adminImageInfoDelete</servlet-name>
+		<url-pattern>/admin/info/image/delete</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>adminImageInfoAdd</servlet-name>
+		<jsp-file>/imageinfo/AddImageInfo.jsp</jsp-file>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>adminImageInfoAdd</servlet-name>
+		<url-pattern>/admin/info/image/add</url-pattern>
+	</servlet-mapping>
 	
 	<!-- 설정 -->
     <servlet-mapping>

@@ -1,3 +1,4 @@
+<%@page import="com.fivetrue.db.annotation.AutoIncrement"%>
 <%@page import="com.fivetrue.gimpo.ac05.vo.ImageInfo"%>
 <%@page import="com.fivetrue.gimpo.ac05.manager.ImageInfoDBManager"%>
 <%@page import="com.fivetrue.gimpo.ac05.manager.NotificationDataCheckUserDBManager"%>
@@ -18,6 +19,8 @@
 <%
 	ArrayList<ImageInfo>datas = ImageInfoDBManager.getInstance().getSelectQueryData(null, null);
 	Field[] fields = ImageInfo.class.getDeclaredFields();
+	
+	UserInfo user = (UserInfo) session.getAttribute("admin");
 %>
 <body>
 <div class="container" align="center">
@@ -60,11 +63,28 @@
 						}
 					}
 				%>
-			
+				
+				<tr>
+				<form action="/gimpo-ac05/admin/info/image/add" method="post">
+				<%
+				Field[] dataFs = ImageInfo.class.getDeclaredFields();
+				for (Field f : dataFs) {
+					f.setAccessible(true);
+					if(f.getAnnotation(AutoIncrement.class) != null){
+						out.println("<td align=\"center\"> 자동입력 </td>");
+						continue;
+					}
+					out.print(String.format("<td align=\"center\"><input type=\"text\" name=\"%s\"></td>", f.getName()));
+				}
+				%>
+				<td align="center">
+				<input type="hidden" name="email" value="<%out.print(user.getEmail()); %>" onclick="return confirm('추가 하시겠습니까?')">
+				<input type="submit" value="추가" onclick="return confirm('추가 하시겠습니까?')">
+				</td>
+				</form>
+				</tr>
 		</table>
-		
-		<form action=""></form>
-
 	</div>
+	<%@include file="AdminFooter.jsp"%></body>
 </body>
 </html>

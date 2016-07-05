@@ -20,8 +20,8 @@ public class ImageInfo extends DatabaseObject{
 	private String description = null;
 	@DisplayName("타입")
 	private String imageType = null;
-	@DisplayName("INDEX")
-	private int index = 0;
+	@DisplayName("Number")
+	private int number = 0;
 	
 	public ImageInfo(){
 		
@@ -68,17 +68,17 @@ public class ImageInfo extends DatabaseObject{
 		this.imageType = imageType;
 	}
 	
-	public int getIndex() {
-		return index;
+	public int getNumber() {
+		return number;
 	}
 
-	public void setIndex(int index) {
-		this.index = index;
+	public void setNumber(int number) {
+		this.number = number;
 	}
 
 	@Override
 	public String toString() {
 		return "ImageInfo [imageUrl=" + imageUrl + ", imageName=" + imageName + ", description=" + description
-				+ ", imageType=" + imageType + ", index=" + index + "]";
+				+ ", imageType=" + imageType + ", number=" + number + "]";
 	}
 }
