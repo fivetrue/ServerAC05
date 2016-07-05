@@ -42,18 +42,37 @@
 			if(admin != null){
 				session.setAttribute("admin", adminUser);
 			}else{
-				response.sendRedirect("./login");
+				response.sendRedirect("/gimpo-ac05/admin/login");
 			}
 		}else{
-			response.sendRedirect("./login");	
+			response.sendRedirect("/gimpo-ac05/admin/login");	
 		}
 	}else{
 		UserInfo admin = (UserInfo) session.getAttribute("admin");
 		if(admin != null){
 			
 		}else{
-			response.sendRedirect("./login");
+			response.sendRedirect("/gimpo-ac05/admin/login");
 		}
 	}
 %>
 </head>
+
+<body>
+
+<header>
+<div class="header-content" bgcolor="#000000">
+	<div class="header-nav">
+		<nav>
+		<ul class="primary-nav">
+			<li><a href="/gimpo-ac05/admin/push">푸쉬</a></li>
+			<li><a href="/gimpo-ac05/admin/info/image">정보 이미지</a></li>
+		</ul>
+		</nav>
+	</div>
+	<div class="navicon">
+		<a class="nav-toggle" href="#"><span></span></a>
+	</div>
+</div>
+</header>
+</body>

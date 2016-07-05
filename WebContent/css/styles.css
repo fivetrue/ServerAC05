@@ -670,7 +670,8 @@ header ul.member-actions li a:hover {
 }
 
 header .header-nav {
-	display: inline-block;
+	display: block;
+	background-color: #87b4f6
 }
 
 header .member-actions {

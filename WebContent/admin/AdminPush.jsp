@@ -35,7 +35,7 @@
 				out.print(userName);
 			%>님 환영합니다.
 		</h2>
-		<form action="../push/send" method="POST">
+		<form action="/gimpo-ac05/push/send" method="POST">
 			<%
 				Field[] fields = NotificationData.class.getDeclaredFields();
 				for (Field f : fields) {
@@ -58,7 +58,7 @@
 			%>
 			테스트 전송<br>
 			<input type="checkbox" name="test"><br><br>
-			<input type="submit" value="보내기" onclick="">
+			<input type="submit" value="보내기" onclick="return confirm('메세지를 전달 하시겠습니까 ?');">
 		</form>
 	</div>
 
@@ -91,9 +91,16 @@
 									out.print(String.format("<td align=\"center\">%s</td>", f.get(data)));
 								}
 							}
-							out.print(String.format("<td align=\"center\"  width=\"200\"><a href=\"%s\">자세히</a></td>"
-									, "/gimpo-ac05/admin/push/detail?id=" + data.getMulticast_id()));
-							out.print("</tr>");
+							%>
+							<td align="center" width="200">
+							<form action="/gimpo-ac05/admin/push/detail" method="post">
+								<input type="hidden" name="id" value="<% out.print(data.getMulticast_id());%>">
+								<input type="submit" value="자세히">
+							</form>
+							</td>
+							</tr>
+							
+							<%
 						}
 					}
 				%>

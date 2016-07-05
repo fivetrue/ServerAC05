@@ -2,6 +2,7 @@ package com.fivetrue.gimpo.ac05.api;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -10,9 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 import com.fivetrue.api.Result;
 import com.fivetrue.gimpo.ac05.Constants;
 import com.fivetrue.gimpo.ac05.manager.NotificationDataCheckUserDBManager;
+import com.fivetrue.gimpo.ac05.manager.NotificationDataDBManager;
+import com.fivetrue.gimpo.ac05.manager.UserDBManager;
 import com.fivetrue.gimpo.ac05.vo.NotificationData;
 import com.fivetrue.gimpo.ac05.vo.NotificationDataCheckUser;
 import com.fivetrue.gimpo.ac05.vo.PushMessage;
+import com.fivetrue.gimpo.ac05.vo.UserInfo;
 import com.fivetrue.utils.TextUtils;
 import com.google.gson.Gson;
 
@@ -88,6 +92,38 @@ public class PushNotificationApiHandler extends ProjectCheckApiHandler{
 			e.printStackTrace();
 		}
 		
+	}
+	public Result deletePushResult(){
+		Result result = new Result();
+		String id = getParameter("id");
+		String userEmail = getParameter("email");
+		
+		if(!TextUtils.isEmpty(id) && !TextUtils.isEmpty(userEmail)){
+			int count = UserDBManager.getInstance().getCountData("email='" + userEmail + "'");
+			if(count > 0){
+				ArrayList<NotificationData> data = NotificationDataDBManager.getInstance().getSelectQueryData(null, "multicast_id='" + id + "'");
+				if(data != null && data.size() > 0){
+					NotificationDataDBManager.getInstance().removeObject(data.get(0));
+					result.setErrorCode(Result.ERROR_CODE_OK);
+				}else{
+					result.setErrorCode(Result.ERROR_CODE_REQUEST_ERROR);
+					result.setMessage("존재하지 않는 id 입니다.");
+				}
+			}else{
+				result.setErrorCode(Result.ERROR_CODE_REQUEST_ERROR);
+				result.setMessage("AdminEmail정보가 없습니다.");
+			}
+		}else{
+			result.setErrorCode(Result.ERROR_CODE_REQUEST_ERROR);
+			result.setMessage("AdminEmail정보가 없습니다. Notification Id 정보가 없습니다.");
+		}
+		result.makeResponseTime();
+		return result;
+	}
+	public void deletePush(){
+		if(checkRequestValidation()){
+			writeObject(deletePushResult());
+		}
 	}
 	
 

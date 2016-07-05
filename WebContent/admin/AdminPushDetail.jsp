@@ -14,7 +14,6 @@
 <html>
 <%@include file="AdminHeader.jsp"%>
 <body>
-
 	<%
 		UserInfo user = (UserInfo) session.getAttribute("admin");
 		String userName = user != null ? user.getName() : "";
@@ -85,7 +84,17 @@
 			out.print(notification.getAuthorEmail()); %></td> 
 			</tr>
 		</table>
+	
+	<div class="container" align="center">
+		<form action="/gimpo-ac05/push/delete" method="post" >
+			<input type="hidden" name="id" value="<%out.print(notification.getMulticast_id()); %>">
+			<input type="hidden" name="email" value="<%out.print(user.getEmail()); %>">
+			<br>
+			<input type="submit" value="삭제" onclick="return confirm('삭제된 데이터는 복구되지 않습니다. 삭제시겠습니까 ?');">
+			<br>
+		</form>
 	</div>
+	
 		
 	<div class="container" align="center">
 		<h2>확인 유저 정보</h2>

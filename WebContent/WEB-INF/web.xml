@@ -138,6 +138,16 @@
 	</servlet-mapping>
 	
 	<servlet>
+		<servlet-name>adminImageInfo</servlet-name>
+		<jsp-file>/admin/AdminImageInfo.jsp</jsp-file>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>adminImageInfo</servlet-name>
+		<url-pattern>/admin/info/image</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
 		<servlet-name>adminError</servlet-name>
 		<jsp-file>/admin/AdminError.jsp</jsp-file>
 	</servlet>
@@ -147,7 +157,7 @@
 		<url-pattern>/admin/error</url-pattern>
 	</servlet-mapping>
 	
-	
+	<!-- Push -->
 	<servlet>
 		<servlet-name>sendPush</servlet-name>
 		<jsp-file>/push/SendPush.jsp</jsp-file>
@@ -166,6 +176,16 @@
 	<servlet-mapping>
 		<servlet-name>checkPush</servlet-name>
 		<url-pattern>/push/check</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>deletePush</servlet-name>
+		<jsp-file>/push/DeletePush.jsp</jsp-file>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>deletePush</servlet-name>
+		<url-pattern>/push/delete</url-pattern>
 	</servlet-mapping>
 	
 	
