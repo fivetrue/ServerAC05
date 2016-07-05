@@ -42,7 +42,7 @@ public class ImageInfoApiHandler extends ProjectCheckApiHandler{
 				where = "imageType='"+ type + "'";
 			}
 			String query = ImageInfoDBManager.getInstance().getSelectQuery(null, where);
-			query += " ORDER BY `imageType`, `index`";
+			query += " ORDER BY `imageType`, `number`";
 			ArrayList<ImageInfo> imageInfos = ImageInfoDBManager.getInstance().rawQuery(query);
 			result.makeResponseTime();
 			result.setErrorCode(Result.ERROR_CODE_OK);
