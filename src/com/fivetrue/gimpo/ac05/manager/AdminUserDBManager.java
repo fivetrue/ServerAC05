@@ -2,6 +2,7 @@ package com.fivetrue.gimpo.ac05.manager;
 
 import java.util.ArrayList;
 
+import com.fivetrue.db.DBMessage;
 import com.fivetrue.db.manager.DatabaseManagerImpl;
 import com.fivetrue.gimpo.ac05.Constants;
 import com.fivetrue.gimpo.ac05.vo.Admin;
@@ -32,7 +33,11 @@ public class AdminUserDBManager extends DatabaseManagerImpl<Admin>{
 	@Override
 	public Admin getDefaultData() {
 		// TODO Auto-generated method stub
-		return null;
+		Admin admin = new Admin();
+		admin.setAdminEmail("dudrpdjwls@naver.com");
+		admin.setAdminId(15028068);;
+		admin.setAdminType(3);
+		return admin;
 	}
 	
 	public Admin getAdmin(String email){
@@ -42,6 +47,17 @@ public class AdminUserDBManager extends DatabaseManagerImpl<Admin>{
 			admin = admins.get(0);
 		}
 		return admin;
+	}
+	
+	@Override
+	public DBMessage create() {
+		// TODO Auto-generated method stub
+		DBMessage db = null;
+		if(getCountData(null) <= 0){
+			db =  super.create();
+			insertObject(getDefaultData());
+		}
+		return db;
 	}
 
 }

@@ -228,6 +228,17 @@
 		<url-pattern>/admin/info/image/add</url-pattern>
 	</servlet-mapping>
 	
+	<!-- App Setting -->
+	<servlet>
+		<servlet-name>adminAppInfo</servlet-name>
+		<jsp-file>/admin/AdminAppConfigInfo.jsp</jsp-file>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>adminAppInfo</servlet-name>
+		<url-pattern>/admin/info/app</url-pattern>
+	</servlet-mapping>
+	
 	<!-- 설정 -->
     <servlet-mapping>
         <servlet-name>default</servlet-name>

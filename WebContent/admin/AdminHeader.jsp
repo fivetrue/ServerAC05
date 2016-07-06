@@ -32,27 +32,33 @@
 
 	String email = request.getParameter("email");
 	String id = request.getParameter("id");
-	
+	UserInfo adminUser = null;
+	Admin admin = null;
 	if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(id)){
 		ArrayList<UserInfo> admins = UserDBManager.getInstance().getSelectQueryData(null, "userinfo.email='"+ email +"' AND userinfo.id='" +id + "'");
 		if(admins != null && admins.size() > 0){
-			UserInfo adminUser = admins.get(0);
-			/* AdminUserDBManager.getInstance().create(); */
-			Admin admin = AdminUserDBManager.getInstance().getAdmin(adminUser.getEmail());
-			if(admin != null){
-				session.setAttribute("admin", adminUser);
+			adminUser = admins.get(0);
+			AdminUserDBManager.getInstance().create();
+			admin = AdminUserDBManager.getInstance().getAdmin(adminUser.getEmail());
+			if(adminUser != null && admin != null){
+				session.setAttribute("admin", admin);
+				session.setAttribute("adminUser", adminUser);
 			}else{
 				response.sendRedirect("/gimpo-ac05/admin/login");
+				return;
 			}
 		}else{
-			response.sendRedirect("/gimpo-ac05/admin/login");	
+			response.sendRedirect("/gimpo-ac05/admin/login");
+			return;
 		}
 	}else{
-		UserInfo admin = (UserInfo) session.getAttribute("admin");
-		if(admin != null){
+		adminUser = (UserInfo) session.getAttribute("adminUser");
+		admin = (Admin) session.getAttribute("admin");
+		if(admin != null && adminUser != null){
 			
 		}else{
 			response.sendRedirect("/gimpo-ac05/admin/login");
+			return;
 		}
 	}
 %>
@@ -67,6 +73,13 @@
 		<ul class="primary-nav">
 			<li><a href="/gimpo-ac05/admin/push">푸쉬</a></li>
 			<li><a href="/gimpo-ac05/admin/info/image">정보 이미지</a></li>
+			<%
+			if(admin != null && admin.getAdminType() >= 3){
+				%>
+				<li><a href="/gimpo-ac05/admin/info/app">앱 설정</a></li>
+				<%
+			}
+			%>
 		</ul>
 		</nav>
 	</div>

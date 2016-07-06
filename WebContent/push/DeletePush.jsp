@@ -13,7 +13,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	UserInfo user = (UserInfo) session.getAttribute("admin");
+	UserInfo user = (UserInfo) session.getAttribute("adminUser");
 	PushNotificationApiHandler manager = new PushNotificationApiHandler(getServletContext(), request, response);
 	if(user == null){
 		manager.deletePush();

@@ -11,7 +11,7 @@
 <%@include file="AdminHeader.jsp"%>
 <body>
 	<%
-		UserInfo user = (UserInfo) session.getAttribute("admin");
+		adminUser = (UserInfo) session.getAttribute("adminUser");
 		String imageId = request.getParameter("id");
 		if (TextUtils.isEmpty(id)) {
 
@@ -38,13 +38,13 @@
 							%>
 		</table>
 		<br>
-		<input type="hidden" name="email" value="<%out.print(user.getEmail()); %>">
+		<input type="hidden" name="email" value="<%out.print(adminUser.getEmail()); %>">
 		<input type="submit" value="Update" onclick="return confirm('정말로 업데이트 하시겠습니까?')">
 		</form>
 		<br>
 		<form action="/gimpo-ac05/admin/info/image/delete" method="post">
 			<input type="hidden" name="id" value="<%out.print(info.getImageInfoId());%>">
-			<input type="hidden" name="email" value="<%out.print(user.getEmail()); %>">
+			<input type="hidden" name="email" value="<%out.print(adminUser.getEmail()); %>">
 			<input type="submit" value="Delete" onclick="return confirm('삭제된 데이터는 복구 할 수 없습니다. 삭제 하시겠습니까?')">
 		</form>
 		<br>

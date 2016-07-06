@@ -6,7 +6,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	UserInfo user = (UserInfo) session.getAttribute("admin");
+	UserInfo user = (UserInfo) session.getAttribute("adminUser");
 	ImageInfoApiHandler manager = new ImageInfoApiHandler(getServletContext(), request, response);
 	if(user == null){
 		manager.deleteImageInfo();

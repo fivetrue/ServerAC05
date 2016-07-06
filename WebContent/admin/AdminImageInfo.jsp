@@ -19,8 +19,7 @@
 <%
 	ArrayList<ImageInfo>datas = ImageInfoDBManager.getInstance().getSelectQueryData(null, null);
 	Field[] fields = ImageInfo.class.getDeclaredFields();
-	
-	UserInfo user = (UserInfo) session.getAttribute("admin");
+	adminUser = (UserInfo) session.getAttribute("adminUser");
 %>
 <body>
 <div class="container" align="center">
@@ -78,13 +77,13 @@
 				}
 				%>
 				<td align="center">
-				<input type="hidden" name="email" value="<%out.print(user.getEmail()); %>" onclick="return confirm('추가 하시겠습니까?')">
+				<input type="hidden" name="email" value="<%out.print(adminUser.getEmail()); %>" onclick="return confirm('추가 하시겠습니까?')">
 				<input type="submit" value="추가" onclick="return confirm('추가 하시겠습니까?')">
 				</td>
 				</form>
 				</tr>
 		</table>
 	</div>
-	<%@include file="AdminFooter.jsp"%></body>
+	<%@include file="AdminFooter.jsp"%>
 </body>
 </html>

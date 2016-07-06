@@ -12,6 +12,9 @@ public class Admin extends DatabaseObject{
 	private int adminId = 0;
 	@ForeignKey(UserInfo.class)
 	private String adminEmail = null;
+	
+	private int adminType = 0;
+	
 	public int getAdminId() {
 		return adminId;
 	}
@@ -24,9 +27,14 @@ public class Admin extends DatabaseObject{
 	public void setAdminEmail(String adminEmail) {
 		this.adminEmail = adminEmail;
 	}
+	public int getAdminType() {
+		return adminType;
+	}
+	public void setAdminType(int adminType) {
+		this.adminType = adminType;
+	}
 	@Override
 	public String toString() {
-		return "Admin [adminId=" + adminId + ", adminEmail=" + adminEmail + "]";
+		return "Admin [adminId=" + adminId + ", adminEmail=" + adminEmail + ", adminType=" + adminType + "]";
 	}
-	
 }

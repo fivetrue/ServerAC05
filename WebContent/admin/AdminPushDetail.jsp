@@ -15,8 +15,8 @@
 <%@include file="AdminHeader.jsp"%>
 <body>
 	<%
-		UserInfo user = (UserInfo) session.getAttribute("admin");
-		String userName = user != null ? user.getName() : "";
+		adminUser = (UserInfo) session.getAttribute("adminUser");
+		String userName = adminUser != null ? adminUser.getName() : "";
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		
 		String multicastId = request.getParameter("id");
@@ -88,7 +88,7 @@
 	<div class="container" align="center">
 		<form action="/gimpo-ac05/push/delete" method="post" >
 			<input type="hidden" name="id" value="<%out.print(notification.getMulticast_id()); %>">
-			<input type="hidden" name="email" value="<%out.print(user.getEmail()); %>">
+			<input type="hidden" name="email" value="<%out.print(adminUser.getEmail()); %>">
 			<br>
 			<input type="submit" value="삭제" onclick="return confirm('삭제된 데이터는 복구되지 않습니다. 삭제시겠습니까 ?');">
 			<br>

@@ -16,7 +16,7 @@
 	NotificationData data = manager.getNotificationDataFromParameter();
 	String test = request.getParameter("test");
 	boolean isTest = (test != null && test.equalsIgnoreCase("on")) ? true : false;
-	UserInfo adminUser = (UserInfo) session.getAttribute("admin");
+	UserInfo adminUser = (UserInfo) session.getAttribute("adminUser");
 	
 	if(data == null || TextUtils.isEmpty(data.getMessage()) || adminUser == null){
 		
