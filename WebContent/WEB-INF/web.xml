@@ -1,16 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app>
 
-	<!-- App Config  -->
-	<servlet>
-		<servlet-name>appConfig</servlet-name>
-		<jsp-file>/config/GetAppConfig.jsp</jsp-file>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>appConfig</servlet-name>
-		<url-pattern>/api/config/appconfig</url-pattern>
-	</servlet-mapping>
-	
 	<!-- User  -->
 	<servlet>
 		<servlet-name>registerUser</servlet-name>
@@ -228,7 +218,27 @@
 		<url-pattern>/admin/info/image/add</url-pattern>
 	</servlet-mapping>
 	
-	<!-- App Setting -->
+	<!-- App Config -->
+		<servlet>
+	<servlet-name>appConfig</servlet-name>
+	<jsp-file>/config/GetAppConfig.jsp</jsp-file>
+</servlet>
+	<servlet-mapping>
+		<servlet-name>appConfig</servlet-name>
+		<url-pattern>/api/config/appconfig</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>appConfigUpdate</servlet-name>
+		<jsp-file>/config/UpdateConfig.jsp</jsp-file>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>appConfigUpdate</servlet-name>
+		<url-pattern>/api/config/update</url-pattern>
+	</servlet-mapping>
+	
+	
 	<servlet>
 		<servlet-name>adminAppInfo</servlet-name>
 		<jsp-file>/admin/AdminAppConfigInfo.jsp</jsp-file>

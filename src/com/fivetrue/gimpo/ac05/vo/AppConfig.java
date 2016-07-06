@@ -1,10 +1,14 @@
 package com.fivetrue.gimpo.ac05.vo;
 
 import com.fivetrue.db.DatabaseObject;
+import com.fivetrue.db.annotation.AutoIncrement;
 import com.fivetrue.db.annotation.PrimaryKey;
 
 public class AppConfig extends DatabaseObject{
 	@PrimaryKey
+	@AutoIncrement
+	private int configId = 0;
+	
 	private int appVersionCode = 0;
 	private String appId = null;
     private String appSercureKey = null;
@@ -20,6 +24,8 @@ public class AppConfig extends DatabaseObject{
     private String clubMyInfo = null;
 
     private String myInfoUrl = null;
+    
+    private int forceUpdate = 0;
 
 	public String getAppId() {
 		return appId;
@@ -116,14 +122,21 @@ public class AppConfig extends DatabaseObject{
 	public void setMyInfoUrl(String myInfoUrl) {
 		this.myInfoUrl = myInfoUrl;
 	}
+	
+	public int getForceUpdate() {
+		return forceUpdate;
+	}
+
+	public void setForceUpdate(int forceUpdate) {
+		this.forceUpdate = forceUpdate;
+	}
 
 	@Override
 	public String toString() {
-		return "AppConfig [appId=" + appId + ", appSercureKey=" + appSercureKey + ", appVersionCode=" + appVersionCode
+		return "AppConfig [appVersionCode=" + appVersionCode + ", appId=" + appId + ", appSercureKey=" + appSercureKey
 				+ ", appVersionName=" + appVersionName + ", appMarketUrl=" + appMarketUrl + ", senderId=" + senderId
 				+ ", naverClientId=" + naverClientId + ", naverClientSecret=" + naverClientSecret + ", clubId=" + clubId
-				+ ", clubUrl=" + clubUrl + ", clubMyInfo=" + clubMyInfo + ", myInfoUrl=" + myInfoUrl + "]";
+				+ ", clubUrl=" + clubUrl + ", clubMyInfo=" + clubMyInfo + ", myInfoUrl=" + myInfoUrl + ", forceUpdate="
+				+ forceUpdate + "]";
 	}
-    
-    
 }

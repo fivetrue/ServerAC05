@@ -1,7 +1,7 @@
-<%@page import="com.fivetrue.gimpo.ac05.api.ConfigApiHandler"%>
+<%@page import="com.fivetrue.gimpo.ac05.api.AppConfigApiHandler"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
- 	ConfigApiHandler handler = new ConfigApiHandler(getServletContext(), request, response);
+	AppConfigApiHandler handler = new AppConfigApiHandler(getServletContext(), request, response);
 	handler.getAppConfig();
  %>

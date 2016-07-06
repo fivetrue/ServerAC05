@@ -1,3 +1,4 @@
+<%@page import="com.fivetrue.db.annotation.PrimaryKey"%>
 <%@page import="com.fivetrue.gimpo.ac05.manager.AppConfigDBManager"%>
 <%@page import="com.fivetrue.gimpo.ac05.vo.AppConfig"%>
 <%@page import="com.fivetrue.db.annotation.AutoIncrement"%>
@@ -38,17 +39,26 @@
 			<%
 				for(AppConfig appConfig : appConfigs){
 					%>
-				<form action="" method="post">
+				<form action="/gimpo-ac05/api/config/update" method="post">
 					<%
 					for (Field f : AppConfig.class.getDeclaredFields()) {
 						f.setAccessible(true);
-						out.print("<tr>");
-						out.print(String.format("<td align=\"center\">%s </td>",f.getName()));
-						out.print(String.format("<td align=\"center\"><input type=\"text\" name=\"%s\" value=\"%s\"></td>", f.getName(), f.get(appConfig)));
-						out.print("</tr>");
+						if(f.getAnnotation(PrimaryKey.class) != null){
+							out.print(String.format("<td align=\"center\">%s </td>",f.getName()));
+							out.print(String.format("<td align=\"center\">%s<input type=\"hidden\" name=\"%s\" value=\"%s\"></td>", f.get(appConfig), f.getName(), f.get(appConfig)));
+						}else{
+							out.print("<tr>");
+							out.print(String.format("<td align=\"center\">%s </td>",f.getName()));
+							out.print(String.format("<td align=\"center\"><input type=\"text\" name=\"%s\" value=\"%s\"></td>", f.getName(), f.get(appConfig)));
+							out.print("</tr>");
+						}
 					}
 					%>
-				<tr><td align="center"><input type="submit" value="수정"></td></tr>
+				<tr>
+				<input type="hidden" name="email" value="<%out.print(admin.getAdminEmail()); %>">
+				<td align="center"><input type="submit" value="수정">
+				</td>
+				</tr>
 				</form>
 			<%
 				}
