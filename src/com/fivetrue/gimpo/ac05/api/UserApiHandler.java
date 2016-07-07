@@ -45,7 +45,11 @@ public class UserApiHandler extends ProjectCheckApiHandler{
 				f.setAccessible(true);
 				String value = getParameter(f.getName());
 				try {
-					f.set(user, value);
+					if(f.getType() == String.class){
+						f.set(user, value);
+					}else{
+						f.setInt(user, Integer.parseInt(value));
+					}
 				} catch (IllegalArgumentException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
