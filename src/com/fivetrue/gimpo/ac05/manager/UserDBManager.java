@@ -6,6 +6,7 @@ import com.fivetrue.db.DBMessage;
 import com.fivetrue.db.manager.DatabaseManagerImpl;
 import com.fivetrue.gimpo.ac05.Constants;
 import com.fivetrue.gimpo.ac05.vo.UserInfo;
+import com.fivetrue.utils.TextUtils;
 
 public class UserDBManager extends DatabaseManagerImpl<UserInfo>{
 
@@ -48,9 +49,13 @@ public class UserDBManager extends DatabaseManagerImpl<UserInfo>{
 	}
 	
 	public UserInfo isExistUser(UserInfo user){
+		return isExistUser(user.getEmail());
+	}
+	
+	public UserInfo isExistUser(String email){
 		UserInfo u = null;
-		if(user != null && user.getEmail() != null){
-			ArrayList<UserInfo> datas = getSelectQueryData(null, "email='" + user.getEmail() +"'");
+		if(!TextUtils.isEmpty(email)){
+			ArrayList<UserInfo> datas = getSelectQueryData(null, "email='" + email +"'");
 			if(datas != null && datas.size() > 0){
 				u = datas.get(0);
 			}

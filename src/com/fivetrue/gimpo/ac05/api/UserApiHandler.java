@@ -11,7 +11,7 @@ import com.fivetrue.api.Result;
 import com.fivetrue.db.DBMessage;
 import com.fivetrue.gimpo.ac05.manager.UserDBManager;
 import com.fivetrue.gimpo.ac05.vo.UserInfo;
-import com.fivetrue.utils.TextUtils;
+import com.fivetrue.utils.TextUtils; 
 
 
 public class UserApiHandler extends ProjectCheckApiHandler{
@@ -64,7 +64,16 @@ public class UserApiHandler extends ProjectCheckApiHandler{
 			DBMessage msg = null;
 			UserInfo existUser = UserDBManager.getInstance().isExistUser(user);
 			if(existUser != null){
-				msg = UserDBManager.getInstance().updateObject(user);
+				existUser.setNickname(user.getNickname());
+				existUser.setEncId(user.getEncId());
+				existUser.setProfileImage(user.getProfileImage());
+				existUser.setAge(user.getAge());
+				existUser.setId(user.getId());
+				existUser.setName(user.getName());
+				existUser.setBirthday(user.getBirthday());
+				existUser.setGcmId(user.getGcmId());
+				existUser.setDevice(user.getDevice());
+				msg = UserDBManager.getInstance().updateObject(existUser);
 			}else{
 //				UserDBManager.getInstance().create();
 				msg = UserDBManager.getInstance().insertObject(user);
@@ -78,6 +87,38 @@ public class UserApiHandler extends ProjectCheckApiHandler{
 				result.setMessage(msg.getMessage());
 				result.setErrorCode(Result.ERROR_CODE_DB_ERROR);
 				result.setResult(user);
+			}
+			result.makeResponseTime();
+			writeObject(result);
+		}
+	}
+	
+	public void updateUserDistrict(){
+		if(checkRequestValidation()){
+			String email = getParameter("email");
+			String district = getParameter("district");
+			Result result = new Result(); 
+			if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(district)){
+				DBMessage msg = null;
+				UserInfo existUser = UserDBManager.getInstance().isExistUser(email);
+				if(existUser != null){
+					try{
+						existUser.setDistrict(Integer.parseInt(district));
+						msg = UserDBManager.getInstance().updateObject(existUser);
+						result.setMessage(Result.OK_MESSAGE);
+						result.setErrorCode(Result.ERROR_CODE_OK);
+						result.setResult(existUser);
+					}catch(Exception e){
+						e.printStackTrace();
+						result.setMessage(Result.OK_MESSAGE);
+						result.setErrorCode(Result.ERROR_CODE_REQUEST_ERROR);
+						result.setResult(e);
+					}
+					
+				}
+			}else{
+				result.setMessage(Result.OK_MESSAGE);
+				result.setErrorCode(Result.ERROR_CODE_REQUEST_ERROR);
 			}
 			result.makeResponseTime();
 			writeObject(result);

@@ -12,6 +12,15 @@
 	</servlet-mapping>
 		
 	<servlet>
+		<servlet-name>updateUserDistrict</servlet-name>
+		<jsp-file>/user/UpdateUserDistrict.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>updateUserDistrict</servlet-name>
+		<url-pattern>/api/user/update/district</url-pattern>
+	</servlet-mapping>
+		
+	<servlet>
 		<servlet-name>adminUsersInfo</servlet-name>
 		<jsp-file>/admin/AdminUserInfo.jsp</jsp-file>
 	</servlet>
