@@ -32,7 +32,6 @@ public class UserDBManager extends DatabaseManagerImpl<UserInfo>{
 	@Override
 	public UserInfo getDefaultData() {
 		// TODO Auto-generated method stub
-//		'','','','','','M','','','','','','512');
 		UserInfo user = new UserInfo();
 		user.setEmail("dudrpdjwls@naver.com");
 		user.setNickname("고구마감자");
@@ -64,6 +63,7 @@ public class UserDBManager extends DatabaseManagerImpl<UserInfo>{
 		// TODO Auto-generated method stub
 		DBMessage msg = null;
 		if(getCountData(null) <= 0){
+			DistrictDBManager.getInstance().create();
 			msg = super.create();
 			insertObject(getDefaultData());
 		}
