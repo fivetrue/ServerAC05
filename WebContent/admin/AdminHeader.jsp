@@ -1,3 +1,4 @@
+<%@page import="com.fivetrue.gimpo.ac05.manager.DistrictDBManager"%>
 <%@page import="com.fivetrue.gimpo.ac05.vo.Admin"%>
 <%@page import="com.fivetrue.gimpo.ac05.manager.AdminUserDBManager"%>
 <%@page import="com.fivetrue.utils.TextUtils"%>
@@ -35,6 +36,7 @@
 	UserInfo adminUser = null;
 	Admin admin = null;
 	if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(id)){
+		DistrictDBManager.getInstance().create();
 		UserDBManager.getInstance().create();
 		ArrayList<UserInfo> admins = UserDBManager.getInstance().getSelectQueryData(null, "userinfo.email='"+ email +"' AND userinfo.id='" +id + "'");
 		if(admins != null && admins.size() > 0){

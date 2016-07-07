@@ -63,7 +63,6 @@ public class UserDBManager extends DatabaseManagerImpl<UserInfo>{
 		// TODO Auto-generated method stub
 		DBMessage msg = null;
 		if(getCountData(null) <= 0){
-			DistrictDBManager.getInstance().create();
 			msg = super.create();
 			insertObject(getDefaultData());
 		}
