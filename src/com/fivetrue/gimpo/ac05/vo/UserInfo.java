@@ -2,8 +2,6 @@ package com.fivetrue.gimpo.ac05.vo;
 
 import com.fivetrue.db.DatabaseObject;
 import com.fivetrue.db.annotation.DisplayName;
-import com.fivetrue.db.annotation.ForeignKey;
-import com.fivetrue.db.annotation.MemberVariable;
 import com.fivetrue.db.annotation.PrimaryKey;
 import com.fivetrue.db.annotation.StringLength;
 
@@ -41,11 +39,7 @@ public class UserInfo extends DatabaseObject {
 	    private String device = null;
 	    
 	    @DisplayName("구역")
-	    @ForeignKey(District.class)
 	    private int district = 0;
-	    
-	    @MemberVariable
-	    private District districtInfo = null;
 	    
 	    public String getEmail() {
 	        return email;
@@ -143,19 +137,10 @@ public class UserInfo extends DatabaseObject {
 			this.district = district;
 		}
 
-		public District getDistrictInfo() {
-			return districtInfo;
-		}
-
-		public void setDistrictInfo(District districtInfo) {
-			this.districtInfo = districtInfo;
-		}
-
 		@Override
 		public String toString() {
 			return "UserInfo [email=" + email + ", nickname=" + nickname + ", encId=" + encId + ", profileImage="
 					+ profileImage + ", age=" + age + ", gender=" + gender + ", id=" + id + ", name=" + name
-					+ ", birthday=" + birthday + ", gcmId=" + gcmId + ", device=" + device + ", district=" + district
-					+ ", districtInfo=" + districtInfo + "]";
+					+ ", birthday=" + birthday + ", gcmId=" + gcmId + ", device=" + device + ", district=" + district + "]";
 		}
 }
