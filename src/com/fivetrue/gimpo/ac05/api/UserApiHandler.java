@@ -43,12 +43,13 @@ public class UserApiHandler extends ProjectCheckApiHandler{
 			Field[] fds = user.getClass().getDeclaredFields();
 			for(Field f : fds){
 				f.setAccessible(true);
+				String typeName = f.getType().getSimpleName();
 				String value = getParameter(f.getName());
 				try {
-					if(f.getType() == String.class){
-						f.set(user, value);
-					}else{
+					if(typeName.contains("Integer") || typeName.contains("int")){
 						f.setInt(user, Integer.parseInt(value));
+					}else{
+						f.set(user, value);
 					}
 				} catch (IllegalArgumentException e) {
 					// TODO Auto-generated catch block
