@@ -35,6 +35,7 @@
 	UserInfo adminUser = null;
 	Admin admin = null;
 	if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(id)){
+		UserDBManager.getInstance().create();
 		ArrayList<UserInfo> admins = UserDBManager.getInstance().getSelectQueryData(null, "userinfo.email='"+ email +"' AND userinfo.id='" +id + "'");
 		if(admins != null && admins.size() > 0){
 			adminUser = admins.get(0);

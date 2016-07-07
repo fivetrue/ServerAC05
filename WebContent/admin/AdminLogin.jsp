@@ -28,7 +28,7 @@
 <body>
 	<div class="container" align="center">
 		<h1>AC-05 관리자 로그인</h1>
-		<form action="./push" method="post">
+		<form action="/gimpo-ac05/admin/push" method="post">
 			<div class="row">
 				<p>Email
 				<p>
