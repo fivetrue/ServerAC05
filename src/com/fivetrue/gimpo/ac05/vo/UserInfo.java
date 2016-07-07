@@ -36,7 +36,7 @@ public class UserInfo extends DatabaseObject {
 	    private String birthday = null;
 
 	    private String gcmId = null;
-	    @StringLength(32)
+	    
 	    @DisplayName("디바이스")
 	    private String device = null;
 	    

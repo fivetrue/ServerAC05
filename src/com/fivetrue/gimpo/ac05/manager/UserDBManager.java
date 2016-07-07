@@ -43,7 +43,7 @@ public class UserDBManager extends DatabaseManagerImpl<UserInfo>{
 		user.setName("권오진");
 		user.setGcmId("APA91bHmu8p161n1MfxY9c0H8B0Iud4Y_IlGPkVBw4l2EZBaIhIEADnAYV4zPFOhTDsorMI7jPJttyMMOECjSdAPX_QvXuL1HP9kruE7r4Xvv9Ddd2gh7sr-WIBVzoFOOseXmcR-M385");
 		user.setBirthday("11-01");
-		user.setDevice("Custom Phone - 5.0.0 - API 21 - 768x1280");
+		user.setDevice("Custom Pho ne - 5.0.0 - API 21 - 768x1280");
 		return user;
 	}
 	
