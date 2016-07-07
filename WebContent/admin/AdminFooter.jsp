@@ -12,8 +12,7 @@
 <footer>
 <div class="container">
 	<div class="row" align="center">
-		<p>Support - fivetrue1101@gmail.com
-		</p>
+		<p>Support - fivetrue1101@gmail.com</p>
 	</div>
 </div>
 </footer>

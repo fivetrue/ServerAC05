@@ -1,3 +1,6 @@
+<%@page import="com.fivetrue.db.annotation.AutoIncrement"%>
+<%@page import="com.fivetrue.gimpo.ac05.vo.ImageInfo"%>
+<%@page import="com.fivetrue.gimpo.ac05.manager.ImageInfoDBManager"%>
 <%@page import="com.fivetrue.gimpo.ac05.manager.NotificationDataCheckUserDBManager"%>
 <%@page import="com.fivetrue.gimpo.ac05.vo.NotificationDataCheckUser"%>
 <%@page import="java.util.Date"%>
@@ -13,117 +16,74 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <%@include file="AdminHeader.jsp"%>
+<%
+	ArrayList<ImageInfo>datas = ImageInfoDBManager.getInstance().getSelectQueryData(null, null);
+	Field[] fields = ImageInfo.class.getDeclaredFields();
+	adminUser = (UserInfo) session.getAttribute("adminUser");
+%>
 <body>
-	<%
-		adminUser = (UserInfo) session.getAttribute("adminUser");
-		String userName = adminUser != null ? adminUser.getName() : "";
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		
-		String multicastId = request.getParameter("id");
-		if(TextUtils.isEmpty(id)){
-			
-		}else{
-			ArrayList<NotificationData> data = NotificationDataDBManager.getInstance().
-					getSelectQueryData(null, "multicast_id='" + id + "'");
-			
-			if(data != null && data.size() > 0){
-				NotificationData notification = data.get(0);
-				if(notification != null){%>
-	<div class="container" align="center">
-		<h2>전달된 Push 정보</h2>
+<div class="container" align="center">
+		<h2>정보 이미지</h2>
 		<table border="1" bordercolor="gray">
 			<tr>
-			<td width="100" align="center"><b>Key</b></td> 
-			<td width="150" align="center" ><b>Value</b></td> 
-			</tr>
-			<tr>
-			<td width="100" align="center">Multicast Id</td> 
-			<td width="150" align="center" ><%out.print(notification.getMulticast_id()); %></td> 
-			</tr>
-			
-			<tr>
-			<td width="100" align="center">Push Id</td> 
-			<td width="150" align="center" ><%out.print(notification.getId()); %></td> 
-			</tr>
-			
-			<tr>
-			<td width="100" align="center">Title</td> 
-			<td width="150" align="center" ><%out.print(notification.getTitle()); %></td> 
-			</tr>
-			
-			<tr>
-			<td width="100" align="center">Message</td> 
-			<td width="150" align="center" ><%out.print(notification.getMessage()); %></td> 
-			</tr>
-			
-			<tr>
-			<td width="100" align="center">URL</td> 
-			<td width="150" align="center" ><%out.print(notification.getUri()); %></td> 
-			</tr>
-			
-			<tr>
-			<td width="100" align="center">imageURL</td> 
-			<td width="150" align="center" ><%out.print(notification.getImageUrl()); %></td> 
-			</tr>
-			
-			<tr>
-			<td width="100" align="center">createdTime</td> 
-			<td width="150" align="center" ><%
-			out.print(sdf.format(new Date(notification.getCreateTime()))); %></td> 
-			</tr>
-			
-			<tr>
-			<td width="100" align="center">author</td> 
-			<td width="150" align="center" ><%
-			out.print(notification.getAuthorNickname()); %></td> 
-			</tr>
-			
-			<tr>
-			<td width="100" align="center">authorEmail</td> 
-			<td width="150" align="center" ><%
-			out.print(notification.getAuthorEmail()); %></td> 
-			</tr>
-		</table>
-	
-	<div class="container" align="center">
-		<form action="/gimpo-ac05/push/delete" method="post" >
-			<input type="hidden" name="id" value="<%out.print(notification.getMulticast_id()); %>">
-			<input type="hidden" name="email" value="<%out.print(adminUser.getEmail()); %>">
-			<br>
-			<input type="submit" value="삭제" onclick="return confirm('삭제된 데이터는 복구되지 않습니다. 삭제시겠습니까 ?');">
-			<br>
-		</form>
-	</div>
-	
-		
-	<div class="container" align="center">
-		<h2>확인 유저 정보</h2>
-		<%
-		ArrayList<NotificationDataCheckUser> checkedUsers = NotificationDataCheckUserDBManager.getInstance()
-			.getSelectQueryData(null, "notiMulticastId='" + id + "'");
-		
-		%>
-		<table border="1" bordercolor="gray">
-			<tr>
-			<td align="center"><b>이메일</b></td>
-			</tr>
-			<%
-			for(NotificationDataCheckUser u : checkedUsers){
-				%>
-			<tr>
-			<td align="center"><%out.print(u.getUserEmail()); %></td>
-			</tr>
 				<%
-			}
-			%>
+					for (Field f : fields) {
+						f.setAccessible(true);
+						DisplayName name = f.getAnnotation(DisplayName.class);
+						if (name != null) {
+							%>
+							<td align="center"  width="200"><b><%out.print(name.value()); %> </b></td>
+							<%
+						}
+					}
+				%>
+
+				<%
+					if (datas != null) {
+						for (ImageInfo data : datas) {
+							Field[] dataFs = data.getClass().getDeclaredFields();
+							out.print("<tr>");
+							for (Field f : dataFs) {
+								f.setAccessible(true);
+								DisplayName name = f.getAnnotation(DisplayName.class);
+								if (name != null) {
+									out.print(String.format("<td align=\"center\">%s</td>", f.get(data)));
+								}
+							}
+							%>
+							<td align="center" width="200">
+							<form action="/gimpo-ac05/admin/info/image/detail" method="post">
+								<input type="hidden" name="id" value="<% out.print(data.getImageInfoId());%>">
+								<input type="submit" value="수정">
+							</form>
+							</td>
+							</tr>
+							<%
+						}
+					}
+				%>
+				
+				<tr>
+				<form action="/gimpo-ac05/admin/info/image/add" method="post">
+				<%
+				Field[] dataFs = ImageInfo.class.getDeclaredFields();
+				for (Field f : dataFs) {
+					f.setAccessible(true);
+					if(f.getAnnotation(AutoIncrement.class) != null){
+						out.println("<td align=\"center\"> 자동입력 </td>");
+						continue;
+					}
+					out.print(String.format("<td align=\"center\"><input type=\"text\" name=\"%s\"></td>", f.getName()));
+				}
+				%>
+				<td align="center">
+				<input type="hidden" name="email" value="<%out.print(adminUser.getEmail()); %>" onclick="return confirm('추가 하시겠습니까?')">
+				<input type="submit" value="추가" onclick="return confirm('추가 하시겠습니까?')">
+				</td>
+				</form>
+				</tr>
 		</table>
 	</div>
-	<%
-				}
-				
-			}
-		}
-	%>
-	<%@include file="AdminFooter.jsp"%></body>
+	<%@include file="AdminFooter.jsp"%>
 </body>
 </html>

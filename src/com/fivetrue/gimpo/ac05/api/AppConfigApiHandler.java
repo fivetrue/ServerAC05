@@ -29,7 +29,6 @@ public class AppConfigApiHandler extends ProjectCheckApiHandler{
 		if(checkRequestValidation()){
 			Result result = new Result();
 			result.setErrorCode(Result.ERROR_CODE_OK);
-			AppConfigDBManager.getInstance().create();
 			String query = AppConfigDBManager.getInstance().getSelectQuery(null, null);
 			query += " ORDER BY appVersionCode DESC";
 

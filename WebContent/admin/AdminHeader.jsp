@@ -77,6 +77,13 @@
 			if(admin != null && admin.getAdminType() >= 3){
 				%>
 				<li><a href="/gimpo-ac05/admin/info/app">앱 설정</a></li>
+				<li><a href="/gimpo-ac05/admin/info/district">구역 설정</a></li>
+				<%
+			}
+			
+			if(admin != null && admin.getAdminType() >=2){
+				%>
+				<li><a href="/gimpo-ac05/admin/info/users">회원정보</a></li>
 				<%
 			}
 			%>

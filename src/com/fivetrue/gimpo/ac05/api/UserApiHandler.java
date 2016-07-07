@@ -59,9 +59,7 @@ public class UserApiHandler extends ProjectCheckApiHandler{
 			DBMessage msg = null;
 			UserInfo existUser = UserDBManager.getInstance().isExistUser(user);
 			if(existUser != null){
-				if(TextUtils.isEmpty(user.getApartDong())){
-					user.setApartDong(existUser.getApartDong());
-				}
+				user.setDistrict(existUser.getDistrict());
 				msg = UserDBManager.getInstance().updateObject(user);
 			}else{
 //				UserDBManager.getInstance().create();

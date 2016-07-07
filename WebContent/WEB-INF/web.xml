@@ -9,11 +9,20 @@
 	<servlet-mapping>
 		<servlet-name>registerUser</servlet-name>
 		<url-pattern>/api/user/register</url-pattern>
+	</servlet-mapping>
+		
+	<servlet>
+		<servlet-name>adminUsersInfo</servlet-name>
+		<jsp-file>/admin/AdminUserInfo.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>adminUsersInfo</servlet-name>
+		<url-pattern>/admin/info/users</url-pattern>
 	</servlet-mapping>	
 	
 	<!-- Naver  -->
 	
-	<servlet>s
+	<servlet>
 		<servlet-name>naverLogin</servlet-name>
 		<jsp-file>/naver/NaverLogin.jsp</jsp-file>
 	</servlet>
@@ -247,6 +256,47 @@
 	<servlet-mapping>
 		<servlet-name>adminAppInfo</servlet-name>
 		<url-pattern>/admin/info/app</url-pattern>
+	</servlet-mapping>
+	
+	<!-- District  -->
+	<servlet>
+		<servlet-name>adminDistrictInfo</servlet-name>
+		<jsp-file>/admin/AdminDistrictInfo.jsp</jsp-file>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>adminDistrictInfo</servlet-name>
+		<url-pattern>/admin/info/district</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>districtUpdate</servlet-name>
+		<jsp-file>/district/UpdateDistrict.jsp</jsp-file>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>districtUpdate</servlet-name>
+		<url-pattern>/api/district/update</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>districtAdd</servlet-name>
+		<jsp-file>/district/AddDistrict.jsp</jsp-file>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>districtAdd</servlet-name>
+		<url-pattern>/api/district/add</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>districtGet</servlet-name>
+		<jsp-file>/district/GetDistrict.jsp</jsp-file>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>districtGet</servlet-name>
+		<url-pattern>/api/district/get</url-pattern>
 	</servlet-mapping>
 	
 	<!-- 설정 -->

@@ -1,6 +1,7 @@
 package com.fivetrue.gimpo.ac05.vo;
 
 import com.fivetrue.db.DatabaseObject;
+import com.fivetrue.db.annotation.DisplayName;
 import com.fivetrue.db.annotation.PrimaryKey;
 import com.fivetrue.db.annotation.StringLength;
 
@@ -8,17 +9,22 @@ public class UserInfo extends DatabaseObject {
 	
 		@PrimaryKey
 		@StringLength(128)
+		@DisplayName("이메일")
 	    private String email = null;
 		
 		@StringLength(64)
+		@DisplayName("넥네임")
 		private String nickname = null;
 		@StringLength(128)
 	    private String encId = null;
 		@StringLength(128)
+		@DisplayName("프로필 이미지")
 	    private String profileImage = null;
 		@StringLength(32)
+		@DisplayName("나이")
 	    private String age = null;
 		@StringLength(4)
+		@DisplayName("성별")
 	    private String gender = null;
 		@StringLength(24)
 	    private String id = null;
@@ -29,9 +35,11 @@ public class UserInfo extends DatabaseObject {
 
 	    private String gcmId = null;
 	    @StringLength(32)
+	    @DisplayName("디바이스")
 	    private String device = null;
 	    
-	    private String apartDong = null;
+	    @DisplayName("구역")
+	    private int district = 0;
 	    
 	    public String getEmail() {
 	        return email;
@@ -120,20 +128,20 @@ public class UserInfo extends DatabaseObject {
 	    public void setDevice(String device) {
 	        this.device = device;
 	    }
-	    
-	    public String getApartDong() {
-			return apartDong;
+
+		public int getDistrict() {
+			return district;
 		}
 
-		public void setApartDong(String apartDong) {
-			this.apartDong = apartDong;
+		public void setDistrict(int district) {
+			this.district = district;
 		}
 
 		@Override
 		public String toString() {
 			return "UserInfo [email=" + email + ", nickname=" + nickname + ", encId=" + encId + ", profileImage="
 					+ profileImage + ", age=" + age + ", gender=" + gender + ", id=" + id + ", name=" + name
-					+ ", birthday=" + birthday + ", gcmId=" + gcmId + ", device=" + device + ", apartDong=" + apartDong + "]";
+					+ ", birthday=" + birthday + ", gcmId=" + gcmId + ", device=" + device + ", district=" + district
+					+ "]";
 		}
-
 }
