@@ -43,7 +43,7 @@ public class UserApiHandler extends ProjectCheckApiHandler{
 			Field[] fds = user.getClass().getDeclaredFields();
 			for(Field f : fds){
 				f.setAccessible(true);
-				String typeName = f.getType().getSimpleName();
+				String typeName = f.getType().toString();
 				String value = getParameter(f.getName());
 				try {
 					if(typeName.contains("Integer") || typeName.contains("int")){
