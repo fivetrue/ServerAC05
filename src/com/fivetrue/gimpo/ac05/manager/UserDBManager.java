@@ -61,9 +61,8 @@ public class UserDBManager extends DatabaseManagerImpl<UserInfo>{
 	@Override
 	public DBMessage create() {
 		// TODO Auto-generated method stub
-		DBMessage msg = null;
+		DBMessage msg = super.create();
 		if(getCountData(null) <= 0){
-			msg = super.create();
 			insertObject(getDefaultData());
 		}
 		return msg;

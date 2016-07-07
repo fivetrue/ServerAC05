@@ -52,9 +52,8 @@ public class AdminUserDBManager extends DatabaseManagerImpl<Admin>{
 	@Override
 	public DBMessage create() {
 		// TODO Auto-generated method stub
-		DBMessage db = null;
+		DBMessage db = super.create();
 		if(getCountData(null) <= 0){
-			db =  super.create();
 			insertObject(getDefaultData());
 		}
 		return db;
