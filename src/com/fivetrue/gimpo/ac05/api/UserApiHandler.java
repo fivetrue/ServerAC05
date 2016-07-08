@@ -82,11 +82,11 @@ public class UserApiHandler extends ProjectCheckApiHandler{
 			if(msg.getRow() > 0){
 				result.setMessage(Result.OK_MESSAGE);
 				result.setErrorCode(Result.ERROR_CODE_OK);
-				result.setResult(user);	
+				result.setResult(existUser);	
 			}else{
 				result.setMessage(msg.getMessage());
 				result.setErrorCode(Result.ERROR_CODE_DB_ERROR);
-				result.setResult(user);
+				result.setResult(existUser);
 			}
 			result.makeResponseTime();
 			writeObject(result);
