@@ -26,6 +26,8 @@ public class AppConfig extends DatabaseObject{
     private String myInfoUrl = null;
     
     private int forceUpdate = 0;
+    
+    private String adminUrl = null;
 
 	public String getAppId() {
 		return appId;
@@ -130,13 +132,21 @@ public class AppConfig extends DatabaseObject{
 	public void setForceUpdate(int forceUpdate) {
 		this.forceUpdate = forceUpdate;
 	}
+	
+	public String getAdminUrl() {
+		return adminUrl;
+	}
+
+	public void setAdminUrl(String adminUrl) {
+		this.adminUrl = adminUrl;
+	}
 
 	@Override
 	public String toString() {
-		return "AppConfig [appVersionCode=" + appVersionCode + ", appId=" + appId + ", appSercureKey=" + appSercureKey
-				+ ", appVersionName=" + appVersionName + ", appMarketUrl=" + appMarketUrl + ", senderId=" + senderId
-				+ ", naverClientId=" + naverClientId + ", naverClientSecret=" + naverClientSecret + ", clubId=" + clubId
-				+ ", clubUrl=" + clubUrl + ", clubMyInfo=" + clubMyInfo + ", myInfoUrl=" + myInfoUrl + ", forceUpdate="
-				+ forceUpdate + "]";
+		return "AppConfig [configId=" + configId + ", appVersionCode=" + appVersionCode + ", appId=" + appId
+				+ ", appSercureKey=" + appSercureKey + ", appVersionName=" + appVersionName + ", appMarketUrl="
+				+ appMarketUrl + ", senderId=" + senderId + ", naverClientId=" + naverClientId + ", naverClientSecret="
+				+ naverClientSecret + ", clubId=" + clubId + ", clubUrl=" + clubUrl + ", clubMyInfo=" + clubMyInfo
+				+ ", myInfoUrl=" + myInfoUrl + ", forceUpdate=" + forceUpdate + ", adminUrl=" + adminUrl + "]";
 	}
 }
