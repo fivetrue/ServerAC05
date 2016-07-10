@@ -11,12 +11,17 @@
 	<%
 		adminUser = (UserInfo) session.getAttribute("adminUser");
 		UserDBManager.getInstance().create();
-		ArrayList<UserInfo> users = UserDBManager.getInstance().getSelectQueryData(null, null);
+		String sql = UserDBManager.getInstance().getSelectQuery(null, null);
+		sql += " ORDER BY district";
+		ArrayList<UserInfo> users = UserDBManager.getInstance().rawQuery(sql);
+		int memberCount = UserDBManager.getInstance().getCountData(null);
 		%>
 		<div class="container" align="center">
-		<h2>정보 이미지</h2>
+		<h2>사용자 정보</h2>
+		<h3><%out.print(String.format("총 %s 명", memberCount)); %></h3>
 		<table border="1" bordercolor="gray">
 			<tr>
+			<td>번호</td>
 			<%
 			for(Field f : UserInfo.class.getDeclaredFields()){
  				f.setAccessible(true);
@@ -28,9 +33,11 @@
 			%>
 			</tr>
 			<%
+			int i = 1;
 			for(UserInfo user : users){
 				%>
 				<tr>
+					<td align="center"><%out.print(i++); %></td>
 					<%
 					for(Field f : UserInfo.class.getDeclaredFields()){
 						f.setAccessible(true);
