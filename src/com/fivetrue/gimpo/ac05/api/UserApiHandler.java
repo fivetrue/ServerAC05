@@ -74,19 +74,20 @@ public class UserApiHandler extends ProjectCheckApiHandler{
 				existUser.setGcmId(user.getGcmId());
 				existUser.setDevice(user.getDevice());
 				msg = UserDBManager.getInstance().updateObject(existUser);
-			}else{
-//				UserDBManager.getInstance().create();
-				msg = UserDBManager.getInstance().insertObject(user);
-			}
-			
-			if(msg.getRow() > 0){
 				result.setMessage(Result.OK_MESSAGE);
 				result.setErrorCode(Result.ERROR_CODE_OK);
-				result.setResult(existUser);	
-			}else{
-				result.setMessage(msg.getMessage());
-				result.setErrorCode(Result.ERROR_CODE_DB_ERROR);
 				result.setResult(existUser);
+			}else{
+				if(user != null && !TextUtils.isEmpty(user.getEmail())
+						&& !TextUtils.isEmpty(user.getId())
+						&& !TextUtils.isEmpty(user.getNickname())){
+					msg = UserDBManager.getInstance().insertObject(user);
+					result.setMessage(Result.OK_MESSAGE);
+					result.setErrorCode(Result.ERROR_CODE_OK);
+					result.setResult(user);
+				}else{
+					result.setErrorCode(ERROR_CODE_INVALID_LOGIN_INFO);
+				}
 			}
 			result.makeResponseTime();
 			writeObject(result);

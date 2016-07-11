@@ -79,7 +79,9 @@
 				%>
 
 				<%
-					ArrayList<NotificationData> list = NotificationDataDBManager.getInstance().getSelectQueryData(null, null);
+					String sql = NotificationDataDBManager.getInstance().getSelectQuery(null, null);
+					sql += " ORDER BY createTime DESC";
+					ArrayList<NotificationData> list = NotificationDataDBManager.getInstance().rawQuery(sql);
 					if (list != null) {
 						for (NotificationData data : list) {
 							Field[] dataFs = data.getClass().getDeclaredFields();
