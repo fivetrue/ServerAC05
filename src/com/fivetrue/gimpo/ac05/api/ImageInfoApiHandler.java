@@ -163,7 +163,7 @@ public class ImageInfoApiHandler extends ProjectCheckApiHandler{
 				result.setErrorCode(Result.ERROR_CODE_REQUEST_ERROR);
 			}
 		}
-		
+		info.setCreateTime(System.currentTimeMillis());
 		String userEmail = getParameter("email");
 		if(TextUtils.isEmpty(userEmail)){
 			result.setErrorCode(Result.ERROR_CODE_REQUEST_ERROR);

@@ -23,6 +23,8 @@ public class ImageInfo extends DatabaseObject{
 	@DisplayName("Number")
 	private int number = 0;
 	
+	private long createTime = 0;
+	
 	public ImageInfo(){
 		
 	}
@@ -75,10 +77,19 @@ public class ImageInfo extends DatabaseObject{
 	public void setNumber(int number) {
 		this.number = number;
 	}
+	
+	public long getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(long createTime) {
+		this.createTime = createTime;
+	}
 
 	@Override
 	public String toString() {
-		return "ImageInfo [imageUrl=" + imageUrl + ", imageName=" + imageName + ", description=" + description
-				+ ", imageType=" + imageType + ", number=" + number + "]";
+		return "ImageInfo [imageInfoId=" + imageInfoId + ", imageUrl=" + imageUrl + ", imageName=" + imageName
+				+ ", description=" + description + ", imageType=" + imageType + ", number=" + number + ", createTime="
+				+ createTime + "]";
 	}
 }
