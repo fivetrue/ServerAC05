@@ -25,7 +25,7 @@ public class DistrictApiHandler extends ProjectCheckApiHandler{
 		if(checkRequestValidation()){
 			Result result = new Result();
 			result.setErrorCode(Result.ERROR_CODE_OK);
-			String query = DistrictDBManager.getInstance().getSelectQuery(null, null);
+			String query = DistrictDBManager.getInstance().getSelectQuery(null, null, null);
 			query += " ORDER BY districtNumber";
 			ArrayList<District> district = DistrictDBManager.getInstance().rawQuery(query);
 			result.setResult(district);
