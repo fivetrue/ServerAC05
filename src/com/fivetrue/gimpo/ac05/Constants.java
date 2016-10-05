@@ -4,8 +4,8 @@ public class Constants {
 	
 	public static final String DB_SERVER = "localhost";
 	public static final String DB_NAME = "gimpoac05";
-	public static final String DB_ID = "****";
-	public static final String DB_PASS = "*******";
+	public static final String DB_ID = "root";
+	public static final String DB_PASS = "maru0411";
 
 	public static final String KEY_APP_ID = "Application-ID";
 	public static final String KEY_APP_KEY = "Application-Key";
