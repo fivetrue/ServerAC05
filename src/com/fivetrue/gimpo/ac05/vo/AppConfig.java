@@ -28,7 +28,7 @@ public class AppConfig extends DatabaseObject{
     private int forceUpdate = 0;
     
     private String adminUrl = null;
-
+    
 	public String getAppId() {
 		return appId;
 	}
@@ -140,6 +140,8 @@ public class AppConfig extends DatabaseObject{
 	public void setAdminUrl(String adminUrl) {
 		this.adminUrl = adminUrl;
 	}
+	
+	
 
 	@Override
 	public String toString() {

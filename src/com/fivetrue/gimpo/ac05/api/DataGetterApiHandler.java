@@ -8,18 +8,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.fivetrue.api.Result;
+import com.fivetrue.gimpo.ac05.manager.ImageInfoDBManager;
 import com.fivetrue.gimpo.ac05.manager.NotificationDataDBManager;
 import com.fivetrue.gimpo.ac05.manager.PageDataDBManager;
 import com.fivetrue.gimpo.ac05.manager.TownDataDBManager;
+import com.fivetrue.gimpo.ac05.vo.ImageInfo;
 import com.fivetrue.gimpo.ac05.vo.MainDataEntry;
 import com.fivetrue.gimpo.ac05.vo.NotificationData;
 import com.fivetrue.gimpo.ac05.vo.PageData;
 import com.fivetrue.gimpo.ac05.vo.PageData.PageType;
 import com.fivetrue.gimpo.ac05.vo.TownData;
 import com.fivetrue.gimpo.ac05.vo.TownDataEntry;
-import com.fivetrue.rss.Feed;
-import com.fivetrue.rss.FeedMessage;
-import com.fivetrue.rss.RSSFeedParser;
 
 import javafx.util.Pair;
 
@@ -124,6 +123,14 @@ public class DataGetterApiHandler extends ProjectCheckApiHandler{
 			}
 			pageData = PageDataDBManager.getInstance().getSelectQueryData(null, null);
 			entry.setPages(pageData);
+			
+			
+			/**
+			 * 이미지 정보 데이터.
+			 */
+			
+			ArrayList<ImageInfo> imageInfos = ImageInfoDBManager.getInstance().getSelectQueryData(null, null, "ORDER BY date DESC " + page);
+			entry.setImageInfos(imageInfos);
 
 			result.setErrorCode(Result.ERROR_CODE_OK);
 			result.setResult(entry);
