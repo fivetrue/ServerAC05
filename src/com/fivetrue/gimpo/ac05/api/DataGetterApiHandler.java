@@ -129,7 +129,7 @@ public class DataGetterApiHandler extends ProjectCheckApiHandler{
 			 * 이미지 정보 데이터.
 			 */
 			
-			ArrayList<ImageInfo> imageInfos = ImageInfoDBManager.getInstance().getSelectQueryData(null, null, "ORDER BY date DESC " + page);
+			ArrayList<ImageInfo> imageInfos = ImageInfoDBManager.getInstance().getSelectQueryData(null, null, "ORDER BY createTime DESC " + page);
 			entry.setImageInfos(imageInfos);
 
 			result.setErrorCode(Result.ERROR_CODE_OK);
