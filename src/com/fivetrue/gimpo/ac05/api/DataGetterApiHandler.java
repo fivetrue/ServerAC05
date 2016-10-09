@@ -13,6 +13,7 @@ import com.fivetrue.gimpo.ac05.manager.NotificationDataDBManager;
 import com.fivetrue.gimpo.ac05.manager.PageDataDBManager;
 import com.fivetrue.gimpo.ac05.manager.TownDataDBManager;
 import com.fivetrue.gimpo.ac05.vo.ImageInfo;
+import com.fivetrue.gimpo.ac05.vo.ImageInfoEntry;
 import com.fivetrue.gimpo.ac05.vo.MainDataEntry;
 import com.fivetrue.gimpo.ac05.vo.NotificationData;
 import com.fivetrue.gimpo.ac05.vo.PageData;
@@ -129,7 +130,7 @@ public class DataGetterApiHandler extends ProjectCheckApiHandler{
 			 * 이미지 정보 데이터.
 			 */
 			
-			ArrayList<ImageInfo> imageInfos = ImageInfoDBManager.getInstance().getSelectQueryData(null, null, "ORDER BY createTime DESC " + page);
+			ArrayList<ImageInfoEntry> imageInfos = ImageInfoDBManager.getInstance().getImageInfoEntry(page);
 			entry.setImageInfos(imageInfos);
 
 			result.setErrorCode(Result.ERROR_CODE_OK);

@@ -17,6 +17,7 @@ import com.fivetrue.gimpo.ac05.manager.ImageInfoDBManager;
 import com.fivetrue.gimpo.ac05.manager.NotificationDataDBManager;
 import com.fivetrue.gimpo.ac05.manager.UserDBManager;
 import com.fivetrue.gimpo.ac05.vo.ImageInfo;
+import com.fivetrue.gimpo.ac05.vo.ImageInfoEntry;
 import com.fivetrue.gimpo.ac05.vo.NotificationData;
 import com.fivetrue.utils.TextUtils;
 
@@ -31,8 +32,28 @@ public class ImageInfoApiHandler extends ProjectCheckApiHandler{
 		// TODO Auto-generated constructor stub
 	}
 	
+	public void getImageInfoEntry(){
+		if(checkRequestValidation()){
+			Result result = new Result();
+			ArrayList<ImageInfo> imageGroup = ImageInfoDBManager.getInstance().getSelectQueryData(null, null, "GROUP BY imageType");
+			ArrayList<ImageInfoEntry> imageInfoEntry = new ArrayList<>();
+			for(ImageInfo g : imageGroup){
+				ImageInfoEntry entry = new ImageInfoEntry();
+				ArrayList<ImageInfo> imageInfos = ImageInfoDBManager.getInstance().getSelectQueryData(null, "imageType='"+ g.getImageType()  + "'", "ODER BY number");
+				entry.setTitle(g.getImageName());
+				entry.setContent(g.getDescription());
+				entry.setImageInfos(imageInfos);
+				imageInfoEntry.add(entry);
+			}
+			result.makeResponseTime();
+			result.setErrorCode(Result.ERROR_CODE_OK);
+			result.setMessage(Result.OK_MESSAGE);
+			result.setResult(imageInfoEntry);
+			writeObject(result);
+		}
+	}
 	
-	public void getImageInfo(){
+	public void getImageInfoByType(){
 		if(checkRequestValidation()){
 			String type = getParameter("type");
 			String where = null;
