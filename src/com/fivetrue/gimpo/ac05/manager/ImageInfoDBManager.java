@@ -43,7 +43,7 @@ public class ImageInfoDBManager extends DatabaseManagerImpl<ImageInfo>{
 		ArrayList<ImageInfoEntry> imageInfoEntry = new ArrayList<>();
 		for(ImageInfo g : imageGroup){
 			ImageInfoEntry entry = new ImageInfoEntry();
-			ArrayList<ImageInfo> imageInfos = ImageInfoDBManager.getInstance().getSelectQueryData(null, "imageType='"+ g.getImageType()  + "'", "ODER BY number " + (limit != null ? limit : "") );
+			ArrayList<ImageInfo> imageInfos = ImageInfoDBManager.getInstance().getSelectQueryData(null, "imageType='"+ g.getImageType()  + "'", "ORDER BY number " + (limit != null ? limit : "") );
 			entry.setTitle(g.getImageName());
 			entry.setContent(g.getDescription());
 			entry.setImageInfos(imageInfos);
