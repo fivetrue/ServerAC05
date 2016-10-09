@@ -7,6 +7,7 @@ public class ImageInfoEntry {
 	private String title = null;
 	private String content = null;
 	private ArrayList<ImageInfo> imageInfos = null;
+	private long updateDate = 0;
 	public String getTitle() {
 		return title;
 	}
@@ -24,6 +25,13 @@ public class ImageInfoEntry {
 	}
 	public void setImageInfos(ArrayList<ImageInfo> imageInfos) {
 		this.imageInfos = imageInfos;
+	}
+	
+	public long getUpdateDate() {
+		return updateDate;
+	}
+	public void setUpdateDate(long updateDate) {
+		this.updateDate = updateDate;
 	}
 	@Override
 	public String toString() {

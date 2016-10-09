@@ -1,7 +1,6 @@
 package com.fivetrue.gimpo.ac05.api;
 
 
-
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
@@ -11,14 +10,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.fivetrue.api.Result;
 import com.fivetrue.db.DBMessage;
+import com.fivetrue.db.PageData;
 import com.fivetrue.db.annotation.AutoIncrement;
-import com.fivetrue.gimpo.ac05.manager.AdminUserDBManager;
 import com.fivetrue.gimpo.ac05.manager.ImageInfoDBManager;
-import com.fivetrue.gimpo.ac05.manager.NotificationDataDBManager;
 import com.fivetrue.gimpo.ac05.manager.UserDBManager;
 import com.fivetrue.gimpo.ac05.vo.ImageInfo;
 import com.fivetrue.gimpo.ac05.vo.ImageInfoEntry;
-import com.fivetrue.gimpo.ac05.vo.NotificationData;
 import com.fivetrue.utils.TextUtils;
 
 
@@ -35,39 +32,69 @@ public class ImageInfoApiHandler extends ProjectCheckApiHandler{
 	public void getImageInfoEntry(){
 		if(checkRequestValidation()){
 			Result result = new Result();
-			ArrayList<ImageInfo> imageGroup = ImageInfoDBManager.getInstance().getSelectQueryData(null, null, "GROUP BY imageType");
-			ArrayList<ImageInfoEntry> imageInfoEntry = new ArrayList<>();
-			for(ImageInfo g : imageGroup){
-				ImageInfoEntry entry = new ImageInfoEntry();
-				ArrayList<ImageInfo> imageInfos = ImageInfoDBManager.getInstance().getSelectQueryData(null, "imageType='"+ g.getImageType()  + "'", "ODER BY number");
-				entry.setTitle(g.getImageName());
-				entry.setContent(g.getDescription());
-				entry.setImageInfos(imageInfos);
-				imageInfoEntry.add(entry);
-			}
+			PageData page = getPageData();
+			ArrayList<ImageInfoEntry> imageEntry = ImageInfoDBManager.getInstance().getImageInfoEntry(page != null ? page.toString() : null);
 			result.makeResponseTime();
 			result.setErrorCode(Result.ERROR_CODE_OK);
 			result.setMessage(Result.OK_MESSAGE);
-			result.setResult(imageInfoEntry);
+			result.setResult(imageEntry);
 			writeObject(result);
+		}
+	}
+	
+	public void getImageInfo(){
+		if(checkRequestValidation()){
+			String version = getParameter("version");
+			if(version != null){
+				int v = 0;
+				try{
+					v = Integer.parseInt(version.trim());
+					
+				}catch(NumberFormatException e){
+					
+				}
+				if(v > 123){
+					getImageInfoByType();
+				}
+			}else{
+				String type = getParameter("type");
+				String where = null;
+				Result result = new Result();
+				
+				if(type != null){
+					where = "imageType='"+ type + "'";
+				}
+				String query = ImageInfoDBManager.getInstance().getSelectQuery(null, where);
+				query += " ORDER BY `imageType`, `number`";
+				ArrayList<ImageInfo> imageInfos = ImageInfoDBManager.getInstance().rawQuery(query);
+				result.makeResponseTime();
+				result.setErrorCode(Result.ERROR_CODE_OK);
+				result.setResult(imageInfos);
+				writeObject(result);
+			}
 		}
 	}
 	
 	public void getImageInfoByType(){
 		if(checkRequestValidation()){
 			String type = getParameter("type");
-			String where = null;
 			Result result = new Result();
-			
-			if(type != null){
-				where = "imageType='"+ type + "'";
+			if(TextUtils.isEmpty(type)){
+				result.makeResponseTime();
+				result.setErrorCode(Result.ERROR_CODE_REQUEST_ERROR);
+				result.setMessage("이미지 Type이 지정되지 않았습니다.");
+				writeObject(result);
+				return;
 			}
-			String query = ImageInfoDBManager.getInstance().getSelectQuery(null, where);
-			query += " ORDER BY `imageType`, `number`";
-			ArrayList<ImageInfo> imageInfos = ImageInfoDBManager.getInstance().rawQuery(query);
+			
+			PageData page = getPageData();
+			
+			ArrayList<ImageInfo> images = ImageInfoDBManager.getInstance().getSelectQueryData(null, "imageType='" + type +"'"
+					, "ORDER BY createTime " + (page != null ? page.toString() : ""));
+			
 			result.makeResponseTime();
 			result.setErrorCode(Result.ERROR_CODE_OK);
-			result.setResult(imageInfos);
+			result.setResult(images);
 			writeObject(result);
 		}
 	}

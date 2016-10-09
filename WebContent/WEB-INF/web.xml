@@ -113,6 +113,16 @@
 		<url-pattern>/api/data/image</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>imageDataEntry</servlet-name>
+		<jsp-file>/info/ImageInfoEntry.jsp</jsp-file>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>imageDataEntry</servlet-name>
+		<url-pattern>/api/data/imageEntry</url-pattern>
+	</servlet-mapping>
+	
 	<!-- Admin -->
 	<servlet>
 		<servlet-name>adminLogin</servlet-name>
