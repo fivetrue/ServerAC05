@@ -98,7 +98,7 @@ public class DataGetterApiHandler extends ProjectCheckApiHandler{
 			/**
 			 * 마을 데이터 
 			 */
-			query = TownDataDBManager.getInstance().getSelectQuery(null, null, "ORDER BY date DESC " + page);
+			query = TownDataDBManager.getInstance().getSelectQuery(null, null, "ORDER BY date DESC");
 			ArrayList<TownData> town = TownDataDBManager.getInstance().rawQuery(query);
 			if(town == null || town.size() <= 0){
 				resetTownData();

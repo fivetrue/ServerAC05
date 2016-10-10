@@ -7,6 +7,7 @@ public class ImageInfoEntry {
 	private String title = null;
 	private String content = null;
 	private ArrayList<ImageInfo> imageInfos = null;
+	private int totalCount = 0;
 	private long updateDate = 0;
 	public String getTitle() {
 		return title;
@@ -33,9 +34,17 @@ public class ImageInfoEntry {
 	public void setUpdateDate(long updateDate) {
 		this.updateDate = updateDate;
 	}
+	
+	public int getTotalCount() {
+		return totalCount;
+	}
+	public void setTotalCount(int totalCount) {
+		this.totalCount = totalCount;
+	}
 	@Override
 	public String toString() {
-		return "ImageInfoEntry [title=" + title + ", content=" + content + ", imageInfos=" + imageInfos + "]";
+		return "ImageInfoEntry [title=" + title + ", content=" + content + ", imageInfos=" + imageInfos
+				+ ", totalCount=" + totalCount + ", updateDate=" + updateDate + "]";
 	}
 	
 }

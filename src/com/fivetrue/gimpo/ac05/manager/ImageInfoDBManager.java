@@ -39,15 +39,16 @@ public class ImageInfoDBManager extends DatabaseManagerImpl<ImageInfo>{
 	}
 	
 	public ArrayList<ImageInfoEntry> getImageInfoEntry(String limit){
-		ArrayList<ImageInfo> imageGroup = ImageInfoDBManager.getInstance().getSelectQueryData(null, null, "GROUP BY imageType ORDER BY createTime DESC");
+		ArrayList<ImageInfo> imageGroup = getSelectQueryData(null, null, "GROUP BY imageType ORDER BY createTime DESC");
 		ArrayList<ImageInfoEntry> imageInfoEntry = new ArrayList<>();
 		for(ImageInfo g : imageGroup){
 			ImageInfoEntry entry = new ImageInfoEntry();
-			ArrayList<ImageInfo> imageInfos = ImageInfoDBManager.getInstance().getSelectQueryData(null, "imageType='"+ g.getImageType()  + "'", "ORDER BY createTime DESC " + (limit != null ? limit : "") );
+			ArrayList<ImageInfo> imageInfos = getSelectQueryData(null, "imageType='"+ g.getImageType()  + "'", "ORDER BY createTime DESC " + (limit != null ? limit : "") );
 			entry.setTitle(g.getImageName());
 			entry.setContent(g.getDescription());
 			entry.setImageInfos(imageInfos);
 			entry.setUpdateDate(g.getCreateTime());
+			entry.setTotalCount(getCountData("imageType='"+ g.getImageType()  + "'"));
 			imageInfoEntry.add(entry);
 		}
 		return imageInfoEntry;
