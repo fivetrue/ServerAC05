@@ -10,8 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.fivetrue.api.Result;
 import com.fivetrue.db.DBMessage;
-import com.fivetrue.gimpo.ac05.Constants;
-import com.fivetrue.gimpo.ac05.NaverConstants;
 import com.fivetrue.gimpo.ac05.manager.AppConfigDBManager;
 import com.fivetrue.gimpo.ac05.vo.AppConfig;
 
