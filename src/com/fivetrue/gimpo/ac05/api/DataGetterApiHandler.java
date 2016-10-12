@@ -210,8 +210,8 @@ public class DataGetterApiHandler extends ProjectCheckApiHandler{
 					}
 				}
 				if(has){
+					System.out.println("found new data : " + newTown.title);
 					realNewData.add(newTown);
-					break;
 				}
 			}else{
 				realNewData.add(newTown);
