@@ -207,6 +207,9 @@ public class DataGetterApiHandler extends ProjectCheckApiHandler{
 					}
 					if(has){
 						realNewData.add(newTown);
+						
+						System.out.println("added Town :" + newTown.title);
+						break;
 					}
 				}
 			}else{
@@ -217,12 +220,11 @@ public class DataGetterApiHandler extends ProjectCheckApiHandler{
 		
 		String message = "";
 		for(TownData data : realNewData){
-			TownDataDBManager.getInstance().insertObject(data);
 			message += data.title + "\n"; 
+			TownDataDBManager.getInstance().insertObject(data);
 		}
 		
 		if(!TextUtils.isEmpty(message)){
-			System.out.println("try sending notification.");
 			PushMessage push = new PushMessage();
 			NotificationData notification = new NotificationData();
 			push.setData(notification);
