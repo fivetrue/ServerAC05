@@ -148,6 +148,7 @@ public class DataGetterApiHandler extends ProjectCheckApiHandler{
 
 	public void updateData(){
 		if(checkRequestValidation()){
+			System.out.println("try to update datas");
 			String userId = getParameter("email");
 			Admin admin = AdminUserDBManager.getInstance().getAdmin(userId);
 			if(admin != null){
@@ -194,6 +195,7 @@ public class DataGetterApiHandler extends ProjectCheckApiHandler{
 	}
 
 	private int updateTownData(){
+		System.out.println("try to update townData");
 		ArrayList<TownData> newDatas = getTownNews();
 		ArrayList<TownData> oldDatas = TownDataDBManager.getInstance().getSelectQueryData(null, null, null);
 		
@@ -217,27 +219,32 @@ public class DataGetterApiHandler extends ProjectCheckApiHandler{
 			
 		}
 		
-		String message = "";
-		for(TownData data : realNewData){
-			message += data.title + "\n"; 
-			TownDataDBManager.getInstance().insertObject(data);
-		}
-		
-		if(!TextUtils.isEmpty(message)){
-			PushMessage push = new PushMessage();
-			NotificationData notification = new NotificationData();
-			push.setData(notification);
-			notification.setId(0x55);
-			notification.setTitle("김포 구래/마산동 소식");
-			notification.setCreateTime(System.currentTimeMillis());
-			notification.setMessage(message);
-			notification.setUri("gimpoac05://notification/town/news");
-			
-			ArrayList<UserInfo> users = UserDBManager.getInstance().getSelectQueryData(null, null);
-			for(UserInfo user : users){
-				push.getRegistration_ids().add(user.getGcmId());
+		if(realNewData.size() > 0){
+			System.out.println("update new TownData count : " + realNewData.size());
+			String message = "";
+			for(TownData data : realNewData){
+				message += data.title + "\n"; 
+				TownDataDBManager.getInstance().insertObject(data);
 			}
-			PushNotificationApiHandler.sendNotification(push);
+			
+			if(!TextUtils.isEmpty(message)){
+				PushMessage push = new PushMessage();
+				NotificationData notification = new NotificationData();
+				push.setData(notification);
+				notification.setId(0x55);
+				notification.setTitle("김포 구래/마산동 소식");
+				notification.setCreateTime(System.currentTimeMillis());
+				notification.setMessage(message);
+				notification.setUri("gimpoac05://notification/town/news");
+				
+				ArrayList<UserInfo> users = UserDBManager.getInstance().getSelectQueryData(null, null);
+				for(UserInfo user : users){
+					push.getRegistration_ids().add(user.getGcmId());
+				}
+				PushNotificationApiHandler.sendNotification(push);
+			}
+		}else{
+			System.out.println("not exist update townData");
 		}
 		return realNewData.size();
 	}
