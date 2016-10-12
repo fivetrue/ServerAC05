@@ -15,6 +15,7 @@ public class AppConfigDBManager extends DatabaseManagerImpl<AppConfig>{
 	protected AppConfigDBManager() {
 		super(Constants.DB_SERVER, Constants.DB_NAME, Constants.DB_ID, Constants.DB_PASS);
 		// TODO Auto-generated constructor stub
+		create();
 	}
 	
 	public static AppConfigDBManager getInstance(){

@@ -12,14 +12,18 @@ import com.fivetrue.gimpo.ac05.manager.ImageInfoDBManager;
 import com.fivetrue.gimpo.ac05.manager.NotificationDataDBManager;
 import com.fivetrue.gimpo.ac05.manager.PageDataDBManager;
 import com.fivetrue.gimpo.ac05.manager.TownDataDBManager;
+import com.fivetrue.gimpo.ac05.manager.UserDBManager;
 import com.fivetrue.gimpo.ac05.vo.ImageInfo;
 import com.fivetrue.gimpo.ac05.vo.ImageInfoEntry;
 import com.fivetrue.gimpo.ac05.vo.MainDataEntry;
 import com.fivetrue.gimpo.ac05.vo.NotificationData;
 import com.fivetrue.gimpo.ac05.vo.PageData;
+import com.fivetrue.gimpo.ac05.vo.PushMessage;
 import com.fivetrue.gimpo.ac05.vo.PageData.PageType;
+import com.fivetrue.utils.TextUtils;
 import com.fivetrue.gimpo.ac05.vo.TownData;
 import com.fivetrue.gimpo.ac05.vo.TownDataEntry;
+import com.fivetrue.gimpo.ac05.vo.UserInfo;
 
 import javafx.util.Pair;
 
@@ -101,7 +105,7 @@ public class DataGetterApiHandler extends ProjectCheckApiHandler{
 			query = TownDataDBManager.getInstance().getSelectQuery(null, null, "ORDER BY date DESC");
 			ArrayList<TownData> town = TownDataDBManager.getInstance().rawQuery(query);
 			if(town == null || town.size() <= 0){
-				resetTownData();
+				updateTownData();
 			}
 			town = TownDataDBManager.getInstance().rawQuery(query);
 			TownDataEntry townEntry= new TownDataEntry();
@@ -140,11 +144,11 @@ public class DataGetterApiHandler extends ProjectCheckApiHandler{
 		}
 	}
 
-	public void resetData(){
+	public void updateData(){
 		if(checkRequestValidation()){
 			Result result = new Result();
 			int count = resetPageData();
-			count += resetTownData();
+			count += updateTownData();
 			result.makeResponseTime();
 			result.setErrorCode(Result.ERROR_CODE_OK);
 			result.setResult(count);
@@ -173,16 +177,48 @@ public class DataGetterApiHandler extends ProjectCheckApiHandler{
 		return pages.size();
 	}
 
-	private int resetTownData(){
-		ArrayList<TownData> datas = getTownNews();
-		TownDataDBManager.getInstance().drop();
-		TownDataDBManager.getInstance().create();
-		if(datas != null){
-			for(TownData page : datas){
-				TownDataDBManager.getInstance().insertObject(page);
+	private int updateTownData(){
+		ArrayList<TownData> newDatas = getTownNews();
+		ArrayList<TownData> oldDatas = TownDataDBManager.getInstance().getSelectQueryData(null, null, null);
+		
+		ArrayList<TownData> realNewData = new ArrayList<>();
+		for(TownData newTown : newDatas){
+			boolean has = false;
+			for(TownData oldTown : oldDatas){
+				if(!newTown.getTitle().equals(oldTown.getTitle()) 
+						&& !newTown.getDate().equals(oldTown.getDate())){
+					has = true;
+				}
+				if(has){
+					realNewData.add(newTown);
+				}
 			}
+			
 		}
-		return datas.size();
+		
+		String message = "";
+		for(TownData data : realNewData){
+			TownDataDBManager.getInstance().insertObject(data);
+			message += data.getTitle() + "\n"; 
+		}
+		
+		if(!TextUtils.isEmpty(message)){
+			PushMessage push = new PushMessage();
+			NotificationData notification = new NotificationData();
+			push.setData(notification);
+			notification.setId(0x55);
+			notification.setTitle("김포 구래/마산동 소식");
+			notification.setCreateTime(System.currentTimeMillis());
+			notification.setMessage(message);
+			notification.setUri("gimpoac05://notification/town/news");
+			
+			ArrayList<UserInfo> users = UserDBManager.getInstance().getSelectQueryData(null, null);
+			for(UserInfo user : users){
+				push.getRegistration_ids().add(user.getGcmId());
+			}
+			PushNotificationApiHandler.sendNotification(push);
+		}
+		return realNewData.size();
 	}
 
 	private ArrayList<TownData> getTownNews(){

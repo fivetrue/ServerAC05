@@ -14,6 +14,7 @@ public class DistrictDBManager extends DatabaseManagerImpl<District>{
 	protected DistrictDBManager() {
 		super(Constants.DB_SERVER, Constants.DB_NAME, Constants.DB_ID, Constants.DB_PASS);
 		// TODO Auto-generated constructor stub
+		create();
 	}
 	
 	public static DistrictDBManager getInstance(){

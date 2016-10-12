@@ -9,30 +9,23 @@ public class UserInfo extends DatabaseObject {
 	
 		@PrimaryKey
 		@StringLength(128)
+	    private String uid = null;
+		
+		@StringLength(128)
 		@DisplayName("이메일")
 	    private String email = null;
 		
 		@StringLength(64)
-		@DisplayName("넥네임")
-		private String nickname = null;
-		@StringLength(128)
-	    private String encId = null;
+	    private String displayName = null;
+		
 		@StringLength(128)
 		@DisplayName("프로필 이미지")
-	    private String profileImage = null;
-		@StringLength(32)
-		@DisplayName("나이")
-	    private String age = null;
-		@StringLength(4)
-		@DisplayName("성별")
-	    private String gender = null;
-		@StringLength(24)
-	    private String id = null;
+	    private String photoUrl = null;
+		
 		@StringLength(64)
-	    private String name = null;
-		@StringLength(16)
-	    private String birthday = null;
-
+		@DisplayName("프로바이더")
+		private String providerId = null;
+	
 	    private String gcmId = null;
 	    
 	    @DisplayName("디바이스")
@@ -49,85 +42,53 @@ public class UserInfo extends DatabaseObject {
 	        this.email = email;
 	    }
 
-	    public String getNickname() {
-	        return nickname;
-	    }
+		public String getUid() {
+			return uid;
+		}
 
-	    public void setNickname(String nickname) {
-	        this.nickname = nickname;
-	    }
+		public void setUid(String uid) {
+			this.uid = uid;
+		}
 
-	    public String getEncId() {
-	        return encId;
-	    }
+		public String getDisplayName() {
+			return displayName;
+		}
 
-	    public void setEncId(String encId) {
-	        this.encId = encId;
-	    }
+		public void setDisplayName(String displayName) {
+			this.displayName = displayName;
+		}
 
-	    public String getProfileImage() {
-	        return profileImage;
-	    }
+		public String getPhotoUrl() {
+			return photoUrl;
+		}
 
-	    public void setProfileImage(String profileImage) {
-	        this.profileImage = profileImage;
-	    }
+		public void setPhotoUrl(String photoUrl) {
+			this.photoUrl = photoUrl;
+		}
 
-	    public String getAge() {
-	        return age;
-	    }
+		public String getProviderId() {
+			return providerId;
+		}
 
-	    public void setAge(String age) {
-	        this.age = age;
-	    }
+		public void setProviderId(String providerId) {
+			this.providerId = providerId;
+		}
 
-	    public String getGender() {
-	        return gender;
-	    }
+		public String getGcmId() {
+			return gcmId;
+		}
 
-	    public void setGender(String gender) {
-	        this.gender = gender;
-	    }
+		public void setGcmId(String gcmId) {
+			this.gcmId = gcmId;
+		}
 
-	    public String getId() {
-	        return id;
-	    }
+		public String getDevice() {
+			return device;
+		}
 
-	    public void setId(String id) {
-	        this.id = id;
-	    }
-
-	    public String getName() {
-	        return name;
-	    }
-
-	    public void setName(String name) {
-	        this.name = name;
-	    }
-
-	    public String getBirthday() {
-	        return birthday;
-	    }
-
-	    public void setBirthday(String birthday) {
-	        this.birthday = birthday;
-	    }
-
-	    public String getGcmId() {
-	        return gcmId;
-	    }
-
-	    public void setGcmId(String gcmId) {
-	        this.gcmId = gcmId;
-	    }
-
-	    public String getDevice() {
-	        return device;
-	    }
-
-	    public void setDevice(String device) {
-	        this.device = device;
-	    }
+		public void setDevice(String device) {
+			this.device = device;
+		}
 
 		public int getDistrict() {
 			return district;
@@ -136,11 +97,18 @@ public class UserInfo extends DatabaseObject {
 		public void setDistrict(int district) {
 			this.district = district;
 		}
-
-		@Override
-		public String toString() {
-			return "UserInfo [email=" + email + ", nickname=" + nickname + ", encId=" + encId + ", profileImage="
-					+ profileImage + ", age=" + age + ", gender=" + gender + ", id=" + id + ", name=" + name
-					+ ", birthday=" + birthday + ", gcmId=" + gcmId + ", device=" + device + ", district=" + district + "]";
+		
+		public void updateUser(UserInfo info){
+			this.device  = info.device;
+			this.displayName = info.displayName;
+			this.district = info.district;
+			this.email = info.email;
+			this.gcmId = info.gcmId;
+			this.photoUrl = info.photoUrl;
+			this.providerId = info.providerId;
+			this.uid = info.uid;
 		}
+	    
+	    
+
 }

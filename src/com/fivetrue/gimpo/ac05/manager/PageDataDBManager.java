@@ -13,6 +13,7 @@ public class PageDataDBManager extends DatabaseManagerImpl<PageData>{
 	protected PageDataDBManager() {
 		super(Constants.DB_SERVER, Constants.DB_NAME, Constants.DB_ID, Constants.DB_PASS);
 		// TODO Auto-generated constructor stub
+		create();
 	}
 	
 	public static PageDataDBManager getInstance(){

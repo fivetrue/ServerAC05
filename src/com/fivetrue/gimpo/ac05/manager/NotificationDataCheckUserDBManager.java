@@ -13,6 +13,7 @@ public class NotificationDataCheckUserDBManager extends DatabaseManagerImpl<Noti
 	protected NotificationDataCheckUserDBManager() {
 		super(Constants.DB_SERVER, Constants.DB_NAME, Constants.DB_ID, Constants.DB_PASS);
 		// TODO Auto-generated constructor stub
+		create();
 	}
 	
 	public static NotificationDataCheckUserDBManager getInstance(){

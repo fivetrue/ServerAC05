@@ -15,6 +15,7 @@ public class NotificationDataDBManager extends DatabaseManagerImpl<NotificationD
 	protected NotificationDataDBManager() {
 		super(Constants.DB_SERVER, Constants.DB_NAME, Constants.DB_ID, Constants.DB_PASS);
 		// TODO Auto-generated constructor stub
+		create();
 	}
 	
 	public static NotificationDataDBManager getInstance(){
