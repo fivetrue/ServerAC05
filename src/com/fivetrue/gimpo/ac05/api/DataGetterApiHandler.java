@@ -8,11 +8,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.fivetrue.api.Result;
+import com.fivetrue.gimpo.ac05.manager.AdminUserDBManager;
 import com.fivetrue.gimpo.ac05.manager.ImageInfoDBManager;
 import com.fivetrue.gimpo.ac05.manager.NotificationDataDBManager;
 import com.fivetrue.gimpo.ac05.manager.PageDataDBManager;
 import com.fivetrue.gimpo.ac05.manager.TownDataDBManager;
 import com.fivetrue.gimpo.ac05.manager.UserDBManager;
+import com.fivetrue.gimpo.ac05.vo.Admin;
 import com.fivetrue.gimpo.ac05.vo.ImageInfo;
 import com.fivetrue.gimpo.ac05.vo.ImageInfoEntry;
 import com.fivetrue.gimpo.ac05.vo.MainDataEntry;
@@ -146,13 +148,27 @@ public class DataGetterApiHandler extends ProjectCheckApiHandler{
 
 	public void updateData(){
 		if(checkRequestValidation()){
-			Result result = new Result();
-			int count = resetPageData();
-			count += updateTownData();
-			result.makeResponseTime();
-			result.setErrorCode(Result.ERROR_CODE_OK);
-			result.setResult(count);
-			writeObject(count);
+			String userData = getParameter("email");
+			Admin admin = AdminUserDBManager.getInstance().getAdmin(userData);
+			if(admin != null){
+				Result result = new Result();
+				StringBuilder sb = new StringBuilder();
+				int count = resetPageData();
+				sb.append("ResetPageData : " + count).append("\n");
+				count = updateTownData();
+				sb.append("Update TownData : " + count).append("\n");
+				result.makeResponseTime();
+				result.setErrorCode(Result.ERROR_CODE_OK);
+				result.setResult(count);
+				writeObject(count);	
+			}else{
+				Result result = new Result();
+				result.setMessage("관리자 계정이 아닙니다.");
+				result.setErrorCode(Result.ERROR_CODE_REQUEST_ERROR);
+				result.makeResponseTime();
+				writeObject(result);
+			}
+			
 		}
 	}
 
