@@ -200,9 +200,10 @@ public class DataGetterApiHandler extends ProjectCheckApiHandler{
 		ArrayList<TownData> oldDatas = TownDataDBManager.getInstance().getSelectQueryData(null, null, null);
 		
 		ArrayList<TownData> realNewData = new ArrayList<>();
-		for(TownData newTown : newDatas){
-			boolean has = true;
-			if(oldDatas.size() > 0){
+		if(oldDatas.size() > 0){
+			for(TownData newTown : newDatas){
+				System.out.println("try to search exist data : " + newTown.title);
+				boolean has = true;
 				for(TownData oldTown : oldDatas){
 					if(newTown.title.equals(oldTown.title)){
 						has = false;
@@ -213,10 +214,10 @@ public class DataGetterApiHandler extends ProjectCheckApiHandler{
 					System.out.println("found new data : " + newTown.title);
 					realNewData.add(newTown);
 				}
-			}else{
-				realNewData.add(newTown);
 			}
-			
+		}else{
+			System.out.println("have no any town data, so update all new data");
+			realNewData.addAll(newDatas);
 		}
 		
 		if(realNewData.size() > 0){
