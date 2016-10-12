@@ -201,8 +201,7 @@ public class DataGetterApiHandler extends ProjectCheckApiHandler{
 		for(TownData newTown : newDatas){
 			boolean has = false;
 			for(TownData oldTown : oldDatas){
-				if(!newTown.getTitle().equals(oldTown.getTitle()) 
-						&& !newTown.getDate().equals(oldTown.getDate())){
+				if(!newTown.title.equals(oldTown.title)){
 					has = true;
 				}
 				if(has){
@@ -215,7 +214,7 @@ public class DataGetterApiHandler extends ProjectCheckApiHandler{
 		String message = "";
 		for(TownData data : realNewData){
 			TownDataDBManager.getInstance().insertObject(data);
-			message += data.getTitle() + "\n"; 
+			message += data.title + "\n"; 
 		}
 		
 		if(!TextUtils.isEmpty(message)){
@@ -255,8 +254,8 @@ public class DataGetterApiHandler extends ProjectCheckApiHandler{
 				url = GIMPO_LOCAL_NOTICE_HOST + url;
 				TownData page = new TownData();
 
-				page.setUrl(url);
-				page.setTitle(title);
+				page.url = url;
+				page.title = title;
 
 
 				String subResponse = requestApi(url, "GET", true, header, "");
@@ -285,9 +284,9 @@ public class DataGetterApiHandler extends ProjectCheckApiHandler{
 				int endSubTokenIndex = subChild.indexOf(contentEndToken);
 				String htmlContent = subChild.substring(0, endSubTokenIndex);
 
-				page.setContent(htmlContent.trim());
-				page.setAuthor(author);
-				page.setDate(date);
+				page.content = htmlContent.trim();
+				page.author = author;
+				page.date = date;
 				pages.add(page);
 			}
 		}

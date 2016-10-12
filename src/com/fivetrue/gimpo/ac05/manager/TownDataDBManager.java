@@ -42,18 +42,18 @@ public class TownDataDBManager extends DatabaseManagerImpl<TownData>{
 	public DBMessage insertObject(DatabaseObject data) {
 		// TODO Auto-generated method stub
 		TownData town = (TownData) data;
-		town.setContent(Base64.getEncoder().encodeToString(town.getContent().getBytes()));
-		town.setTitle(Base64.getEncoder().encodeToString(town.getTitle().getBytes()));
+		town.content = Base64.getEncoder().encodeToString(town.content.getBytes());
+		town.title = Base64.getEncoder().encodeToString(town.title.getBytes());
 		return super.insertObject(data);
 	}
 	
 	@Override
-	public ArrayList<TownData> getSelectQueryData(String[] selection, String where) {
+	public ArrayList<TownData> getSelectQueryData(String[] selection, String where, String extra) {
 		// TODO Auto-generated method stub
-		ArrayList<TownData> data = super.getSelectQueryData(selection, where);
+		ArrayList<TownData> data = super.getSelectQueryData(selection, where, extra);
 		for(TownData t : data){
-			t.setContent(new String(Base64.getDecoder().decode(t.getContent())));
-			t.setTitle(new String(Base64.getDecoder().decode(t.getTitle())));
+			t.content = new String(Base64.getDecoder().decode(t.content));
+			t.title = new String(Base64.getDecoder().decode(t.title));
 		}
 		return data;
 	}
@@ -64,8 +64,8 @@ public class TownDataDBManager extends DatabaseManagerImpl<TownData>{
 		// TODO Auto-generated method stub
 		ArrayList<TownData> data = super.rawQuery(query);
 		for(TownData t : data){
-			t.setContent(new String(Base64.getDecoder().decode(t.getContent())));
-			t.setTitle(new String(Base64.getDecoder().decode(t.getTitle())));
+			t.content = new String(Base64.getDecoder().decode(t.content));
+			t.title = new String(Base64.getDecoder().decode(t.title));
 		}
 		return data;
 	}
