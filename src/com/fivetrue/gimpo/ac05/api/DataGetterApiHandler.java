@@ -199,18 +199,17 @@ public class DataGetterApiHandler extends ProjectCheckApiHandler{
 		
 		ArrayList<TownData> realNewData = new ArrayList<>();
 		for(TownData newTown : newDatas){
-			boolean has = false;
+			boolean has = true;
 			if(oldDatas.size() > 0){
 				for(TownData oldTown : oldDatas){
-					if(!newTown.title.equals(oldTown.title)){
-						has = true;
-					}
-					if(has){
-						realNewData.add(newTown);
-						
-						System.out.println("added Town :" + newTown.title);
+					if(newTown.title.equals(oldTown.title)){
+						has = false;
 						break;
 					}
+				}
+				if(has){
+					realNewData.add(newTown);
+					break;
 				}
 			}else{
 				realNewData.add(newTown);
