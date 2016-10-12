@@ -148,8 +148,8 @@ public class DataGetterApiHandler extends ProjectCheckApiHandler{
 
 	public void updateData(){
 		if(checkRequestValidation()){
-			String userData = getParameter("email");
-			Admin admin = AdminUserDBManager.getInstance().getAdmin(userData);
+			String userId = getParameter("email");
+			Admin admin = AdminUserDBManager.getInstance().getAdmin(userId);
 			if(admin != null){
 				Result result = new Result();
 				StringBuilder sb = new StringBuilder();
