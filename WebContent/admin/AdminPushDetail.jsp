@@ -16,7 +16,7 @@
 <body>
 	<%
 		adminUser = (UserInfo) session.getAttribute("adminUser");
-		String userName = adminUser != null ? adminUser.getName() : "";
+		String userName = adminUser != null ? adminUser.getDisplayName() : "";
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		
 		String multicastId = request.getParameter("id");

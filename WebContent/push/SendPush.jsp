@@ -46,7 +46,6 @@
 				data.setMulticast_id(gcmResult.getMulticast_id());
 				data.setCreateTime(System.currentTimeMillis());
 				data.setAuthorEmail(adminUser.getEmail());
-				data.setAuthorNickname(adminUser.getNickname());
 				
 				/* NotificationDataDBManager.getInstance().create(); */
 				NotificationDataDBManager.getInstance().insertObject(data);
@@ -87,7 +86,6 @@
 				data.setMulticast_id(gcmResult.getMulticast_id());
 				data.setCreateTime(System.currentTimeMillis());
 				data.setAuthorEmail(adminUser.getEmail());
-				data.setAuthorNickname(adminUser.getNickname());
 				%>
 				<script type="text/javascript">
 					

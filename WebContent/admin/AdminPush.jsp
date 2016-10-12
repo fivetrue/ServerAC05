@@ -26,7 +26,7 @@
 
 	<%
 		adminUser = (UserInfo) session.getAttribute("adminUser");
-		String userName = adminUser != null ? adminUser.getName() : "";
+		String userName = adminUser != null ? adminUser.getDisplayName() : "";
 	%>
 
 	<div class="container" align="center">

@@ -74,13 +74,13 @@
 	
 	<!-- News feeds -->
 	<servlet>
-		<servlet-name>resetData</servlet-name>
-		<jsp-file>/info/ResetData.jsp</jsp-file>
+		<servlet-name>updateData</servlet-name>
+		<jsp-file>/info/UpdateData.jsp</jsp-file>
 	</servlet>
 	
 	<servlet-mapping>
-		<servlet-name>resetData</servlet-name>
-		<url-pattern>/api/data/reset</url-pattern>
+		<servlet-name>updateData</servlet-name>
+		<url-pattern>/api/data/update</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>
