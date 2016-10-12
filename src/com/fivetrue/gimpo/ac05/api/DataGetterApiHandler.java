@@ -200,13 +200,17 @@ public class DataGetterApiHandler extends ProjectCheckApiHandler{
 		ArrayList<TownData> realNewData = new ArrayList<>();
 		for(TownData newTown : newDatas){
 			boolean has = false;
-			for(TownData oldTown : oldDatas){
-				if(!newTown.title.equals(oldTown.title)){
-					has = true;
+			if(oldDatas.size() > 0){
+				for(TownData oldTown : oldDatas){
+					if(!newTown.title.equals(oldTown.title)){
+						has = true;
+					}
+					if(has){
+						realNewData.add(newTown);
+					}
 				}
-				if(has){
-					realNewData.add(newTown);
-				}
+			}else{
+				realNewData.add(newTown);
 			}
 			
 		}
@@ -218,6 +222,7 @@ public class DataGetterApiHandler extends ProjectCheckApiHandler{
 		}
 		
 		if(!TextUtils.isEmpty(message)){
+			System.out.println("try sending notification.");
 			PushMessage push = new PushMessage();
 			NotificationData notification = new NotificationData();
 			push.setData(notification);
