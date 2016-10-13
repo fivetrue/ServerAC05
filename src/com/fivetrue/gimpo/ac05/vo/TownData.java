@@ -20,7 +20,7 @@ public class TownData extends DatabaseObject{
 	public String author = null;
 	public String date = null;
 	
-	@StringLength(2048*5)
+	@StringLength(2048*8)
 	public String content = null;
 
 	
