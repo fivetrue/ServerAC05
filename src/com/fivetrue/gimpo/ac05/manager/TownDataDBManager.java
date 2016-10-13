@@ -48,18 +48,6 @@ public class TownDataDBManager extends DatabaseManagerImpl<TownData>{
 	}
 	
 	@Override
-	public ArrayList<TownData> getSelectQueryData(String[] selection, String where, String extra) {
-		// TODO Auto-generated method stub
-		ArrayList<TownData> data = super.getSelectQueryData(selection, where, extra);
-		for(TownData t : data){
-			t.content = new String(Base64.getDecoder().decode(t.content));
-			t.title = new String(Base64.getDecoder().decode(t.title));
-		}
-		return data;
-	}
-	
-	
-	@Override
 	public ArrayList<TownData> rawQuery(String query) {
 		// TODO Auto-generated method stub
 		ArrayList<TownData> data = super.rawQuery(query);
