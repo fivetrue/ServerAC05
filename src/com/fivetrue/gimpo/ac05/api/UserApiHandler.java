@@ -87,17 +87,16 @@ public class UserApiHandler extends ProjectCheckApiHandler{
 	
 	public void updateUserDistrict(){
 		if(checkRequestValidation()){
-			String email = getParameter("email");
+			String uid = getParameter("uid");
 			String district = getParameter("district");
 			Result result = new Result(); 
-			if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(district)){
-				DBMessage msg = null;
-				UserInfo existUser = UserDBManager.getInstance().isExistUser(email);
+			if(!TextUtils.isEmpty(uid) && !TextUtils.isEmpty(district)){
+				UserInfo existUser = UserDBManager.getInstance().isExistUser(uid);
 				if(existUser != null){
 					try{
 						existUser.setDistrict(Integer.parseInt(district));
-						msg = UserDBManager.getInstance().updateObject(existUser);
-						result.setMessage(Result.OK_MESSAGE);
+						DBMessage msg = UserDBManager.getInstance().updateObject(existUser);
+						result.setMessage(msg.getMessage());
 						result.setErrorCode(Result.ERROR_CODE_OK);
 						result.setResult(existUser);
 					}catch(Exception e){
@@ -107,6 +106,9 @@ public class UserApiHandler extends ProjectCheckApiHandler{
 						result.setResult(e);
 					}
 					
+				}else{
+					result.setErrorCode(Result.ERROR_CODE_REQUEST_ERROR);
+					result.setMessage("전달된 값이 정확하지 않습니다.");
 				}
 			}else{
 				result.setMessage(Result.OK_MESSAGE);
