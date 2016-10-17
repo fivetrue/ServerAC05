@@ -45,6 +45,7 @@ public class AppConfigDBManager extends DatabaseManagerImpl<AppConfig>{
 		config.senderId = Constants.GCM.GCM_SENDER_ID;
 		config.fDatabaseUrl = Constants.FIREBASE.FIREBASE_DB_URI;
 		config.fStorageUrl = Constants.FIREBASE.FIREBASE_STORAGE_URI;
+		config.defaultImageUrl = Constants.DEFAULT_IMAGE_URL;
 		return config;
 	}
 	
